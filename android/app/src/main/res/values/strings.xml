@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">voklizer</string>
+    <string name="title_activity_main">voklizer</string>
+    <string name="package_name">com.voklizer</string>
+    <string name="custom_url_scheme">com.voklizer</string>
+</resources>

@@ -1,0 +1,8 @@
+{
+  "appId": "com.voklizer",
+  "appName": "voklizer",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
