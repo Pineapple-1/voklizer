@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function FakeSelect({ lable }) {
+function FakeSelect({ label }) {
   const [selected, setSelected] = useState(null);
   const data = [
     {
@@ -44,7 +44,7 @@ function FakeSelect({ lable }) {
           )}
           <div className="border-0 focus:ring-0 outline-none border-b-2 border-purple bg-transparent text-p1" />
         </div>
-        <div className="text-p1 text-start ">{lable}</div>
+        <div className="text-p1 text-start ">{label}</div>
 
         <div className="flex flex-col gap-1 mt-2 w-max">
           {data.map((item) => (

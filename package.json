@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor-community/facebook-login": "^6.0.0",
     "@capacitor/android": "^5.7.4",
     "@capacitor/cli": "^5.7.4",
     "@capacitor/core": "^5.7.4",
@@ -19,11 +20,13 @@
     "@ionic/react-router": "^6.6.1",
     "@loadable/component": "^5.16.3",
     "@radix-ui/react-select": "^2.0.0",
+    "@react-oauth/google": "^0.12.1",
     "clsx": "^2.1.0",
     "ionicons": "^7.0.0",
     "lucide-react": "^0.366.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.3",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4"
   },

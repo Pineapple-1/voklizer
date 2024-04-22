@@ -3,7 +3,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route } from "react-router-dom";
 
-import { Play, ServiceProviderCompanyName } from "./routes";
+import { Play, ServiceProviderCompanyName,Register } from "./routes";
 import { ServiceProviderCompanyUser } from "./routes";
 import { ServiceProviderCompanyRegistrationNumber } from "./routes";
 import { ServiceProviderCompanyEmail } from "./routes";
@@ -24,6 +24,8 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 setupIonicReact();
+
+
 
 import "./App.css";
 
@@ -69,8 +71,10 @@ function App() {
               </Route>
 
               <Route exact path="/register">
-                <Play />
+                <Register />
               </Route>
+
+
             </IonRouterOutlet>
           </IonReactRouter>
         </Suspense>

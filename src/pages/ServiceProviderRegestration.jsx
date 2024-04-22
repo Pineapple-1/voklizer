@@ -11,7 +11,7 @@ export function ServiceProviderCompanyName() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
-        <Textbox lable={"Company Name"} />
+        <Textbox label={"Company Name"} />
         <div className="flex justify-end">
           <ChipButton onClick={() => history.push("/user-name")}>
             Next
@@ -29,8 +29,8 @@ export function ServiceProviderCompanyUser() {
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
         <div className="grid grid-cols-2 gap-6">
-          <Textbox lable={"First Name"} />
-          <Textbox lable={"Last Name"} />
+          <Textbox label={"First Name"} />
+          <Textbox label={"Last Name"} />
         </div>
         <div className="flex justify-between">
           <ChipButton onClick={() => history.go(-1)}>Back</ChipButton>
@@ -49,7 +49,7 @@ export function ServiceProviderCompanyRegistrationNumber() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
-        <Textbox lable={"Company Registration Number"} />
+        <Textbox label={"Company Registration Number"} />
         <div className="flex justify-between">
           <ChipButton onClick={() => history.go(-1)}>Back</ChipButton>
           <ChipButton onClick={() => history.push("/company-email")}>
@@ -67,7 +67,7 @@ export function ServiceProviderCompanyEmail() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
-        <Textbox lable={"Company Email Address"} />
+        <Textbox label={"Company Email Address"} />
         <div className="flex justify-between">
           <ChipButton onClick={() => history.go(-1)}>Back</ChipButton>
           <ChipButton onClick={() => history.push("/otp")}>Next</ChipButton>
@@ -83,7 +83,7 @@ export function ServiceProviderCompanyOtp() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
-        <Textbox lable={"Enter OTP"} subtitle={"Verify Email Address"} />
+        <Textbox label={"Enter OTP"} subtitle={"Verify Email Address"} />
         <div className="flex justify-between">
           <ChipButton onClick={() => history.go(-1)}>Back</ChipButton>
           <ChipButton onClick={() => history.push("/mobile")}>Next</ChipButton>
@@ -99,7 +99,7 @@ export function ServiceProviderCompanyMobileNumber() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
-        <Textbox lable={"Mobile Number"} />
+        <Textbox label={"Mobile Number"} />
         <div className="flex justify-between">
           <ChipButton onClick={() => history.go(-1)}>Back</ChipButton>
           <ChipButton onClick={() => history.push("/landline")}>
@@ -117,7 +117,7 @@ export function ServiceProviderCompanyLandLineNumber() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
-        <Textbox lable={"Landline Number"} />
+        <Textbox label={"Landline Number"} />
         <div className="flex justify-between">
           <ChipButton onClick={() => history.go(-1)}>Back</ChipButton>
           <ChipButton onClick={() => history.push("/address")}>Next</ChipButton>
@@ -134,15 +134,15 @@ export function ServiceProviderCompanyAddress() {
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
         <div className="flex flex-col gap-2">
-          <Textbox lable={"Address Line 1"} />
-          <Textbox lable={"Address Line 2"} />
+          <Textbox label={"Address Line 1"} />
+          <Textbox label={"Address Line 2"} />
           <div className="w-6/12">
-            <Textbox lable={"City"} />
+            <Textbox label={"City"} />
           </div>
           <div className="w-4/12">
-            <Textbox lable={"Post Code"} />
+            <Textbox label={"Post Code"} />
           </div>
-          <Textbox lable={"County"} />
+          <Textbox label={"County"} />
         </div>
 
         <div className="flex justify-between">
@@ -163,16 +163,16 @@ export function ServiceProviderCompanyPracticeArea() {
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
         <div className="flex flex-col gap-5">
-          <FakeSelect lable={"Practice Area"} />
+          <FakeSelect label={"Practice Area"} />
         </div>
 
         <div className="flex justify-between">
           <ChipButton onClick={() => history.go(-1)}>Back</ChipButton>
-          <ChipButton onClick={() => {}}>
+          <ChipButton onClick={() => history.push("/register")}>
             Next
           </ChipButton>
         </div>
-      </div>     
+      </div>
     </ServiceProviderRegistrationLayout>
   );
 }

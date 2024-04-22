@@ -56,5 +56,4 @@ export const ServiceProviderCompanyPracticeArea = loadable(() =>
 
 export const Play = loadable(() => import("./pages/Play"));
 
-
-export const Register = loadable(()=>import('./pages/Register'))
+export const Register = loadable(() => import("./pages/Register"));

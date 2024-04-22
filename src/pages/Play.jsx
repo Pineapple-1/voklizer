@@ -26,7 +26,7 @@ function Play() {
           <img className="w-[28px] h-[33px]" src={Stopwatch} alt="" />
           <div className="flex flex-col gap-6 ">
             {record ? <img src={Ripple} alt="" /> : <MusicBars isAnimating />}
-            <div className="text-[10px] leading-3 text-black w-full text-center">
+            <div className="text-xs leading-3 text-black w-full text-center">
               Press to listen & Slide to send
             </div>
           </div>
