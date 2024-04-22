@@ -22,12 +22,7 @@ import BtmLogo from "../assets/logos/Logo-Alt.svg";
 FacebookLogin.initialize({ appId: "644429617838557" });
 
 function Register() {
-  const FACEBOOK_PERMISSIONS = [
-    "email",
-    "user_birthday",
-    "user_photos",
-    "user_gender",
-  ];
+  const FACEBOOK_PERMISSIONS = ["public_profile", "email"];
 
   const [user, setUser] = useState(null);
 
@@ -73,7 +68,7 @@ function Register() {
       });
 
       if (result.accessToken) {
-        console.log(`Facebook access token is `, result.accessToken.token);
+        console.log(`Facebook access token is `, result);
       }
     } catch (error) {
       console.error("Error logging in with Facebook:", error);
