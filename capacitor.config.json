@@ -10,6 +10,19 @@
       "scopes": ["profile", "email"],
       "androidClientId": "916564216176-6jdbhubb15qpc588lg9a1e0lflga6ghg.apps.googleusercontent.com",
       "clientId": "916564216176-6jdbhubb15qpc588lg9a1e0lflga6ghg.apps.googleusercontent.com"
+    },
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#000000",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": true,
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#999999",
+      "splashFullScreen": true,
+      "splashImmersive": true
     }
   }
 }

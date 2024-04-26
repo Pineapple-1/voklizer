@@ -1,4 +1,4 @@
-require_relative '../../node_modules/.pnpm/@capacitor+ios@5.7.4_@capacitor+core@5.7.4/node_modules/@capacitor/ios/scripts/pods_helpers'
+require_relative '../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios/scripts/pods_helpers'
 
 platform :ios, '13.0'
 use_frameworks!
@@ -9,10 +9,16 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@5.7.4_@capacitor+core@5.7.4/node_modules/@capacitor/ios'
-  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@5.7.4_@capacitor+core@5.7.4/node_modules/@capacitor/ios'
+  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios'
   pod 'CapacitorCommunityFacebookLogin', :path => '../../node_modules/.pnpm/@capacitor-community+facebook-login@6.0.0/node_modules/@capacitor-community/facebook-login'
-  pod 'CodetrixStudioCapacitorGoogleAuth', :path => '../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.4/node_modules/@codetrix-studio/capacitor-google-auth'
+  pod 'CapacitorBrowser', :path => '../../node_modules/.pnpm/@capacitor+browser@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/browser'
+  pod 'CapacitorHaptics', :path => '../../node_modules/.pnpm/@capacitor+haptics@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/haptics'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/.pnpm/@capacitor+keyboard@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard'
+  pod 'CapacitorSplashScreen', :path => '../../node_modules/.pnpm/@capacitor+splash-screen@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen'
+  pod 'CapacitorStatusBar', :path => '../../node_modules/.pnpm/@capacitor+status-bar@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/status-bar'
+  pod 'CodetrixStudioCapacitorGoogleAuth', :path => '../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.5/node_modules/@codetrix-studio/capacitor-google-auth'
+  pod 'CapacitorVoiceRecorder', :path => '../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.5/node_modules/capacitor-voice-recorder'
 end
 
 target 'App' do

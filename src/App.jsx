@@ -3,7 +3,15 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route } from "react-router-dom";
 
-import { Play, ServiceProviderCompanyName,Register } from "./routes";
+import {
+  Play,
+  ServiceProviderCompanyName,
+  Register,
+  Login,
+  ForgetPass,
+  ResetPass,
+  Locale,
+} from "./routes";
 import { ServiceProviderCompanyUser } from "./routes";
 import { ServiceProviderCompanyRegistrationNumber } from "./routes";
 import { ServiceProviderCompanyEmail } from "./routes";
@@ -12,6 +20,7 @@ import { ServiceProviderCompanyMobileNumber } from "./routes";
 import { ServiceProviderCompanyLandLineNumber } from "./routes";
 import { ServiceProviderCompanyAddress } from "./routes";
 import { ServiceProviderCompanyPracticeArea } from "./routes";
+import { Selection } from "./routes";
 
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/display.css";
@@ -25,8 +34,6 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 setupIonicReact();
 
-
-
 import "./App.css";
 
 function App() {
@@ -38,7 +45,7 @@ function App() {
         <Suspense>
           <IonReactRouter>
             <IonRouterOutlet>
-              <Route exact path="/">
+              <Route exact path="/company-reg">
                 <ServiceProviderCompanyName />
               </Route>
               <Route exact path="/user-name">
@@ -69,12 +76,24 @@ function App() {
               <Route exact path="/home">
                 <Play />
               </Route>
-
               <Route exact path="/register">
                 <Register />
               </Route>
-
-
+              <Route exact path="/selection">
+                <Selection />
+              </Route>
+              <Route exact path="/">
+                <Login />
+              </Route>
+              <Route exact path="/forget-pass">
+                <ForgetPass />
+              </Route>
+              <Route exact path="/reset-pass">
+                <ResetPass />
+              </Route>
+              <Route exact path="/locale">
+                <Locale />
+              </Route>
             </IonRouterOutlet>
           </IonReactRouter>
         </Suspense>

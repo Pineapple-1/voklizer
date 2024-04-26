@@ -1,6 +1,10 @@
+
+
 :root {
     --ion-background-color: #F5F5F550;
     --ion-font-family: 'Lexend', sans-serif;
+    --ion-safe-area-top:100px;
+
   
     /** primary **/
     --ion-color-primary: #013332;
@@ -81,3 +85,7 @@
     background-size: cover;
   }
   
+
+  ion-content{
+    
+  }
