@@ -14,7 +14,7 @@ function Locale() {
 
   const onSubmit = (data) => {
     console.log(data);
-    history.replace("/home");
+    history.replace("/");
   };
 
   return (

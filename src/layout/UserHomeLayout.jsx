@@ -1,7 +1,9 @@
 import React from "react";
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
+
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 import Logo from "../assets/logos/Logo.svg";
 import BtmLogo from "../assets/logos/Logo-Alt.svg";
@@ -10,17 +12,22 @@ import { useHistory } from "react-router-dom";
 function UserHomeLayout({ children }) {
   const history = useHistory();
 
+  useIonViewWillEnter(() => {
+    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setBackgroundColor({ color: "#F5F5F550" });
+  });
+
   return (
     <IonPage>
       <IonContent>
         <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
           <div className="flex flex-col gap-5">
             <div className=" flex justify-between">
-              <div onClick={() => history.push("/home")}>
+              <div onClick={() => history.push("/listing")}>
                 <HomeIcon />
               </div>
 
-              <div onClick={() => history.push("/practice-area")}>
+              <div onClick={() => history.push("/login")}>
                 <BurgerIcon />
               </div>
             </div>

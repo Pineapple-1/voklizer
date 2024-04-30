@@ -1,5 +1,11 @@
-import { useState, Suspense } from "react";
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import { Suspense, useEffect } from "react";
+import {
+  IonApp,
+  IonRouterOutlet,
+  setupIonicReact,
+  useIonViewDidEnter,
+  IonPage,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route } from "react-router-dom";
 
@@ -11,6 +17,7 @@ import {
   ForgetPass,
   ResetPass,
   Locale,
+  SendSuccess,
 } from "./routes";
 import { ServiceProviderCompanyUser } from "./routes";
 import { ServiceProviderCompanyRegistrationNumber } from "./routes";
@@ -21,6 +28,7 @@ import { ServiceProviderCompanyLandLineNumber } from "./routes";
 import { ServiceProviderCompanyAddress } from "./routes";
 import { ServiceProviderCompanyPracticeArea } from "./routes";
 import { Selection } from "./routes";
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/display.css";
@@ -37,7 +45,12 @@ setupIonicReact();
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+
+
+  useEffect(() => {
+    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setBackgroundColor({ color: "#F5F5F550" });
+  });
 
   return (
     <>
@@ -73,16 +86,17 @@ function App() {
                 <ServiceProviderCompanyPracticeArea />
               </Route>
 
-              <Route exact path="/home">
+              <Route exact path="/">
                 <Play />
               </Route>
+
               <Route exact path="/register">
                 <Register />
               </Route>
               <Route exact path="/selection">
                 <Selection />
               </Route>
-              <Route exact path="/">
+              <Route exact path="/login">
                 <Login />
               </Route>
               <Route exact path="/forget-pass">
@@ -93,6 +107,13 @@ function App() {
               </Route>
               <Route exact path="/locale">
                 <Locale />
+              </Route>
+
+              <Route exact path="/send-success">
+                <SendSuccess />
+              </Route>
+              <Route exact path='/listing'>
+
               </Route>
             </IonRouterOutlet>
           </IonReactRouter>

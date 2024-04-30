@@ -1,14 +1,21 @@
 import React from "react";
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage, useIonViewDidEnter } from "@ionic/react";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
 
 import Logo from "../assets/logos/Logo.svg";
 import BtmLogo from "../assets/logos/Logo-Alt.svg";
 import { useHistory } from "react-router-dom";
+import { StatusBar, Style } from "@capacitor/status-bar";
+
 
 function ServiceProviderRegistrationLayout({ children }) {
   const history = useHistory();
+
+  useIonViewDidEnter(() => {
+    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setBackgroundColor({ color: "#F5F5F550" });
+  }, []);
 
   return (
     <IonPage>
@@ -19,7 +26,7 @@ function ServiceProviderRegistrationLayout({ children }) {
               <div onClick={() => history.push("/home")}>
                 <HomeIcon />
               </div>
-              
+
               <BurgerIcon />
             </div>
 

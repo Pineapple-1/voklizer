@@ -1,9 +1,17 @@
 import React from "react";
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage,useIonViewWillEnter } from "@ionic/react";
 import { useHistory } from "react-router-dom";
+import { StatusBar, Style } from "@capacitor/status-bar";
+
 
 function Selection() {
   const history = useHistory();
+
+  useIonViewWillEnter(() => {
+    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setBackgroundColor({ color: "#F5F5F550" });
+  });
+
   return (
     <IonPage>
       <IonContent>
@@ -17,7 +25,7 @@ function Selection() {
               <div className=" text-white text-sm">Need a service?</div>
               <button
                 className="bg-[#fff] rounded-xl flex justify-between items-center py-[9px] px-3 w-full"
-                onClick={() => history.push("/")}
+                onClick={() => history.push("/login")}
               >
                 <div className="h-1.5 w-1/2 bg-purple rounded-2xl"></div>
                 <div className="text-sm">Yes</div>
