@@ -55,10 +55,16 @@ export const ServiceProviderCompanyPracticeArea = loadable(() =>
 );
 
 export const Play = loadable(() => import("./pages/home/Play"));
-export const SendSuccess = loadable (()=>import('./pages/home/SendSuccess'))
+export const SendSuccess = loadable(() => import("./pages/home/SendSuccess"));
 
+export const QueryListing = loadable(() =>
+  import("./pages/company/QueryListing")
+);
+export const PitchSuccess = loadable(() =>
+  import("./pages/company/PitchSuccess")
+);
 
-
+export const Replies = loadable(() => import("./pages/voicebox/Replies"));
 
 export const Register = loadable(() => import("./pages/auth/Register"));
 export const Selection = loadable(() => import("./pages/auth/Selection"));
@@ -66,4 +72,3 @@ export const Login = loadable(() => import("./pages/auth/Login"));
 export const ForgetPass = loadable(() => import("./pages/auth/ForgetPassword"));
 export const ResetPass = loadable(() => import("./pages/auth/ResetPassword"));
 export const Locale = loadable(() => import("./pages/auth/Locale"));
-

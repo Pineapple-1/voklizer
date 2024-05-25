@@ -18,6 +18,9 @@ import {
   ResetPass,
   Locale,
   SendSuccess,
+  QueryListing,
+  Replies,
+  PitchSuccess,
 } from "./routes";
 import { ServiceProviderCompanyUser } from "./routes";
 import { ServiceProviderCompanyRegistrationNumber } from "./routes";
@@ -45,8 +48,6 @@ setupIonicReact();
 import "./App.css";
 
 function App() {
-
-
   useEffect(() => {
     StatusBar.setStyle({ style: Style.Light });
     StatusBar.setBackgroundColor({ color: "#F5F5F550" });
@@ -112,8 +113,14 @@ function App() {
               <Route exact path="/send-success">
                 <SendSuccess />
               </Route>
-              <Route exact path='/listing'>
-
+              <Route exact path="/listing">
+                <QueryListing />
+              </Route>
+              <Route exact path="/pitch-success">
+                <PitchSuccess />
+              </Route>
+              <Route exact path="/replies">
+                <Replies />
               </Route>
             </IonRouterOutlet>
           </IonReactRouter>

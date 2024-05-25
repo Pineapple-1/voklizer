@@ -22,16 +22,6 @@ function UserHomeLayout({ children }) {
       <IonContent>
         <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
           <div className="flex flex-col gap-5">
-            <div className=" flex justify-between">
-              <div onClick={() => history.push("/listing")}>
-                <HomeIcon />
-              </div>
-
-              <div onClick={() => history.push("/login")}>
-                <BurgerIcon />
-              </div>
-            </div>
-
             <div className="flex flex-col gap-3 mt-5">
               <div>
                 <img

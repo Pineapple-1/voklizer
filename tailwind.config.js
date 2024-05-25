@@ -9,16 +9,31 @@ export default {
         lexend: ["Lexend", ...fontFamily.sans],
       },
       colors: {
-       'purple':'#8532D8',
-       'gray':'#F5F5F5'
+        purple: "#8532D8",
+        gray: "#F5F5F5",
       },
       fontSize: {
         p1: [
           "14px",
           {
-            lineHeight: "18px", 
+            lineHeight: "18px",
           },
         ],
+      },
+
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },

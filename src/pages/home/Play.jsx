@@ -2,10 +2,9 @@ import UserHomeLayout from "../../layout/UserHomeLayout";
 import MusicBars from "../../components/MusicBars";
 
 import { VoiceRecorder } from "capacitor-voice-recorder";
-import clsx from "clsx";
 
-import { useHistory, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 function Play() {
   const [isRecording, setIsRecording] = useState(false);
@@ -110,7 +109,7 @@ function Play() {
               </button>
               <div className="h-1.5 bg-purple rounded-2xl flex-1" />
               <button className="text-sm " onClick={SendAudio}>
-                send
+                Send
               </button>
             </div>
           ) : (
