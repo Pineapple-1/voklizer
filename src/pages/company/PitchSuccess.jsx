@@ -18,12 +18,12 @@ function PitchSuccess() {
             />
           </div>
           <div className="flex flex-col gap-5 text-[#030303] ml-4">
-            <div className=" text-xl  w-24 ">Sit tight, Pitch has been sent</div>
+            <div className=" text-xl  w-24 ">
+              Sit tight, Pitch has been sent
+            </div>
             <div className=" text-xs">you shall be notified soon</div>
           </div>
         </div>
-
-
       </div>
     </UserHomeLayout>
   );

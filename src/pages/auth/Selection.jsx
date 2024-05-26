@@ -1,15 +1,14 @@
 import React from "react";
-import { IonContent, IonPage,useIonViewWillEnter } from "@ionic/react";
+import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
-
 
 function Selection() {
   const history = useHistory();
 
   useIonViewWillEnter(() => {
-    StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({ color: "#F5F5F550" });
+    StatusBar.setStyle({ style: Style.Dark });
+    StatusBar.setBackgroundColor({ color: "#8532D8" });
   });
 
   return (

@@ -5,6 +5,10 @@ import { VoiceRecorder } from "capacitor-voice-recorder";
 
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { StatusBar, Style } from "@capacitor/status-bar";
+
+import { useIonViewWillEnter } from "@ionic/react";
+import { useEffect } from "react";
 
 function Play() {
   const [isRecording, setIsRecording] = useState(false);
@@ -64,7 +68,13 @@ function Play() {
     }
   };
 
+  useEffect(() => {
+    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setBackgroundColor({ color: "#FFFFFF" });
+  });
+
   return (
+    
     <UserHomeLayout>
       <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
         <div className="relative flex justify-center items-center">
@@ -79,7 +89,6 @@ function Play() {
                 className={
                   "absolute -inset-4 border border-purple w-40 h-40 rounded-full -z-10  animate-[ping_1s_linear_infinite]"
                 }
-               
               />
             </>
           )}

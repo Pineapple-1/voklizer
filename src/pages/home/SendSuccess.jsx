@@ -3,8 +3,6 @@ import React from "react";
 import UserHomeLayout from "../../layout/UserHomeLayout";
 import { useHistory } from "react-router-dom";
 
-
-
 function SendSuccess() {
   const history = useHistory();
 
@@ -20,21 +18,10 @@ function SendSuccess() {
             />
           </div>
           <div className="flex flex-col gap-5 text-[#030303] ml-4">
-            <div className=" text-xl  w-24 ">
-              Sit tight, Message sent
-            </div>
+            <div className=" text-xl  w-24 ">Sit tight, Message sent</div>
             <div className=" text-xs">you shall be notified soon</div>
           </div>
         </div>
-        <div className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
-        <button className="text-sm " onClick={()=>history.push("/replies")}>
-                Replies
-              </button>
-              <div className="h-1.5 bg-purple rounded-2xl flex-1" />
-              <button className="text-sm " onClick={()=>history.push("/listing")}>
-                Listings
-              </button>
-            </div>
       </div>
     </UserHomeLayout>
   );

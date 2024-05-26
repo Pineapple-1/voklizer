@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Slider, SliderThumb, SliderTrack } from "react-aria-components";
 import PlayIcon from "../../../assets/icons/PlayIcon";
 import clsx from "clsx";
 import Star from "../../../assets/icons/Star";
 import Ticks from "../../../assets/icons/Ticks";
+import { IonContent, IonModal } from "@ionic/react";
+import PersonIcon from "../../../assets/icons/PersonIcon";
 
-function MessageReplies({ accepted }) {
+function MessageReplies({ accepted, id }) {
   const [value, setValue] = useState(accepted ? 100 : 0);
+  const modal = useRef();
+
   return (
-    <div className={clsx("flex flex-col gap-3",value===100&&"mr-6")}>
+    <div className={clsx("flex flex-col gap-3", value === 100 && "mr-6")}>
       <div
         className={clsx(
           "flex gap-3 items-end -mb-2",
           value === 100 ? "justify-start  ml-4" : "justify-end  mr-4"
         )}
+        onClick={() => modal.current?.present()}
       >
         <div className="flex flex-col items-start">
           <div className="text-[6px] leading-[8px] text-[#8A8A8A]">
@@ -89,6 +94,42 @@ function MessageReplies({ accepted }) {
           12/04/2024 - 11:40
         </div>
       </div>
+
+      <IonModal
+        ref={modal}
+        trigger="open-modal"
+        initialBreakpoint={0.25}
+        breakpoints={[0, 0.25, 0.5, 0.75]}
+        handleBehavior="cycle"
+      >
+        <div className="bg-[#f5f5f5] h-screen p-6">
+          <div className="flex justify-between">
+            <div className="bg-blue-200 w-[131px] h-[247px] rounded-lg"></div>
+            <div className="flex flex-col gap-5">
+              <div className="flex bg-[#32C889] gap-1 items-center rounded-md justify-center w-[60px] h-[25px]">
+                <Star className="text-white" />
+                <div className="leading-[18px] text-[15px] text-white">4.8</div>
+              </div>
+              <div className="text-purple font-bold text-[16px] leading-5 w-24">
+                AB Solicitors Ltd.
+              </div>
+              <div className="w-full bg-black h-0.5" />
+              <div className="flex gap-1">
+                <PersonIcon />
+                <div className="text-purple text-[20px] leading-[25px] font-bold">
+                  88%
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <PersonIcon />
+                <div className="text-purple text-[20px] leading-[25px] font-bold">
+                  4%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </IonModal>
     </div>
   );
 }
