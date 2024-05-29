@@ -5,6 +5,7 @@ import {
   IonPage,
   IonMenuButton,
   IonMenu,
+  IonMenuToggle,
 } from "@ionic/react";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
@@ -38,7 +39,9 @@ function Base({ children }) {
               <div className="text-[#CCCCCC] text-[20px] leading-[23px] w-24 mt-7">
                 It's that simple.
               </div>
-              <div className="text-[40px] leading-[50px] ">x</div>
+              <IonMenuToggle>
+                <div className="text-[40px] leading-[50px] ">x</div>
+              </IonMenuToggle>
             </div>
             <div className="flex gap-4 items-center">
               <div className="flex flex-col gap-5">
@@ -98,7 +101,7 @@ function Base({ children }) {
           <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
             <div className="flex flex-col gap-5">
               <div className=" flex justify-between">
-                <div onClick={() => history.push("/listing")}>
+                <div onClick={() => history.push("/")}>
                   <HomeIcon />
                 </div>
 

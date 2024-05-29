@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "680199080385",
+    "project_id": "voklizer-dev",
+    "storage_bucket": "voklizer-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680199080385:android:d2e282b64ebd58a9c60740",
+        "android_client_info": {
+          "package_name": "com.voklizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA390sWMPCaEqRg1i1t3HOZlT7gIyPtYkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

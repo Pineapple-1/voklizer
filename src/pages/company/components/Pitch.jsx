@@ -17,18 +17,53 @@ function Pitch({ location, area, audio, focus }) {
   const [replyhex, setReplyhex] = useState("");
   const history = useHistory();
 
+  const cancel = () => {
+    recordingStop();
+    setReplyhex("");
+    setIsReplying(false);
+    setIsRecording(false);
+    setisListening(false);
+  };
+
+  const PlayRecordedAudio = () => {
+    const audioRef = new Audio(`data:audio/aac;base64,${replyhex}`);
+    audioRef.oncanplaythrough = () => {
+      audioRef.play();
+    };
+    audioRef.onended = () => {
+      setisListening(false);
+    };
+  };
+
+  const ListenReply = () => {
+    if (isReplying) {
+      if (!isRecording && !replyhex) {
+        recordingStart();
+      }
+
+      if (isRecording) {
+        recordingStop();
+      }
+
+      if (!isRecording && replyhex) {
+        setisListening((isListening) => !isListening);
+
+        PlayRecordedAudio();
+      }
+    } else {
+      setisListening((isListening) => !isListening);
+    }
+  };
+
   const reply = () => {
     setisListening(false);
     setIsReplying(true);
-  };
-  const listen = () => {
-    setisListening((isListening) => !isListening);
   };
 
   const send = () => {
     history.push("/pitch-success");
   };
-  const recording = () => {
+  const recordingStart = () => {
     VoiceRecorder.requestAudioRecordingPermission()
       .then((result) => {
         console.log(result);
@@ -42,7 +77,7 @@ function Pitch({ location, area, audio, focus }) {
       .catch((error) => console.log(error));
   };
 
-  const recordStop = () => {
+  const recordingStop = () => {
     VoiceRecorder.stopRecording()
       .then((result) => {
         console.log("-->>stop", JSON.stringify(result));
@@ -135,22 +170,18 @@ function Pitch({ location, area, audio, focus }) {
                 )}
                 <div
                   className="bg-[#F6F5F6] w-[88px] h-[88px] rounded-full flex justify-center items-center m-auto relative"
-                  onClick={
-                    isReplying
-                      ? isRecording
-                        ? replyhex
-                          ? listen
-                          : recordStop
-                        : recording
-                      : listen
-                  }
+                  onClick={ListenReply}
                 >
                   {isReplying ? (
-                    <MicIcon className="text-purple" />
+                    replyhex ? (
+                      <PlayIcon />
+                    ) : (
+                      <MicIcon className="text-purple" />
+                    )
                   ) : (
                     <PlayIcon />
                   )}
-                  {isListening && (
+                  {(isListening || isRecording) && (
                     <>
                       <div className="absolute inset-1 animate-ping border border-white w-20 h-20 rounded-full " />
                       <div className="absolute inset-1 border border-white w-20 h-20 rounded-full  animate-[ping_1s_linear_infinite]" />
@@ -159,7 +190,10 @@ function Pitch({ location, area, audio, focus }) {
                 </div>
               </div>
               <div className="w-full h-8 bg-white mt-4 flex justify-between gap-7 items-center px-[14px] rounded-lg">
-                <div className="text-[#E7515B] text-[13px] leading-[16px] font-bold">
+                <div
+                  className="text-[#E7515B] text-[13px] leading-[16px] font-bold"
+                  onClick={cancel}
+                >
                   Cancel
                 </div>
                 <div

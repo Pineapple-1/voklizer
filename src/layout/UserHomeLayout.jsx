@@ -5,6 +5,7 @@ import {
   IonPage,
   IonMenuButton,
   IonMenu,
+  IonMenuToggle
 } from "@ionic/react";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
@@ -17,6 +18,7 @@ import WalletIcon from "../assets/icons/WalletIcon";
 import SupportIcon from "../assets/icons/SupportIcon";
 import SpeakerIcon from "../assets/icons/SpeakerIcon";
 import HomeIconSm from "../assets/icons/HomeIconSm";
+
 
 import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -42,7 +44,10 @@ function UserHomeLayout({ children }) {
               <div className="text-[#CCCCCC] text-[20px] leading-[23px] w-24 mt-7">
                 It's that simple.
               </div>
+              <IonMenuToggle>
               <div className="text-[40px] leading-[50px] ">x</div>
+              </IonMenuToggle>
+
             </div>
             <div className="flex gap-4 items-center">
               <div className="flex flex-col gap-5">

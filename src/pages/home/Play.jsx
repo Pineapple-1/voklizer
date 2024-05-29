@@ -7,7 +7,6 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { StatusBar, Style } from "@capacitor/status-bar";
 
-import { useIonViewWillEnter } from "@ionic/react";
 import { useEffect } from "react";
 
 function Play() {
@@ -74,7 +73,6 @@ function Play() {
   });
 
   return (
-    
     <UserHomeLayout>
       <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
         <div className="relative flex justify-center items-center">
@@ -112,24 +110,32 @@ function Play() {
 
         <div className="flex flex-col gap-3 items-center w-full">
           {!isRecording && audioHex ? (
-            <div className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
-              <button className="text-sm" onClick={() => setAudioHex("")}>
-                Cancel
-              </button>
-              <div className="h-1.5 bg-purple rounded-2xl flex-1" />
-              <button className="text-sm " onClick={SendAudio}>
-                Send
-              </button>
+            <div className="h-[40px] flex items-center justify-center w-full">
+              <div className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
+                <button className="text-sm" onClick={() => setAudioHex("")}>
+                  Cancel
+                </button>
+                <div className="h-1.5 bg-purple rounded-2xl flex-1" />
+                <button className="text-sm " onClick={SendAudio}>
+                  Send
+                </button>
+              </div>
             </div>
           ) : (
-            <img className="w-[28px] h-[33px]" src="/Stopwatch.svg" alt="" />
+            <div className="h-[40px] flex items-center justify-center w-full">
+              <img className="w-[28px] h-[33px]" src="/Stopwatch.svg" alt="" />
+            </div>
           )}
 
-          <div className="flex flex-col gap-6  justify-center ">
+          <div className="flex flex-col gap-6 justify-center">
             {isRecording || isPlaying ? (
-              <MusicBars isAnimating />
+              <div className="h-[44px] flex items-center justify-center">
+                <MusicBars isAnimating />
+              </div>
             ) : (
-              <img src="/Ripple.svg" alt="" />
+              <div className="h-[44px] flex items-center justify-center">
+                <img src="/Ripple.svg" alt="" />
+              </div>
             )}
             <div className="text-xs leading-3 text-black w-full text-center">
               Press to listen & Slide to send

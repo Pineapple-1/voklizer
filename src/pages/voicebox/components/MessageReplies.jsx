@@ -6,6 +6,9 @@ import Star from "../../../assets/icons/Star";
 import Ticks from "../../../assets/icons/Ticks";
 import { IonContent, IonModal } from "@ionic/react";
 import PersonIcon from "../../../assets/icons/PersonIcon";
+import CloseIcon from "../../../assets/icons/CloseIcon";
+import CloseBadge from "../../../assets/icons/CloseBadge";
+import PersonAlt from "../../../assets/icons/PersonAlt";
 
 function MessageReplies({ accepted, id }) {
   const [value, setValue] = useState(accepted ? 100 : 0);
@@ -98,13 +101,13 @@ function MessageReplies({ accepted, id }) {
       <IonModal
         ref={modal}
         trigger="open-modal"
-        initialBreakpoint={0.25}
+        initialBreakpoint={0.5}
         breakpoints={[0, 0.25, 0.5, 0.75]}
         handleBehavior="cycle"
       >
         <div className="bg-[#f5f5f5] h-screen p-6">
-          <div className="flex justify-between">
-            <div className="bg-blue-200 w-[131px] h-[247px] rounded-lg"></div>
+          <div className="flex gap-5">
+            <div className="bg-slate-400 w-[131px] h-[247px] rounded-lg"></div>
             <div className="flex flex-col gap-5">
               <div className="flex bg-[#32C889] gap-1 items-center rounded-md justify-center w-[60px] h-[25px]">
                 <Star className="text-white" />
@@ -115,16 +118,26 @@ function MessageReplies({ accepted, id }) {
               </div>
               <div className="w-full bg-black h-0.5" />
               <div className="flex gap-1">
-                <PersonIcon />
+                <PersonAlt/>
                 <div className="text-purple text-[20px] leading-[25px] font-bold">
                   88%
                 </div>
               </div>
               <div className="flex gap-1">
-                <PersonIcon />
+                <CloseIcon />
                 <div className="text-purple text-[20px] leading-[25px] font-bold">
                   4%
                 </div>
+              </div>
+              <div>
+                <div className="flex gap-1 items-center">
+                  <CloseBadge />
+
+                  <div className="text-purple text-[20px] leading-[25px] font-bold">
+                    500
+                  </div>
+                </div>
+                Reviews
               </div>
             </div>
           </div>

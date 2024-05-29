@@ -18,9 +18,13 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (6.0.0):
     - Capacitor
+  - CapacitorPushNotifications (6.0.0):
+    - Capacitor
   - CapacitorSplashScreen (6.0.0):
     - Capacitor
   - CapacitorStatusBar (5.0.2):
+    - Capacitor
+  - CapacitorToast (6.0.0):
     - Capacitor
   - CapacitorVoiceRecorder (5.0.0):
     - Capacitor
@@ -51,8 +55,10 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios`)"
   - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard`)"
+  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../node_modules/.pnpm/@capacitor+splash-screen@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/status-bar`)"
+  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/toast`)"
   - "CapacitorVoiceRecorder (from `../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.5/node_modules/capacitor-voice-recorder`)"
   - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.5/node_modules/@codetrix-studio/capacitor-google-auth`)"
 
@@ -80,10 +86,14 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+haptics@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/haptics"
   CapacitorKeyboard:
     :path: "../../node_modules/.pnpm/@capacitor+keyboard@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard"
+  CapacitorPushNotifications:
+    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
     :path: "../../node_modules/.pnpm/@capacitor+splash-screen@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../node_modules/.pnpm/@capacitor+status-bar@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/status-bar"
+  CapacitorToast:
+    :path: "../../node_modules/.pnpm/@capacitor+toast@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/toast"
   CapacitorVoiceRecorder:
     :path: "../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.5/node_modules/capacitor-voice-recorder"
   CodetrixStudioCapacitorGoogleAuth:
@@ -97,8 +107,10 @@ SPEC CHECKSUMS:
   CapacitorCordova: c946a6052b547e1e185fc46862003f7b9130ead1
   CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
   CapacitorKeyboard: deacbd09d8d1029c3681197fb05d206b721d5f73
+  CapacitorPushNotifications: e18636e8a96f1d70b4c669e21c730e995bf5e5c9
   CapacitorSplashScreen: 5431ab8d19c1c6e95777d53bfaa7a36a6c3d94c7
   CapacitorStatusBar: 48f2899f6846cc7d8431b251ebfc58e1c10e3d58
+  CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
   CapacitorVoiceRecorder: 872ea857b497ce2c71afe3e4eb5de0a74290c0db
   CodetrixStudioCapacitorGoogleAuth: fcce058390347c1ce5d8ac4764bdf1f5c1ee233b
   FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
@@ -109,6 +121,6 @@ SPEC CHECKSUMS:
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
 
-PODFILE CHECKSUM: bfe57c2f1c6123932c7c196084c489f4ea057a17
+PODFILE CHECKSUM: 4c65b40661c4b5f56296c1f48d3842d4ed6705bc
 
 COCOAPODS: 1.15.2
