@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import Base from "../../layout/Base";
 import Message from "./components/Message";
 import MessageReplies from "./components/MessageReplies";

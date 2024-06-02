@@ -15,7 +15,7 @@ function Locale() {
 
   const onSubmit = (data) => {
     console.log(data);
-    history.replace("/");
+    history.replace("/play");
   };
 
   const language = [
@@ -86,7 +86,7 @@ function Locale() {
         <button
           className="bg-[#D9D9D960]  flex justify-between items-center rounded-xl py-[9px] px-3"
           // type="submit"
-          onClick={() => history.replace("/")}
+          onClick={() => history.replace("/play")}
         >
           <div className="h-1.5 w-1/2 bg-purple rounded-2xl"></div>
           <div className="text-sm">Done</div>

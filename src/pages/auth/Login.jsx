@@ -2,6 +2,11 @@ import React from "react";
 import Socials from "./components/Socials";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import Instance from "../../axios/Axios";
+
+import { storage } from "../../storage";
+import {tokenSubject$} from './TokenState'
+
 
 import AuthLayout from "./AuthLayout";
 
@@ -15,7 +20,13 @@ function Login() {
 
   const onSubmit = (data) => {
     console.log(data);
-    history.push("/locale");
+
+    Instance.post("auth/login/", data).then((res) => {
+      console.log('-->>res',res)
+      tokenSubject$.next(res.data.data.token);
+      storage.set("token", res.data.data.token);
+      history.push("/locale");
+    });
   };
 
   return (

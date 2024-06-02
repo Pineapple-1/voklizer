@@ -2,7 +2,9 @@ import React from "react";
 import Socials from "./components/Socials";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import Instance from "../../axios/Axios";
 
+import { storage } from "../../storage";
 import AuthLayout from "./AuthLayout";
 
 function Register() {
@@ -15,9 +17,15 @@ function Register() {
   const history = useHistory();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const { confirmPassword, ...restOfData } = data;
 
-    history.push("/selection");
+    Instance.post("auth/register/", { ...restOfData, role: "user" }).then(
+      (res) => {
+        console.log("----->>>", res);
+        storage.set("token", res.data.data.token);
+        history.push("/");
+      }
+    );
   };
   const password = watch("password");
 
@@ -77,7 +85,7 @@ function Register() {
                 {...register("mobileNumber", {
                   required: "Required eg: +92-3244272485",
                   pattern: {
-                    value: /^\d{11}$/,
+                    value: /^\d{12}$/,
                     message: "Invalid Mobile Number",
                   },
                 })}

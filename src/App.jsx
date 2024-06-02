@@ -7,7 +7,7 @@ import {
   useIonViewWillEnter,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
 import {
   Play,
@@ -48,14 +48,19 @@ setupIonicReact();
 
 import "./App.css";
 
-function App() {
+function App({ token }) {
   useIonViewWillEnter(() => {
     StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({ color: "#FFFFFF" });
+    StatusBar.setBackgroundColor({ color: "#F5F5F5" });
   });
+
+  const setStatusBarStyleLight = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+    await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+  };
+
   useEffect(() => {
-    StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({ color: "#FFFFFF" });
+    setStatusBarStyleLight();
   });
 
   const nullEntry = [];
@@ -76,7 +81,7 @@ function App() {
         register();
       }
     });
-  },[]);
+  }, []);
 
   const register = () => {
     console.log("Initializing HomePage");
@@ -84,7 +89,7 @@ function App() {
     PushNotifications.register();
 
     PushNotifications.addListener("registration", (token) => {
-      console.log("---->>>> Push registration success",JSON.stringify(token));
+      console.log("---->>>> Push registration success", JSON.stringify(token));
     });
 
     PushNotifications.addListener("registrationError", (error) => {
@@ -122,8 +127,6 @@ function App() {
     );
   };
 
-
-
   return (
     <>
       <IonApp>
@@ -159,6 +162,12 @@ function App() {
               </Route>
 
               <Route exact path="/">
+                {console.log('--->>>',token)}
+                {!token && <Redirect to="/login" />}
+                {token && <Redirect to="/play" />}
+              </Route>
+
+              <Route exact path="/play">
                 <Play />
               </Route>
 

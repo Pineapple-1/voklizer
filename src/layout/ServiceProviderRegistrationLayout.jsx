@@ -13,7 +13,7 @@ function ServiceProviderRegistrationLayout({ children }) {
 
   useIonViewWillEnter(() => {
     StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({ color: "#F5F5F550" });
+    StatusBar.setBackgroundColor({ color: "#F5F5F5" });
   });
 
   return (

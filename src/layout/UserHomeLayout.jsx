@@ -28,7 +28,7 @@ function UserHomeLayout({ children }) {
 
   const setStatusBarStyleLight = async () => {
     await StatusBar.setStyle({ style: Style.Light });
-    await StatusBar.setBackgroundColor({ color: "#FFFFFF" });
+    await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
   };
 
   useIonViewWillEnter(() => {

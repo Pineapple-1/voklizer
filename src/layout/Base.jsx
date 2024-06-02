@@ -27,7 +27,7 @@ function Base({ children }) {
 
   useIonViewWillEnter(() => {
     StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({ color: "#FFFFFF" });
+    StatusBar.setBackgroundColor({ color: "#F5F5F5" });
   });
 
   return (
