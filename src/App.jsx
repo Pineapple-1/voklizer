@@ -1,7 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import {
   IonApp,
-  IonPage,
   IonRouterOutlet,
   setupIonicReact,
   useIonViewWillEnter,
@@ -21,6 +20,7 @@ import {
   QueryListing,
   Replies,
   PitchSuccess,
+  VokDiary,
 } from "./routes";
 import { ServiceProviderCompanyUser } from "./routes";
 import { ServiceProviderCompanyRegistrationNumber } from "./routes";
@@ -162,7 +162,6 @@ function App({ token }) {
               </Route>
 
               <Route exact path="/">
-                {console.log('--->>>',token)}
                 {!token && <Redirect to="/login" />}
                 {token && <Redirect to="/play" />}
               </Route>
@@ -201,6 +200,10 @@ function App({ token }) {
               </Route>
               <Route exact path="/replies">
                 <Replies />
+              </Route>
+
+              <Route exact path="/diary">
+                <VokDiary />
               </Route>
             </IonRouterOutlet>
           </IonReactRouter>
