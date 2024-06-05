@@ -5,7 +5,7 @@ import {
   IonPage,
   IonMenuButton,
   IonMenu,
-  IonMenuToggle
+  IonMenuToggle,
 } from "@ionic/react";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
@@ -18,7 +18,6 @@ import WalletIcon from "../assets/icons/WalletIcon";
 import SupportIcon from "../assets/icons/SupportIcon";
 import SpeakerIcon from "../assets/icons/SpeakerIcon";
 import HomeIconSm from "../assets/icons/HomeIconSm";
-
 
 import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -45,9 +44,8 @@ function UserHomeLayout({ children }) {
                 It's that simple.
               </div>
               <IonMenuToggle>
-              <div className="text-[40px] leading-[50px] ">x</div>
+                <div className="text-[40px] leading-[50px] ">x</div>
               </IonMenuToggle>
-
             </div>
             <div className="flex gap-4 items-center">
               <div className="flex flex-col gap-5">
@@ -98,6 +96,12 @@ function UserHomeLayout({ children }) {
             >
               Listings
             </div>
+            <div
+              className="text-[20px] leading-6 text-[#000] font-semibold"
+              onClick={() => history.push("/diary")}
+            >
+              Diary
+            </div>
           </div>
         </div>
       </IonMenu>
@@ -112,9 +116,9 @@ function UserHomeLayout({ children }) {
                 </div>
 
                 <div>
-                  <IonMenuButton>
+                  <IonMenuToggle autoHide={false}>
                     <BurgerIcon />
-                  </IonMenuButton>
+                  </IonMenuToggle>
                 </div>
               </div>
               <div className="flex flex-col gap-3 mt-5">

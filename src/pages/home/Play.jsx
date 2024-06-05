@@ -92,7 +92,6 @@ function Play() {
   return (
     <UserHomeLayout>
       <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
-        <button onClick={SendAudio}>Api test</button>
         <div className="relative flex justify-center items-center">
           {isRecording && (
             <>

@@ -92,23 +92,29 @@ function Base({ children }) {
             >
               Listings
             </div>
+            <div
+              className="text-[20px] leading-6 text-[#000] font-semibold"
+              onClick={() => history.push("/diary")}
+            >
+              Diary
+            </div>
           </div>
         </div>
       </IonMenu>
 
-      <IonPage>
+      <IonPage id="main-content">
         <IonContent>
           <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
             <div className="flex flex-col gap-5">
-              <div className=" flex justify-between">
+              <div className=" flex justify-between items-center">
                 <div onClick={() => history.push("/")}>
                   <HomeIcon />
                 </div>
 
-                <div className="">
-                  <IonMenuButton>
+                <div>
+                  <IonMenuToggle autoHide={false}>
                     <BurgerIcon />
-                  </IonMenuButton>
+                  </IonMenuToggle>
                 </div>
               </div>
 

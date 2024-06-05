@@ -13,6 +13,32 @@ import PersonAlt from "../../../assets/icons/PersonAlt";
 function MessageReplies({ accepted, id }) {
   const [value, setValue] = useState(accepted ? 100 : 0);
   const modal = useRef();
+  const data = [
+    {
+      name: "Immigration",
+      price: "£2000",
+    },
+    {
+      name: "Property",
+      price: "£3000",
+    },
+    {
+      name: "Personal Injury",
+      price: "£500",
+    },
+    {
+      name: "Criminal Law",
+      price: "£2000",
+    },
+    {
+      name: "Family Law",
+      price: "£5000",
+    },
+    {
+      name: "Property Law",
+      price: "£2000",
+    },
+  ];
 
   return (
     <div className={clsx("flex flex-col gap-3", value === 100 && "mr-6")}>
@@ -101,47 +127,94 @@ function MessageReplies({ accepted, id }) {
       <IonModal
         ref={modal}
         trigger="open-modal"
-        initialBreakpoint={0.5}
-        breakpoints={[0, 0.25, 0.5, 0.75]}
+        initialBreakpoint={1}
+        breakpoints={[0, 0.25, 0.5, 0.75, 1]}
         handleBehavior="cycle"
       >
-        <div className="bg-[#f5f5f5] h-screen p-6">
-          <div className="flex gap-5">
-            <div className="bg-slate-400 w-[131px] h-[247px] rounded-lg"></div>
-            <div className="flex flex-col gap-5">
-              <div className="flex bg-[#32C889] gap-1 items-center rounded-md justify-center w-[60px] h-[25px]">
-                <Star className="text-white" />
-                <div className="leading-[18px] text-[15px] text-white">4.8</div>
-              </div>
-              <div className="text-purple font-bold text-[16px] leading-5 w-24">
-                AB Solicitors Ltd.
-              </div>
-              <div className="w-full bg-black h-0.5" />
-              <div className="flex gap-1">
-                <PersonAlt/>
-                <div className="text-purple text-[20px] leading-[25px] font-bold">
-                  88%
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <CloseIcon />
-                <div className="text-purple text-[20px] leading-[25px] font-bold">
-                  4%
-                </div>
-              </div>
-              <div>
-                <div className="flex gap-1 items-center">
-                  <CloseBadge />
-
-                  <div className="text-purple text-[20px] leading-[25px] font-bold">
-                    500
+        <IonContent>
+          <div className="flex flex-col gap-5 bg-[#f5f5f5] h-screen p-6">
+            <div className="flex gap-5 w-full">
+              <div className="bg-slate-400 w-full max-w-[180px] rounded-lg"></div>
+              <div className="flex flex-col gap-5">
+                <div className="flex bg-[#32C889] gap-1 items-center rounded-md justify-center w-[60px] h-[25px]">
+                  <Star className="text-white" />
+                  <div className="leading-[18px] text-[15px] text-white">
+                    4.8
                   </div>
                 </div>
-                Reviews
+                <div className="text-purple font-bold text-[16px] leading-5 w-24">
+                  AB Solicitors Ltd.
+                </div>
+                <div className="w-full bg-black h-0.5" />
+                <div className="flex gap-1">
+                  <PersonAlt />
+                  <div className="text-purple text-[20px] leading-[25px] font-bold">
+                    88%
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  <CloseIcon />
+                  <div className="text-purple text-[20px] leading-[25px] font-bold">
+                    4%
+                  </div>
+                </div>
+                <div>
+                  <div className="flex gap-1 items-center">
+                    <CloseBadge />
+
+                    <div className="text-purple text-[20px] leading-[25px] font-bold">
+                      500
+                    </div>
+                  </div>
+                  Reviews
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <div className="text-[#B2B2B2] text-[14px] leading-[18px]">
+                Preferred Language/s
+              </div>
+              <div className="flex gap-2">
+                <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
+                  English
+                </div>
+                <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
+                  Urdu
+                </div>
+                <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
+                  Spanish
+                </div>
+                <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
+                  French
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <div className="text-[#B2B2B2] text-[14px] leading-[18px]">
+                Areas of Expertise
+              </div>
+              {data.map((item) => (
+                <div className="flex gap-1" onClick={() => setSelected(item)}>
+                  <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
+                    {item.name}
+                  </div>
+                  <div className="bg-[#C9C9C9] px-3 py-0.5 text-p1 text-black w-max rounded-[14px] cursor-pointer">
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col gap-3">
+              <div className="text-[#B2B2B2] text-[14px] leading-[18px]">
+                Website
+              </div>
+              <div className="text-[13px] leading-4">
+                www.absolicitors.co.uk
               </div>
             </div>
           </div>
-        </div>
+        </IonContent>
       </IonModal>
     </div>
   );

@@ -4,7 +4,6 @@ import {
   useIonViewWillEnter,
   IonContent,
   IonPage,
-  IonMenuButton,
   IonMenu,
   IonMenuToggle,
 } from "@ionic/react";
@@ -24,6 +23,7 @@ import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
 
 import Calender from "./components/Calender";
+import MeetingInfo from "./components/MeetingInfo";
 
 function VokDairy() {
   const [date, setDate] = useState(new Date());
@@ -96,29 +96,34 @@ function VokDairy() {
             >
               Listings
             </div>
+            <div
+              className="text-[20px] leading-6 text-[#000] font-semibold"
+              onClick={() => history.push("/diary")}
+            >
+              Diary
+            </div>
           </div>
         </div>
       </IonMenu>
 
-      <IonPage>
+      <IonPage id="main-content">
         <IonContent>
-          <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
+          <div className="h-full bg-gray/50 py-10 flex flex-col">
             <div className="flex flex-col gap-5">
-              <div className=" flex justify-between">
+              <div className=" flex justify-between px-6 ">
                 <div onClick={() => history.push("/")}>
                   <HomeIcon />
                 </div>
-
-                <div className="">
-                  <IonMenuButton>
+                <div>
+                  <IonMenuToggle autoHide={false}>
                     <BurgerIcon />
-                  </IonMenuButton>
+                  </IonMenuToggle>
                 </div>
               </div>
 
               <div className="h-max flex flex-1 flex-col">
                 <div className="flex flex-col gap-5">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center px-6 ">
                     <div className="flex flex-col gap-2 relative">
                       <div className="text-[13px] leading-[16px] text-[#030303]">
                         Calendar View
@@ -137,6 +142,9 @@ function VokDairy() {
                     </div>
                   </div>
                   <Calender mode="single" selected={date} onSelect={setDate} />
+                  <MeetingInfo/>
+                  <MeetingInfo/>
+
                 </div>
               </div>
             </div>
