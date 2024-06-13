@@ -80,29 +80,3 @@ ion-header {
   box-shadow: none;
   background-size: cover;
 }
-
-ion-menu::part(backdrop) {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-ion-menu::part(container) {
-  border-radius: 0 0 0 0;
-
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-}
-
-ion-menu-button {
-  --border-radius: 0 0 0 0;
-  --padding: 0;
-  --background-hover: #0000000;
-}
-
-ion-menu-button {
-  --border-radius: 0 0 0 0;
-  --padding: 0;
-  --background-hover: #0000000;
-}
-
-
-
-

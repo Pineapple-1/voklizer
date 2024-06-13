@@ -1,22 +1,18 @@
 import UserHomeLayout from "../../layout/UserHomeLayout";
 import MusicBars from "../../components/MusicBars";
+import { motion } from "framer-motion";
 
 import { VoiceRecorder } from "capacitor-voice-recorder";
 
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import { StatusBar, Style } from "@capacitor/status-bar";
 import Instance from "../../axios/Axios";
-
-import { useEffect } from "react";
 
 function Play() {
   const [isRecording, setIsRecording] = useState(false);
   const [audioHex, setAudioHex] = useState(null);
 
-  const [isPlaying, setIsPlaying] = useState("");
-
-  const [file, setFile] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const history = useHistory();
 
@@ -43,19 +39,13 @@ function Play() {
       audioHex: audioHex.recordDataBase64,
     })
       .then((res) => {
-        console.log("res -->>", JSON.stringify(res));
+        setAudioHex(null);
         history.push("/send-success");
       })
       .catch((e) => console.log("errors", JSON.stringify(e)));
   };
 
   const RecordStart = () => {
-    VoiceRecorder.requestAudioRecordingPermission()
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => console.log(error));
-
     VoiceRecorder.startRecording()
       .then((result) => {
         console.log("-->>start", JSON.stringify(result));
@@ -83,11 +73,6 @@ function Play() {
       RecordStart();
     }
   };
-
-  // useEffect(() => {
-  //   StatusBar.setStyle({ style: Style.Light });
-  //   StatusBar.setBackgroundColor({ color: "#F5F5F5" });
-  // });
 
   return (
     <UserHomeLayout>
@@ -127,20 +112,38 @@ function Play() {
 
         <div className="flex flex-col gap-3 items-center w-full">
           {!isRecording && audioHex ? (
-            <div className="h-[40px] flex items-center justify-center w-full">
-              <div className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
-                <button className="text-sm" onClick={() => setAudioHex(null)}>
-                  Cancel
-                </button>
-                <div className="h-1.5 bg-purple rounded-2xl flex-1" />
-                <button className="text-sm " onClick={SendAudio}>
-                  Send
-                </button>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="w-full"
+            >
+              <div className="h-[40px] flex items-center justify-center w-full">
+                <div className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
+                  <button className="text-sm" onClick={() => setAudioHex(null)}>
+                    Cancel
+                  </button>
+                  <div className="h-1.5 bg-purple rounded-2xl flex-1" />
+                  <button className="text-sm " onClick={SendAudio}>
+                    Send
+                  </button>
+                </div>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <div className="h-[40px] flex items-center justify-center w-full">
-              <img className="w-[28px] h-[33px]" src="/Stopwatch.svg" alt="" />
+            <div className="h-[40px]  w-full">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                className="w-full flex items-center justify-center "
+              >
+                <img
+                  className="w-[28px] h-[33px]"
+                  src="/Stopwatch.svg"
+                  alt=""
+                />
+              </motion.div>
             </div>
           )}
 

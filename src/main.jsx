@@ -8,6 +8,7 @@ import { storage } from "./storage";
 
 async function setup() {
   await storage.create();
+
   const [token] = await Promise.all([storage.get("token")]);
 
   const App = await import("./App").then((e) => e.default);

@@ -9,7 +9,7 @@ import { useState } from "react";
 import { VoiceRecorder } from "capacitor-voice-recorder";
 import { useHistory } from "react-router-dom";
 
-function Pitch({ location, area, audio, focus }) {
+function Pitch({ location, area, audio, focus, url }) {
   const [open, setOpen] = useState(focus ? true : false);
   const [isReplying, setIsReplying] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -35,7 +35,7 @@ function Pitch({ location, area, audio, focus }) {
     };
   };
 
-  const ListenReply = () => {
+  const ListenReply = async () => {
     if (isReplying) {
       if (!isRecording && !replyhex) {
         recordingStart();
@@ -52,6 +52,12 @@ function Pitch({ location, area, audio, focus }) {
       }
     } else {
       setisListening((isListening) => !isListening);
+      console.log("listning", url);
+
+      const audio = new Audio(
+        `https://storage.googleapis.com/voklizer-dev/${url}`
+      );
+      audio.play();
     }
   };
 

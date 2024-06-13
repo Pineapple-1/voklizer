@@ -33,6 +33,7 @@ import { ServiceProviderCompanyPracticeArea } from "./routes";
 import { Selection } from "./routes";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { PushNotifications } from "@capacitor/push-notifications";
+import { VoiceRecorder } from "capacitor-voice-recorder";
 
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/display.css";
@@ -44,29 +45,56 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
-setupIonicReact();
+setupIonicReact({
+  platform: {
+    /** The default `desktop` function returns false for devices with a touchscreen.
+     * This is not always wanted, so this function tests the User Agent instead.
+     **/
+    desktop: (win) => {
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          win.navigator.userAgent
+        );
+      return !isMobile;
+    },
+  },
+});
 
 import "./App.css";
 
 function App({ token }) {
-  useIonViewWillEnter(() => {
-    StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+  useEffect(() => {
+    const setStatusBarStyleLight = async () => {
+      await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+      await StatusBar.setStyle({ style: Style.Light });
+    };
+
+    setStatusBarStyleLight();
   });
 
-  const setStatusBarStyleLight = async () => {
-    await StatusBar.setStyle({ style: Style.Light });
-    await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
-  };
+  useIonViewWillEnter(() => {
+    const setStatusBarColor = async () => {
+      try {
+        await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+        await StatusBar.setStyle({ style: Style.Light });
+      } catch (error) {
+        console.error("Failed to set status bar color", error);
+      }
+    };
 
-  useEffect(() => {
-    setStatusBarStyleLight();
+    setStatusBarColor();
   });
 
   const nullEntry = [];
   const [notifications, setnotifications] = useState(nullEntry);
 
   useEffect(() => {
+    VoiceRecorder.requestAudioRecordingPermission()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => console.log(error));
+
     PushNotifications.checkPermissions().then((res) => {
       if (res.receive !== "granted") {
         PushNotifications.requestPermissions().then((res) => {

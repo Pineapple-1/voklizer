@@ -1,18 +1,34 @@
 import React from "react";
-import Base from "../../layout/Base";
+import UserHomeLayout from "../../layout/UserHomeLayout";
 
 import Pitch from "./components/Pitch";
+import useSwr from "swr";
 
 function QueryListing() {
+  const { data, isLoading } = useSwr("user-jobs?page=1&limit=5");
+
+  console.log(data);
+
   return (
-    <Base>
-      <div className="flex flex-col gap-6">
-        <Pitch location={"Lahore"} area={"Medical"} focus />
-        <Pitch location={"Islamabad"} area={"Property"} />
-        <Pitch location={"Karachi"} area={"Defamation"} />
-        <Pitch location={"Peshawar"} area={"Immigration"} />
+    <UserHomeLayout>
+      <div className="flex flex-col items-center h-full justify-end gap-6 my-6">
+        {!isLoading ? (
+          data.jobs.map((item, index) => (
+            <Pitch
+              location={"Lahore"}
+              area={"Medical"}
+              focus={index === 0 ? true : false}
+              url = {item.messageLink}
+            />
+          ))
+        ) : (
+          <div className="flex flex-col gap-8 w-full">
+            <div className="w-full h-[200px]  bg-[#c0c0c0]  rounded-xl animate-pulse"></div>
+            <div className="w-full h-[200px]  bg-[#c0c0c0]  rounded-xl animate-pulse"></div>
+          </div>
+        )}
       </div>
-    </Base>
+    </UserHomeLayout>
   );
 }
 

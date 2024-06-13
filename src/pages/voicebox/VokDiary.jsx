@@ -142,9 +142,8 @@ function VokDairy() {
                     </div>
                   </div>
                   <Calender mode="single" selected={date} onSelect={setDate} />
-                  <MeetingInfo/>
-                  <MeetingInfo/>
-
+                  <MeetingInfo />
+                  <MeetingInfo />
                 </div>
               </div>
             </div>

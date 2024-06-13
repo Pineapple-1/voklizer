@@ -1,7 +1,14 @@
 import React from "react";
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 function AuthLayout({ children }) {
+
+  useIonViewWillEnter(() => {
+    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+  });
+  
   return (
     <IonPage>
       <IonContent>

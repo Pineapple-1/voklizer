@@ -10,12 +10,15 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 
 function ServiceProviderRegistrationLayout({ children }) {
   const history = useHistory();
+  
+  const setStatusBarStyleLight = async () => {
+    await StatusBar.setStyle({ style: Style.Light });
+    await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+  };
 
   useIonViewWillEnter(() => {
-    StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+    setStatusBarStyleLight();
   });
-
   return (
     <IonPage>
       <IonContent>

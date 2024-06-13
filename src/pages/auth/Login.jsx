@@ -5,10 +5,11 @@ import { useHistory } from "react-router-dom";
 import Instance from "../../axios/Axios";
 
 import { storage } from "../../storage";
-import {tokenSubject$} from './TokenState'
-
+import { tokenSubject$ } from "./TokenState";
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 import AuthLayout from "./AuthLayout";
+import { useEffect } from "react";
 
 function Login() {
   const {
@@ -22,12 +23,21 @@ function Login() {
     console.log(data);
 
     Instance.post("auth/login/", data).then((res) => {
-      console.log('-->>res',res)
-      tokenSubject$.next(res.data.data.token);
-      storage.set("token", res.data.data.token);
+      console.log("-->>res", JSON.stringify(res));
+      tokenSubject$.next(res.data.token);
+      storage.set("token", res.data.token);
       history.push("/locale");
     });
   };
+
+  useEffect(() => {
+    const setStatusBarStyleLight = async () => {
+      await StatusBar.setStyle({ style: Style.Light });
+      await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+    };
+
+    setStatusBarStyleLight();
+  });
 
   return (
     <AuthLayout>
