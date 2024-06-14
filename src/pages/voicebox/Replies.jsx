@@ -4,6 +4,7 @@ import Message from "./components/Message";
 import MessageReplies from "./components/MessageReplies";
 
 function Replies() {
+
   return (
     <Base>
       <div className="flex flex-col gap-10">
