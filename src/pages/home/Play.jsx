@@ -1,51 +1,73 @@
 import UserHomeLayout from "../../layout/UserHomeLayout";
-import MusicBars from "../../components/MusicBars";
+import { MusicBars } from "../../components/MusicBars";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 import { VoiceRecorder } from "capacitor-voice-recorder";
 
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import Instance from "../../axios/Axios";
+import Loading from "../../components/Loading";
 
 function Play() {
   const [isRecording, setIsRecording] = useState(false);
   const [audioHex, setAudioHex] = useState(null);
-
+  const [jobPosting, setJobPosting] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   const history = useHistory();
 
+  const cancelAudio = () => {
+    setAudioHex(null);
+    setIsPlaying(false);
+    audioRef.current.pause();
+    audioRef.current = null;
+  };
+
   const PlayAudio = () => {
-    const audioRef = new Audio(
-      `data:${audioHex.mimeType};base64,${audioHex.recordDataBase64}`
-    );
-    audioRef.oncanplaythrough = () => {
-      console.log("in play through");
-      setIsPlaying(true);
-      audioRef.play();
-    };
+    if (!isPlaying) {
+      audioRef.current = new Audio(
+        `data:${audioHex.mimeType};base64,${audioHex.recordDataBase64}`
+      );
+      audioRef.current.oncanplaythrough = () => {
+        console.log("in play through");
+        setIsPlaying(true);
+        audioRef.current.play();
+      };
 
-    audioRef.onended = () => {
-      setIsPlaying(false);
-    };
+      audioRef.current.onended = () => {
+        setIsPlaying(false);
+      };
 
-    audioRef.load();
+      audioRef.current.load();
+    }
   };
 
   const SendAudio = () => {
+    setJobPosting(true);
+
     Instance.post("/add-job", {
       audioType: audioHex.mimeType,
       audioHex: audioHex.recordDataBase64,
     })
       .then((res) => {
         setAudioHex(null);
+        setIsPlaying(false);
+        audioRef.current = null;
+        setJobPosting(false);
         history.push("/send-success");
       })
       .catch((e) => console.log("errors", JSON.stringify(e)));
   };
 
   const RecordStart = () => {
+    // VoiceRecorder.requestAudioRecordingPermission()
+    // .then((result) => {
+
+    // })
+    // .catch((error) => console.log(error));
     VoiceRecorder.startRecording()
       .then((result) => {
         console.log("-->>start", JSON.stringify(result));
@@ -57,13 +79,13 @@ function Play() {
   const RecordStop = () => {
     VoiceRecorder.stopRecording()
       .then((result) => {
-        console.log("-->>stop", JSON.stringify(result));
-
         setAudioHex(result.value);
-        console.log("-->>>", result.value.mimeType);
         setIsRecording(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setIsRecording(false);
+        console.log("-->>>", error);
+      });
   };
 
   const toggleRecording = () => {
@@ -74,20 +96,21 @@ function Play() {
     }
   };
 
+  console.log("-->>", isRecording, isPlaying);
   return (
     <UserHomeLayout>
       <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
         <div className="relative flex justify-center items-center">
-          {isRecording && (
+          {(isRecording || isPlaying) && (
             <>
               <div
                 className={
-                  "absolute -inset-4 animate-ping border border-purple w-40 h-40 rounded-full -z-10 "
+                  "absolute inset-x-0  animate-ping border-[1.5px] border-purple w-32 h-32 rounded-full -z-10 "
                 }
               />
               <div
                 className={
-                  "absolute -inset-4 border border-purple w-40 h-40 rounded-full -z-10  animate-[ping_1s_linear_infinite]"
+                  "absolute inset-x-0 border-[1.5px] border-purple w-32 h-32 rounded-full -z-10  animate-[ping_1s_linear_infinite]"
                 }
               />
             </>
@@ -120,7 +143,7 @@ function Play() {
             >
               <div className="h-[40px] flex items-center justify-center w-full">
                 <div className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
-                  <button className="text-sm" onClick={() => setAudioHex(null)}>
+                  <button className="text-sm" onClick={cancelAudio}>
                     Cancel
                   </button>
                   <div className="h-1.5 bg-purple rounded-2xl flex-1" />
@@ -146,6 +169,7 @@ function Play() {
               </motion.div>
             </div>
           )}
+          <Loading open={jobPosting} message={"Transmitting"} />
 
           <div className="flex flex-col gap-6 justify-center">
             {isRecording || isPlaying ? (

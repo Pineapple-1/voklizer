@@ -21,7 +21,7 @@ async function setup() {
       <SWRConfig
         value={{
           fetcher: (res) => Instance.get(res).then((r) => r.data),
-          focusThrottleInterval: 30000,
+          focusThrottleInterval: 3000,
         }}
       >
         <GoogleOAuthProvider clientId="916564216176-6jdbhubb15qpc588lg9a1e0lflga6ghg.apps.googleusercontent.com">

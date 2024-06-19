@@ -18,7 +18,8 @@ function QueryListing() {
               location={"Lahore"}
               area={"Medical"}
               focus={index === 0 ? true : false}
-              url = {item.messageLink}
+              url={item.messageLink}
+              jobId={item.id}
             />
           ))
         ) : (

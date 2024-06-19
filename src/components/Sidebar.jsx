@@ -59,13 +59,17 @@ function Sidebar({ open, setOpen }) {
                       className="text-[20px] leading-6 text-[#000] font-semibold"
                       onClick={() => {
                         history.push("/");
+                        setOpen(false);
                       }}
                     >
                       Home
                     </div>
                     <div
                       className="text-[20px] leading-6 text-[#000] font-semibold"
-                      onClick={() => history.push("/replies")}
+                      onClick={() => {
+                        history.push("/replies");
+                        setOpen(false);
+                      }}
                     >
                       Voice Box
                     </div>
@@ -85,19 +89,28 @@ function Sidebar({ open, setOpen }) {
                 </div>
                 <div
                   className="text-[20px] leading-6 text-[#000] font-semibold"
-                  onClick={() => history.push("/login")}
+                  onClick={() => {
+                    history.push("/login");
+                    setOpen(false);
+                  }}
                 >
                   Logout
                 </div>
                 <div
                   className="text-[20px] leading-6 text-[#000] font-semibold"
-                  onClick={() => history.push("/listing")}
+                  onClick={() => {
+                    history.push("/listing");
+                    setOpen(false);
+                  }}
                 >
                   Listings
                 </div>
                 <div
                   className="text-[20px] leading-6 text-[#000] font-semibold"
-                  onClick={() => history.push("/diary")}
+                  onClick={() => {
+                    history.push("/diary");
+                    setOpen(false);
+                  }}
                 >
                   Diary
                 </div>

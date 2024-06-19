@@ -1,15 +1,35 @@
-import React from "react";
 import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
+import { storage } from "../../storage";
+import Instance from "../../axios/Axios";
+
+import { useAtomValue } from "jotai";
+import { userAtom } from "../../state";
+import Loading from "../../components/Loading";
+import { useState } from "react";
 
 function Selection() {
   const history = useHistory();
+  const user = useAtomValue(userAtom);
+  const [creatingUser, setCreatingUser] = useState(false);
 
   useIonViewWillEnter(() => {
     StatusBar.setStyle({ style: Style.Dark });
     StatusBar.setBackgroundColor({ color: "#8532D8" });
   });
+
+  const register = (role) => {
+    setCreatingUser(true);
+    Instance.post("auth/register/", { ...user, role: role })
+      .then((res) => {
+        storage.set("token", res.data.data.token);
+        role === "user" ? history.push("/play") : history.push("/company-reg");
+      })
+      .finally(() => {
+        setCreatingUser(false);
+      });
+  };
 
   return (
     <IonPage>
@@ -24,7 +44,7 @@ function Selection() {
               <div className=" text-white text-sm">Need a service?</div>
               <button
                 className="bg-[#fff] rounded-xl flex justify-between items-center py-[9px] px-3 w-full"
-                onClick={() => history.push("/login")}
+                onClick={() => register("user")}
               >
                 <div className="h-1.5 w-1/2 bg-purple rounded-2xl"></div>
                 <div className="text-sm">Yes</div>
@@ -35,7 +55,7 @@ function Selection() {
 
               <button
                 className="bg-[#000] rounded-xl flex justify-between items-center py-[9px] px-3 w-full"
-                onClick={() => history.push("/company-reg")}
+                onClick={() => register("serviceProvider")}
               >
                 <div className="h-1.5 w-1/2 bg-white rounded-2xl"></div>
                 <div className="text-sm text-white">Yes</div>
@@ -48,6 +68,7 @@ function Selection() {
             alt=""
           />
         </div>
+        <Loading open={creatingUser} message={"Signing Up"} />
       </IonContent>
     </IonPage>
   );

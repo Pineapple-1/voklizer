@@ -5,6 +5,23 @@ import Textbox from "../components/Textbox";
 import { useHistory } from "react-router-dom";
 import FakeSelect from "../components/FakeSelect";
 
+export function ServiceProviderPreferredLanguage() {
+  const history = useHistory();
+
+  return (
+    <ServiceProviderRegistrationLayout>
+      <div className="flex flex-col gap-9">
+        <Textbox label={"Preferred Language/s"} />
+        <div className="flex justify-end">
+          <ChipButton onClick={() => history.push("/user-name")}>
+            Next
+          </ChipButton>
+        </div>
+      </div>
+    </ServiceProviderRegistrationLayout>
+  );
+}
+
 export function ServiceProviderCompanyName() {
   const history = useHistory();
 
@@ -12,7 +29,7 @@ export function ServiceProviderCompanyName() {
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
         <Textbox label={"Company Name"} />
-        <div className="flex justify-end">
+        <div className="flex justify-between">
           <ChipButton onClick={() => history.push("/user-name")}>
             Next
           </ChipButton>

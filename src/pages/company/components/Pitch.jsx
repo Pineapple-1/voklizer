@@ -8,18 +8,19 @@ import clsx from "clsx";
 import { useState } from "react";
 import { VoiceRecorder } from "capacitor-voice-recorder";
 import { useHistory } from "react-router-dom";
+import Instance from "../../../axios/Axios";
 
-function Pitch({ location, area, audio, focus, url }) {
+function Pitch({ location, area, focus, url, jobId }) {
   const [open, setOpen] = useState(focus ? true : false);
   const [isReplying, setIsReplying] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setisListening] = useState(false);
-  const [replyhex, setReplyhex] = useState("");
+  const [replyhex, setReplyhex] = useState(null);
   const history = useHistory();
 
   const cancel = () => {
     recordingStop();
-    setReplyhex("");
+    setReplyhex(null);
     setIsReplying(false);
     setIsRecording(false);
     setisListening(false);
@@ -33,9 +34,10 @@ function Pitch({ location, area, audio, focus, url }) {
     audioRef.onended = () => {
       setisListening(false);
     };
+    audioRef.load();
   };
 
-  const ListenReply = async () => {
+  const ListenReply = () => {
     if (isReplying) {
       if (!isRecording && !replyhex) {
         recordingStart();
@@ -58,6 +60,10 @@ function Pitch({ location, area, audio, focus, url }) {
         `https://storage.googleapis.com/voklizer-dev/${url}`
       );
       audio.play();
+
+      audio.onended = () => {
+        setisListening(false);
+      };
     }
   };
 
@@ -67,7 +73,11 @@ function Pitch({ location, area, audio, focus, url }) {
   };
 
   const send = () => {
-    history.push("/pitch-success");
+    Instance.post(`job-service-provider-offer/${jobId}`, {
+      audioType: replyhex.mimeType,
+      audioHex: replyhex.recordDataBase64,
+    }).then(() => {});
+    // history.push("/pitch-success");
   };
   const recordingStart = () => {
     VoiceRecorder.requestAudioRecordingPermission()
@@ -88,7 +98,7 @@ function Pitch({ location, area, audio, focus, url }) {
       .then((result) => {
         console.log("-->>stop", JSON.stringify(result));
 
-        setReplyhex(result.value.recordDataBase64);
+        setReplyhex(result.value);
         setIsRecording(false);
       })
       .catch((error) => console.log(error));

@@ -27,6 +27,7 @@ function FakeSelect({ label }) {
       name: "Property Law",
       price: "£2000",
     },
+
   ];
   return (
     <>
