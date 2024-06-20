@@ -8,6 +8,7 @@ import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
 
 import Sidebar from "../components/Sidebar";
+import { useEffect } from "react";
 
 function Base({ children }) {
   const history = useHistory();
@@ -17,6 +18,25 @@ function Base({ children }) {
     await StatusBar.setStyle({ style: Style.Light });
     await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
   };
+
+  // const backButtonHandler = () => {
+  //   ev.detail.register(200, () => {
+  //     history.go(-1);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener("ionBackButton", backButtonHandler);
+  //   return () => {
+  //     document.removeEventListener("ionBackButton", backButtonHandler);
+  //   };
+  // });
+
+  // document.addEventListener("ionBackButton", (ev) => {
+  //   ev.detail.register(10, () => {
+  //     console.log("Handler was called!");
+  //   });
+  // });
 
   useIonViewWillEnter(() => {
     setStatusBarStyleLight();

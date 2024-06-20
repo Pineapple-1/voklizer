@@ -10,7 +10,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 
 function ServiceProviderRegistrationLayout({ children }) {
   const history = useHistory();
-  
+
   const setStatusBarStyleLight = async () => {
     await StatusBar.setStyle({ style: Style.Light });
     await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
@@ -19,6 +19,20 @@ function ServiceProviderRegistrationLayout({ children }) {
   useIonViewWillEnter(() => {
     setStatusBarStyleLight();
   });
+
+  // const backButtonHandler = () => {
+  //   ev.detail.register(200, () => {
+  //     history.go(-1);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener("ionBackButton", backButtonHandler);
+  //   return () => {
+  //     document.removeEventListener("ionBackButton", backButtonHandler);
+  //   };
+  // });
+
   return (
     <IonPage>
       <IonContent>

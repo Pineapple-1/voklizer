@@ -5,21 +5,19 @@ import Pitch from "./components/Pitch";
 import useSwr from "swr";
 
 function QueryListing() {
-  const { data, isLoading } = useSwr("user-jobs?page=1&limit=5");
-
-  console.log(data);
+  const { data, isLoading } = useSwr("job-notifications?page=1&pageSize=5");
 
   return (
     <UserHomeLayout>
       <div className="flex flex-col items-center h-full justify-end gap-6 my-6">
         {!isLoading ? (
-          data.jobs.map((item, index) => (
+          data?.data.map((item, index) => (
             <Pitch
               location={"Lahore"}
-              area={"Medical"}
+              area={item.category}
               focus={index === 0 ? true : false}
-              url={item.messageLink}
-              jobId={item.id}
+              url={item.userMessageLink}
+              jobId={item.jobId}
             />
           ))
         ) : (

@@ -6,9 +6,11 @@ import PlayIcon from "../../../assets/icons/PlayIcon";
 import clsx from "clsx";
 
 import { useState } from "react";
+import { useRef } from "react";
 import { VoiceRecorder } from "capacitor-voice-recorder";
 import { useHistory } from "react-router-dom";
 import Instance from "../../../axios/Axios";
+import Loading from "../../../components/Loading";
 
 function Pitch({ location, area, focus, url, jobId }) {
   const [open, setOpen] = useState(focus ? true : false);
@@ -16,25 +18,44 @@ function Pitch({ location, area, focus, url, jobId }) {
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setisListening] = useState(false);
   const [replyhex, setReplyhex] = useState(null);
+
+  const [sending, setSending] = useState(false);
+
   const history = useHistory();
+  const recordedRef = useRef(null);
+  const listingRef = useRef(null);
 
   const cancel = () => {
     recordingStop();
     setReplyhex(null);
     setIsReplying(false);
-    setIsRecording(false);
+
     setisListening(false);
+    listingRef.current?.pause();
+    listingRef.current = null;
+
+    if (isRecording) {
+      setIsRecording(false);
+      recordedRef.current?.pause();
+      recordedRef.current = null;
+    }
   };
 
   const PlayRecordedAudio = () => {
-    const audioRef = new Audio(`data:audio/aac;base64,${replyhex}`);
-    audioRef.oncanplaythrough = () => {
-      audioRef.play();
+    recordedRef.current = new Audio(
+      `data:${replyhex.mimeType};base64,${replyhex.recordDataBase64}`
+    );
+
+    recordedRef.current.oncanplaythrough = () => {
+      console.log("in recorder play...");
+      recordedRef.current.play();
     };
-    audioRef.onended = () => {
+
+    recordedRef.current.onended = () => {
       setisListening(false);
     };
-    audioRef.load();
+
+    recordedRef.current.load();
   };
 
   const ListenReply = () => {
@@ -48,22 +69,30 @@ function Pitch({ location, area, focus, url, jobId }) {
       }
 
       if (!isRecording && replyhex) {
-        setisListening((isListening) => !isListening);
-
+        setisListening(true);
+        console.log("in here");
         PlayRecordedAudio();
       }
     } else {
-      setisListening((isListening) => !isListening);
-      console.log("listning", url);
+      // setisListening(true);
 
-      const audio = new Audio(
-        `https://storage.googleapis.com/voklizer-dev/${url}`
-      );
-      audio.play();
+      if (!isListening) {
+        console.log("listning", url);
 
-      audio.onended = () => {
-        setisListening(false);
-      };
+        listingRef.current = new Audio(
+          `https://storage.googleapis.com/voklizer-dev/${url}`
+        );
+
+        listingRef.current.oncanplaythrough = () => {
+          console.log("in play through");
+          setisListening(true);
+          listingRef.current.play();
+        };
+
+        listingRef.current.onended = () => {
+          setisListening(false);
+        };
+      }
     }
   };
 
@@ -73,12 +102,21 @@ function Pitch({ location, area, focus, url, jobId }) {
   };
 
   const send = () => {
+    setSending(true);
     Instance.post(`job-service-provider-offer/${jobId}`, {
       audioType: replyhex.mimeType,
       audioHex: replyhex.recordDataBase64,
-    }).then(() => {});
-    // history.push("/pitch-success");
+    }).then(() => {
+      setSending(false);
+      setReplyhex(null);
+      setIsReplying(false);
+      setIsRecording(false);
+      setisListening(false);
+
+      history.push("/pitch-success");
+    });
   };
+
   const recordingStart = () => {
     VoiceRecorder.requestAudioRecordingPermission()
       .then((result) => {
@@ -109,7 +147,10 @@ function Pitch({ location, area, focus, url, jobId }) {
       <div className="cursor-pointer">
         <div
           className="p-[15px] flex  justify-between"
-          onClick={() => setOpen((open) => !open)}
+          onClick={() => {
+            cancel();
+            setOpen((open) => !open);
+          }}
         >
           <div className=" text-2xl font-bold">{location}</div>
           <StopWatchIcon className="text-purple" />
@@ -124,7 +165,10 @@ function Pitch({ location, area, focus, url, jobId }) {
           {!open && (
             <div
               className="flex items-center justify-between text-white"
-              onClick={() => setOpen((open) => !open)}
+              onClick={() => {
+                cancel();
+                setOpen((open) => !open);
+              }}
             >
               <div className="text-[12px] leading-[15px] font-bold">{area}</div>
               <div className=" flex flex-col">
@@ -138,7 +182,10 @@ function Pitch({ location, area, focus, url, jobId }) {
             <>
               <div
                 className="flex items-center justify-between"
-                onClick={() => setOpen(() => false)}
+                onClick={() => {
+                  cancel();
+                  setOpen(() => false);
+                }}
               >
                 <div className="flex gap-2 items-center w-full">
                   <div className="text-[#231F20] text-2xl bg-white rounded-3xl font-bold px-3 flex items-center gap-2">
@@ -229,6 +276,7 @@ function Pitch({ location, area, focus, url, jobId }) {
           )}
         </div>
       </div>
+      <Loading open={sending} message="Replying..." />
     </div>
   );
 }

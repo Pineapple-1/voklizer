@@ -14,9 +14,10 @@ import Translate from "../../../assets/icons/Translate";
 import Retry from "../../../assets/icons/Retry";
 import { AnimatePresence } from "framer-motion";
 
-function MessageReplies({ accepted, id }) {
+function MessageReplies({ accepted, id, offer }) {
   const [value, setValue] = useState(accepted ? 100 : 0);
   const modal = useRef();
+  console.log(JSON.stringify(offer));
   const data = [
     {
       name: "Immigration",
@@ -43,6 +44,21 @@ function MessageReplies({ accepted, id }) {
       price: "£2000",
     },
   ];
+
+  const playReply = () => {
+    const audio = new Audio(
+      `https://storage.googleapis.com/voklizer-dev/${offer.originalMessageLink}`
+    );
+
+    audio.oncanplaythrough = () => {
+      console.log("in play through");
+      audio.play();
+    };
+
+    // audio.onended = () => {};
+
+    audio.load();
+  };
 
   return (
     <>
@@ -77,16 +93,18 @@ function MessageReplies({ accepted, id }) {
           aria-label="slider"
         >
           <SliderTrack>
-            <SliderThumb
-              className={clsx(
-                " w-[61px] h-[61px]  flex items-center justify-center rounded-full mt-3  z-30",
-                value === 100 ? "bg-[#000000]" : "bg-[#D9D9D9]"
-              )}
-            >
-              <PlayIcon
-                className={clsx(value === 100 ? "text-white" : "text-purple")}
-              />
-            </SliderThumb>
+            <div onClick={playReply}>
+              <SliderThumb
+                className={clsx(
+                  " w-[61px] h-[61px]  flex items-center justify-center rounded-full mt-3  z-30",
+                  value === 100 ? "bg-[#000000]" : "bg-[#D9D9D9]"
+                )}
+              >
+                <PlayIcon
+                  className={clsx(value === 100 ? "text-white" : "text-purple")}
+                />
+              </SliderThumb>
+            </div>
           </SliderTrack>
           <div
             className={clsx(
@@ -279,9 +297,6 @@ function MessageReplies({ accepted, id }) {
           </motion.div>
         )}
       </AnimatePresence>
-
-
-      
     </>
   );
 }

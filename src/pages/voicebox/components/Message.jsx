@@ -2,13 +2,15 @@ import { useState } from "react";
 import PlayIcon from "../../../assets/icons/PlayIcon";
 import Delivered from "../../../assets/icons/Delivered";
 import Ticks from "../../../assets/icons/Ticks";
-import useSwr from "swr";
 import { MusicBarsSmall } from "../../../components/MusicBars";
 import clsx from "clsx";
+import useSwr from "swr";
+
 
 function Message() {
   const [isPlaying, setIsPlaying] = useState(false);
   const { data, isLoading } = useSwr("user-jobs?page=1&limit=1");
+
 
   const listen = () => {
     if (!isPlaying) {
