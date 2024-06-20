@@ -14,11 +14,9 @@ import Calender from "./components/Calender";
 import MeetingInfo from "./components/MeetingInfo";
 import Sidebar from "../../components/Sidebar";
 
-
 function VokDairy() {
   const [date, setDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
-
 
   const history = useHistory();
 

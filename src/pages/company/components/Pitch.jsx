@@ -107,6 +107,7 @@ function Pitch({ location, area, focus, url, jobId }) {
       audioType: replyhex.mimeType,
       audioHex: replyhex.recordDataBase64,
     }).then(() => {
+      mutate(`user-job/${jobId}`);
       setSending(false);
       setReplyhex(null);
       setIsReplying(false);
