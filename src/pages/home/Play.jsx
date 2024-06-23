@@ -9,9 +9,11 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading";
-import { mutate } from "swr";
+import { useSWRConfig } from "swr";
 
 function Play() {
+  const { mutate } = useSWRConfig();
+
   const [isRecording, setIsRecording] = useState(false);
   const [audioHex, setAudioHex] = useState(null);
   const [jobPosting, setJobPosting] = useState(false);
@@ -58,7 +60,7 @@ function Play() {
         setIsPlaying(false);
         audioRef.current = null;
         setJobPosting(false);
-        mutate("job-notifications?page=1&pageSize=5");
+        mutate("job-notifications");
         history.push("/send-success");
       })
       .catch((e) => console.log("errors", JSON.stringify(e)));

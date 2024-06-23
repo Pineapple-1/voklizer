@@ -11,8 +11,11 @@ import { VoiceRecorder } from "capacitor-voice-recorder";
 import { useHistory } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import Loading from "../../../components/Loading";
+import { useSWRConfig } from "swr";
 
 function Pitch({ location, area, focus, url, jobId }) {
+  const { mutate } = useSWRConfig();
+
   const [open, setOpen] = useState(focus ? true : false);
   const [isReplying, setIsReplying] = useState(false);
   const [isRecording, setIsRecording] = useState(false);

@@ -5,14 +5,13 @@ import MessageReplies from "./components/MessageReplies";
 import useSwr from "swr";
 import { AnimatePresence, motion } from "framer-motion";
 import { useParams } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 function Replies() {
-  const { JobId } = useParams();
+  const { jobId } = useParams();
   const { data: replies, isLoading: repliesLoading } = useSwr(
-    `user-job/${JobId}`
+    `user-job/${jobId}`
   );
-
-  console.log(JSON.stringify(replies));
 
   return (
     <Base>
@@ -36,6 +35,7 @@ function Replies() {
           </AnimatePresence>
         </div>
       </div>
+      <Loading open={repliesLoading} message={"Fetching Replies"} />
     </Base>
   );
 }
