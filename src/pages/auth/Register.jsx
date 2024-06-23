@@ -1,32 +1,35 @@
 import Socials from "./components/Socials";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import Instance from "../../axios/Axios";
 import { useState } from "react";
-import { storage } from "../../storage";
 import AuthLayout from "./AuthLayout";
 import SelectIcon from "../../assets/icons/SelectIcon";
-import { useSetAtom } from 'jotai'
-import { userAtom } from "../../state";
+import { useSetAtom, useAtomValue } from "jotai";
+import { userAtom, socialAtom } from "../../state";
 
 function Register() {
+  const social = useAtomValue(socialAtom);
+  const history = useHistory();
+  const [showCountry, setShowCountry] = useState(false);
+  const setUser = useSetAtom(userAtom);
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors },
-  } = useForm();
-  const history = useHistory();
-  const [showCountry, setShowCountry] = useState(false);
-
-  const setUser = useSetAtom(userAtom)
+  } = useForm({
+    defaultValues: {
+      firstName: social?.firstname || "",
+      lastName: social?.lastname || "",
+      email: social?.email || "",
+    },
+  });
 
   const onSubmit = (data) => {
     const { confirmPassword, ...restOfData } = data;
-
     setUser({ ...restOfData });
-
     history.push("/selection");
   };
   const password = watch("password");
@@ -80,7 +83,7 @@ function Register() {
 
             <div className="flex gap-4 w-full">
               <div
-                className="flex flex-col gap-1.5 w-[300px] relative"
+                className="flex flex-col gap-1.5 w-1/4 relative"
                 onClick={() => setShowCountry((showCountry) => !showCountry)}
               >
                 <input
@@ -239,7 +242,7 @@ function Register() {
 
         <div className=" text-lg text-center ">OR</div>
 
-        <Socials />
+        <Socials setValue={setValue} />
       </div>
     </AuthLayout>
   );

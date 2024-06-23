@@ -1,23 +1,143 @@
-import React from "react";
-import { useGoogleLogin } from "@react-oauth/google";
-import { isPlatform } from "@ionic/react";
+import { useState } from "react";
+import { initializeApp } from "firebase/app";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { FacebookLogin } from "@capacitor-community/facebook-login";
+import { Capacitor } from "@capacitor/core";
+import { useHistory, useLocation } from "react-router-dom";
 
+import Instance from "../../../axios/Axios";
+import { useAtomValue, useSetAtom } from "jotai";
+import { fmcAtom, socialAtom } from "../../../state";
+import Loading from "../../../components/Loading";
+import { tokenSubject$ } from "./../TokenState";
+
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  getAuth,
+  signInWithCredential,
+} from "firebase/auth";
 FacebookLogin.initialize({ appId: "644429617838557" });
 
-function Socials() {
+const firebaseConfig = {
+  apiKey: "AIzaSyC_hSGTW8obPsehb_JEKKIGcasLtsXHCo0",
+  authDomain: "voklizer-dev.firebaseapp.com",
+  projectId: "voklizer-dev",
+  storageBucket: "voklizer-dev.appspot.com",
+  messagingSenderId: "680199080385",
+  appId: "1:680199080385:web:442d3af8a16c67d1c60740",
+  measurementId: "G-8Y7WJ3ERBE",
+};
+
+function Socials({ setValue }) {
+  initializeApp(firebaseConfig);
+
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+  const fmcToken = useAtomValue(fmcAtom);
+  const setSocial = useSetAtom(socialAtom);
+  const history = useHistory();
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
   const signInGoogle = async () => {
-    try {
-      if (isPlatform("ios") || isPlatform("android")) {
-        console.log("in herea androwid");
-        const result = await GoogleAuth.signIn();
-        console.log("Google", JSON.stringify(result));
-      } else {
-        loginWithGoogle();
-      }
-    } catch (error) {
-      console.log("Google Sign In Error", JSON.stringify(error.message));
+    setLoading(true);
+    if (Capacitor.getPlatform() !== "web") {
+      const result = await GoogleAuth.signIn();
+
+      const googleCredential = GoogleAuthProvider.credential(
+        result?.authentication?.idToken,
+        result?.authentication?.accessToken
+      );
+      const firebaseUserCredential = await signInWithCredential(
+        auth,
+        googleCredential
+      );
+
+      Instance.post("auth/login", {
+        token: firebaseUserCredential.user.stsTokenManager.accessToken,
+        fcmToken: fmcToken ?? "",
+      }).then((res) => {
+        setLoading(false);
+
+        if (!res.data.registered) {
+          if (location.pathname === "/register") {
+            setValue(
+              "firstName",
+              firebaseUserCredential.user.displayName.split(" ")?.[0],
+              {
+                shouldValidate: true,
+                shouldDirty: true,
+              }
+            );
+            setValue(
+              "lastName",
+              firebaseUserCredential.user.displayName.split(" ")?.[1],
+              {
+                shouldValidate: true,
+                shouldDirty: true,
+              }
+            );
+            setValue("email", firebaseUserCredential.user.email, {
+              shouldValidate: true,
+              shouldDirty: true,
+            });
+          } else {
+            setSocial({
+              firstname:
+                firebaseUserCredential.user.displayName.split(" ")?.[0],
+              lastname: firebaseUserCredential.user.displayName.split(" ")?.[1],
+              email: firebaseUserCredential.user.email,
+            });
+            history.push("/register");
+          }
+        } else {
+          tokenSubject$.next(res.data.token);
+          history.push("/play");
+        }
+      });
+    } else {
+      signInWithPopup(auth, provider).then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+
+        console.log(token, credential, user);
+
+        Instance.post("auth/login", {
+          token: user.accessToken,
+          fcmToken: fmcToken,
+        }).then((res) => {
+          setLoading(false);
+
+          if (!res.data.registered) {
+            if (location.pathname === "/register") {
+              setValue("firstName", user.displayName.split(" ")?.[0], {
+                shouldValidate: true,
+                shouldDirty: true,
+              });
+              setValue("lastName", user.displayName.split(" ")?.[1], {
+                shouldValidate: true,
+                shouldDirty: true,
+              });
+              setValue("email", user.email, {
+                shouldValidate: true,
+                shouldDirty: true,
+              });
+            } else {
+              setSocial({
+                firstname: user.displayName.split(" ")?.[0],
+                lastname: user.displayName.split(" ")?.[1],
+                email: user.email,
+              });
+              history.push("/register");
+            }
+          } else {
+            tokenSubject$.next(res.data.token);
+            history.push("/play");
+          }
+        });
+      });
     }
   };
 
@@ -34,14 +154,6 @@ function Socials() {
       console.error("Error logging in with Facebook:", error);
     }
   };
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: (response) => {
-      console.log("Login Success:", response);
-    },
-    onFailure: (error) => {
-      console.error("Login Error:", error);
-    },
-  });
 
   return (
     <div className="flex flex-col gap-3">
@@ -64,6 +176,8 @@ function Socials() {
           Continue with Google
         </div>
       </div>
+
+      <Loading open={loading} message="Gathering Info" />
     </div>
   );
 }

@@ -20,19 +20,6 @@ function ServiceProviderRegistrationLayout({ children }) {
     setStatusBarStyleLight();
   });
 
-  // const backButtonHandler = () => {
-  //   ev.detail.register(200, () => {
-  //     history.go(-1);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("ionBackButton", backButtonHandler);
-  //   return () => {
-  //     document.removeEventListener("ionBackButton", backButtonHandler);
-  //   };
-  // });
-
   return (
     <IonPage>
       <IonContent>

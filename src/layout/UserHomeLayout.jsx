@@ -10,8 +10,6 @@ import BtmLogo from "../assets/logos/Logo-Alt.svg";
 import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import Sidebar from "../components/Sidebar";
-import { useEffect } from "react";
-
 
 function UserHomeLayout({ children }) {
   const history = useHistory();
@@ -21,21 +19,6 @@ function UserHomeLayout({ children }) {
     await StatusBar.setStyle({ style: Style.Light });
     await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
   };
-
-
-
-  // const backButtonHandler = () => {
-  //   ev.detail.register(200, () => {
-  //     history.go(-1);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("ionBackButton", backButtonHandler);
-  //   return () => {
-  //     document.removeEventListener("ionBackButton", backButtonHandler);
-  //   };
-  // });
 
   useIonViewWillEnter(() => {
     setStatusBarStyleLight();
@@ -48,7 +31,7 @@ function UserHomeLayout({ children }) {
           <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
             <div className="flex flex-col gap-5">
               <div className=" flex justify-between">
-                <div onClick={() => history.push("/")}>
+                <div onClick={() => history.push("/play")}>
                   <HomeIcon />
                 </div>
 

@@ -62,7 +62,7 @@ function MessageReplies({ accepted, id, offer }) {
 
   return (
     <>
-      <div className={clsx("flex flex-col gap-3", value === 100 && "mr-6")}>
+      <div className={clsx("flex flex-col gap-3 ", value === 100 && "mr-6")}>
         <div
           className={clsx(
             "flex gap-3 items-end -mb-2",
@@ -127,7 +127,7 @@ function MessageReplies({ accepted, id, offer }) {
             </div>
           </div>
         </Slider>
-        <div className="flex gap-20">
+        <div className="flex justify-between ">
           <div
             className={clsx(
               "text-[6px] leading-[8px] text-[#8A8A8A] -mt-2",

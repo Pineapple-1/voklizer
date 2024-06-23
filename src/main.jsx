@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./ionic.css";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { SWRConfig } from "swr";
 import { storage } from "./storage";
 
@@ -21,12 +20,10 @@ async function setup() {
       <SWRConfig
         value={{
           fetcher: (res) => Instance.get(res).then((r) => r.data),
-          focusThrottleInterval: 3000,
+          focusThrottleInterval: 300,
         }}
       >
-        <GoogleOAuthProvider clientId="916564216176-6jdbhubb15qpc588lg9a1e0lflga6ghg.apps.googleusercontent.com">
-          <App token={token} />
-        </GoogleOAuthProvider>
+        <App token={token} />
       </SWRConfig>
     </React.StrictMode>
   );

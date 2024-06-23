@@ -21,6 +21,8 @@ import {
   Replies,
   PitchSuccess,
   VokDiary,
+  Queries,
+  ServiceProviderPreferredLanguage,
 } from "./routes";
 import { ServiceProviderCompanyUser } from "./routes";
 import { ServiceProviderCompanyRegistrationNumber } from "./routes";
@@ -34,6 +36,8 @@ import { Selection } from "./routes";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { PushNotifications } from "@capacitor/push-notifications";
 import { VoiceRecorder } from "capacitor-voice-recorder";
+import { fmcAtom } from "./state";
+import { useSetAtom } from "jotai";
 
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/display.css";
@@ -59,10 +63,11 @@ setupIonicReact({
     },
   },
 });
-
 import "./App.css";
 
 function App({ token }) {
+  const setFMC = useSetAtom(fmcAtom);
+
   useEffect(() => {
     const setStatusBarStyleLight = async () => {
       await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
@@ -112,12 +117,9 @@ function App({ token }) {
   }, []);
 
   const register = () => {
-    console.log("Initializing HomePage");
-
     PushNotifications.register();
-
     PushNotifications.addListener("registration", (token) => {
-      console.log("---->>>> Push registration success", JSON.stringify(token));
+      setFMC(token.value);
     });
 
     PushNotifications.addListener("registrationError", (error) => {
@@ -189,6 +191,10 @@ function App({ token }) {
                 <ServiceProviderCompanyPracticeArea />
               </Route>
 
+              <Route exact path="/preferred-language">
+                <ServiceProviderPreferredLanguage />
+              </Route>
+
               <Route exact path="/">
                 {!token && <Redirect to="/login" />}
                 {token && <Redirect to="/play" />}
@@ -226,7 +232,10 @@ function App({ token }) {
               <Route exact path="/pitch-success">
                 <PitchSuccess />
               </Route>
-              <Route exact path="/replies">
+              <Route exact path="/queries">
+                <Queries />
+              </Route>
+              <Route exact path="/replies/:jobId">
                 <Replies />
               </Route>
 

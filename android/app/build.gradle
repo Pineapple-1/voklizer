@@ -1,6 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/abdulrehmanajmal/Desktop/voklizer/android/app/debug.keystore')
+            storePassword 'Voklizer'
+            keyAlias 'key0'
+            keyPassword 'Voklizer'
+        }
+        release {
+            storeFile file('/Users/abdulrehmanajmal/Desktop/voklizer/android/app/production.keystore')
+            storePassword 'Voklizer'
+            keyAlias 'key0'
+            keyPassword 'Voklizer'
+        }
+    }
     namespace "com.voklizer"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -18,8 +32,10 @@ android {
     }
     buildTypes {
         release {
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }

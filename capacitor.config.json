@@ -8,8 +8,8 @@
   "plugins": {
     "GoogleAuth": {
       "scopes": ["profile", "email"],
-      "androidClientId": "916564216176-6jdbhubb15qpc588lg9a1e0lflga6ghg.apps.googleusercontent.com",
-      "clientId": "916564216176-6jdbhubb15qpc588lg9a1e0lflga6ghg.apps.googleusercontent.com"
+      "androidClientId": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com",
+      "clientId": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com"
     },
     "SplashScreen": {
       "launchShowDuration": 3000,

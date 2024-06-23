@@ -9,26 +9,20 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (5.0.3):
     - Capacitor
-  - CapacitorBrowser (6.0.0):
-    - Capacitor
   - CapacitorCommunityFacebookLogin (5.0.3):
     - Capacitor
     - FBSDKCoreKit (= 16.1.3)
     - FBSDKLoginKit (= 16.1.3)
   - CapacitorCordova (5.7.5)
-  - CapacitorFilesystem (6.0.0):
+  - CapacitorHaptics (5.0.2):
     - Capacitor
-  - CapacitorHaptics (6.0.0):
+  - CapacitorKeyboard (5.0.2):
     - Capacitor
-  - CapacitorKeyboard (6.0.0):
+  - CapacitorPushNotifications (5.0.2):
     - Capacitor
-  - CapacitorPushNotifications (6.0.0):
-    - Capacitor
-  - CapacitorSplashScreen (6.0.0):
+  - CapacitorSplashScreen (5.0.2):
     - Capacitor
   - CapacitorStatusBar (5.0.2):
-    - Capacitor
-  - CapacitorToast (6.0.0):
     - Capacitor
   - CapacitorVoiceRecorder (5.0.0):
     - Capacitor
@@ -55,16 +49,13 @@ PODS:
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@5.0.3_@capacitor+core@5.7.5/node_modules/@capacitor/app`)"
-  - "CapacitorBrowser (from `../../node_modules/.pnpm/@capacitor+browser@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/browser`)"
   - "CapacitorCommunityFacebookLogin (from `../../node_modules/.pnpm/@capacitor-community+facebook-login@5.0.3/node_modules/@capacitor-community/facebook-login`)"
   - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios`)"
-  - "CapacitorFilesystem (from `../../node_modules/.pnpm/@capacitor+filesystem@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/filesystem`)"
-  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/haptics`)"
-  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard`)"
-  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications`)"
-  - "CapacitorSplashScreen (from `../../node_modules/.pnpm/@capacitor+splash-screen@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen`)"
+  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard`)"
+  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorSplashScreen (from `../../node_modules/.pnpm/@capacitor+splash-screen@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/status-bar`)"
-  - "CapacitorToast (from `../../node_modules/.pnpm/@capacitor+toast@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/toast`)"
   - "CapacitorVoiceRecorder (from `../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.5/node_modules/capacitor-voice-recorder`)"
   - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.5/node_modules/@codetrix-studio/capacitor-google-auth`)"
 
@@ -84,26 +75,20 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/.pnpm/@capacitor+app@5.0.3_@capacitor+core@5.7.5/node_modules/@capacitor/app"
-  CapacitorBrowser:
-    :path: "../../node_modules/.pnpm/@capacitor+browser@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/browser"
   CapacitorCommunityFacebookLogin:
     :path: "../../node_modules/.pnpm/@capacitor-community+facebook-login@5.0.3/node_modules/@capacitor-community/facebook-login"
   CapacitorCordova:
     :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios"
-  CapacitorFilesystem:
-    :path: "../../node_modules/.pnpm/@capacitor+filesystem@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/filesystem"
   CapacitorHaptics:
-    :path: "../../node_modules/.pnpm/@capacitor+haptics@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/haptics"
+    :path: "../../node_modules/.pnpm/@capacitor+haptics@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/haptics"
   CapacitorKeyboard:
-    :path: "../../node_modules/.pnpm/@capacitor+keyboard@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard"
+    :path: "../../node_modules/.pnpm/@capacitor+keyboard@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard"
   CapacitorPushNotifications:
-    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications"
+    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
-    :path: "../../node_modules/.pnpm/@capacitor+splash-screen@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen"
+    :path: "../../node_modules/.pnpm/@capacitor+splash-screen@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../node_modules/.pnpm/@capacitor+status-bar@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/status-bar"
-  CapacitorToast:
-    :path: "../../node_modules/.pnpm/@capacitor+toast@6.0.0_@capacitor+core@5.7.5/node_modules/@capacitor/toast"
   CapacitorVoiceRecorder:
     :path: "../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.5/node_modules/capacitor-voice-recorder"
   CodetrixStudioCapacitorGoogleAuth:
@@ -113,16 +98,13 @@ SPEC CHECKSUMS:
   AppAuth: 182c5b88630569df5acb672720534756c29b3358
   Capacitor: 7d42085cb786b2d3ea9ac8a17ebd7e3305be7b72
   CapacitorApp: 7a5dec8b33573707164b293475d5c89ba684364a
-  CapacitorBrowser: 7e1e2cdbb3e372f09f0bad0c4c21a6d187b679ad
   CapacitorCommunityFacebookLogin: c0e2bb54cb567d90443a80ae20569fdac0df3f89
   CapacitorCordova: c946a6052b547e1e185fc46862003f7b9130ead1
-  CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
-  CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
-  CapacitorKeyboard: deacbd09d8d1029c3681197fb05d206b721d5f73
-  CapacitorPushNotifications: e18636e8a96f1d70b4c669e21c730e995bf5e5c9
-  CapacitorSplashScreen: 5431ab8d19c1c6e95777d53bfaa7a36a6c3d94c7
+  CapacitorHaptics: 864585542a435bd41eaabf7f30d9ff5ec03024d3
+  CapacitorKeyboard: e628d4e66d621c69e449945ebabded17c5b9c2e8
+  CapacitorPushNotifications: 0566429afa72fe083a4142a58321f0ad83837096
+  CapacitorSplashScreen: bd2a056394ba0b8807e7bb3e746424f67c426e03
   CapacitorStatusBar: 48f2899f6846cc7d8431b251ebfc58e1c10e3d58
-  CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
   CapacitorVoiceRecorder: 872ea857b497ce2c71afe3e4eb5de0a74290c0db
   CodetrixStudioCapacitorGoogleAuth: fcce058390347c1ce5d8ac4764bdf1f5c1ee233b
   FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
@@ -133,6 +115,6 @@ SPEC CHECKSUMS:
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
 
-PODFILE CHECKSUM: 80ffdd0573950a6970cce1357f8d41233d80578c
+PODFILE CHECKSUM: 75ab2899230aa322b22cc408488f9d4ce4881d9b
 
 COCOAPODS: 1.15.2

@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "680199080385-0974eokgflutc7h6jpi61ura55hm23h1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voklizer",
+            "certificate_hash": "ddf0c997cfe96d045b3b4b7da58da093c82c4dd5"
+          }
+        },
+        {
+          "client_id": "680199080385-2u8k6jss5g47ipf9pvn81efsjrjq5gga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voklizer",
+            "certificate_hash": "ef5c5442276f49ad50b0c2e9f398e18d9e716e93"
+          }
+        },
+        {
           "client_id": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com",
           "client_type": 3
         }

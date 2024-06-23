@@ -8,7 +8,6 @@ import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
 
 import Sidebar from "../components/Sidebar";
-import { useEffect } from "react";
 
 function Base({ children }) {
   const history = useHistory();
@@ -19,25 +18,6 @@ function Base({ children }) {
     await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
   };
 
-  // const backButtonHandler = () => {
-  //   ev.detail.register(200, () => {
-  //     history.go(-1);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("ionBackButton", backButtonHandler);
-  //   return () => {
-  //     document.removeEventListener("ionBackButton", backButtonHandler);
-  //   };
-  // });
-
-  // document.addEventListener("ionBackButton", (ev) => {
-  //   ev.detail.register(10, () => {
-  //     console.log("Handler was called!");
-  //   });
-  // });
-
   useIonViewWillEnter(() => {
     setStatusBarStyleLight();
   });
@@ -47,7 +27,7 @@ function Base({ children }) {
         <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
           <div className="flex flex-col gap-5">
             <div className=" flex justify-between items-center">
-              <div onClick={() => history.push("/")}>
+              <div onClick={() => history.push("/play")}>
                 <HomeIcon />
               </div>
 

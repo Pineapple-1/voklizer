@@ -9,9 +9,14 @@ import { tokenSubject$ } from "./TokenState";
 import { StatusBar, Style } from "@capacitor/status-bar";
 
 import AuthLayout from "./AuthLayout";
-import { useEffect } from "react";
+import Loading from "../../components/Loading";
+import { useEffect, useState } from "react";
+import { useAtomValue } from "jotai";
+import { fmcAtom } from "../../state";
 
 function Login() {
+  const [isLogging, setIsLogging] = useState(false);
+  const fmcToken = useAtomValue(fmcAtom);
   const {
     register,
     handleSubmit,
@@ -20,13 +25,14 @@ function Login() {
   const history = useHistory();
 
   const onSubmit = (data) => {
-    console.log(data);
+    setIsLogging(true);
 
     Instance.post("auth/login/", data).then((res) => {
-      console.log("-->>res", JSON.stringify(res));
       tokenSubject$.next(res.data.token);
       storage.set("token", res.data.token);
-      history.push("/locale");
+      setIsLogging(false);
+      history.replace("/play");
+      // history.push("/locale");
     });
   };
 
@@ -107,7 +113,7 @@ function Login() {
             </form>
             <div className="flex justify-between px-1">
               <div
-                className="text-purple text-sm"
+                className="text-purple text-xs"
                 onClick={() => {
                   history.push("/forget-pass");
                 }}
@@ -115,7 +121,7 @@ function Login() {
                 Forgot Password ?
               </div>
               <div
-                className="text-purple text-sm"
+                className="text-purple text-xs"
                 onClick={() => {
                   history.push("/register");
                 }}
@@ -128,6 +134,7 @@ function Login() {
         <div className=" text-lg text-center ">OR</div>
         <Socials />
       </div>
+      <Loading open={isLogging} message={"Signing In ..."} />
     </AuthLayout>
   );
 }

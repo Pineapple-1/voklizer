@@ -59,7 +59,7 @@ function Sidebar({ open, setOpen }) {
                       <div
                         className="text-[20px] leading-6 text-[#000] font-semibold"
                         onClick={() => {
-                          history.push("/");
+                          history.push("/play");
                           setOpen(false);
                         }}
                       >
@@ -68,7 +68,7 @@ function Sidebar({ open, setOpen }) {
                       <div
                         className="text-[20px] leading-6 text-[#000] font-semibold"
                         onClick={() => {
-                          history.push("/replies");
+                          history.push("/queries");
                           setOpen(false);
                         }}
                       >

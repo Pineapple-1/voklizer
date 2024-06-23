@@ -4,12 +4,12 @@ import Message from "./components/Message";
 import MessageReplies from "./components/MessageReplies";
 import useSwr from "swr";
 import { AnimatePresence, motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 
 function Replies() {
-  const { data } = useSwr("user-jobs?page=1&limit=1");
-
+  const { JobId } = useParams();
   const { data: replies, isLoading: repliesLoading } = useSwr(
-    data && `user-job/${data?.jobs?.[0]?.id}`
+    `user-job/${JobId}`
   );
 
   console.log(JSON.stringify(replies));
@@ -28,7 +28,7 @@ function Replies() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.75 }}
                   transition={{ duration: 0.3 }}
-                  className="w-full flex flex-col justify-end items-end"
+                  className="flex flex-col justify-end items-end"
                 >
                   <MessageReplies offer={item} />
                 </motion.div>

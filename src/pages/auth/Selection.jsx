@@ -4,14 +4,17 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { storage } from "../../storage";
 import Instance from "../../axios/Axios";
 
-import { useAtomValue } from "jotai";
-import { userAtom } from "../../state";
+import { useAtomValue, useSetAtom } from "jotai";
+import { userAtom, roleAtom } from "../../state";
 import Loading from "../../components/Loading";
 import { useState } from "react";
+import { tokenSubject$ } from "./TokenState";
 
 function Selection() {
   const history = useHistory();
   const user = useAtomValue(userAtom);
+  const setRole = useSetAtom(roleAtom);
+
   const [creatingUser, setCreatingUser] = useState(false);
 
   useIonViewWillEnter(() => {
@@ -21,10 +24,16 @@ function Selection() {
 
   const register = (role) => {
     setCreatingUser(true);
-    Instance.post("auth/register/", { ...user, role: role })
+    Instance.post("auth/register/", {
+      ...user,
+      role: role,
+      authType: "customPassword",
+    })
       .then((res) => {
-        storage.set("token", res.data.data.token);
-        role === "user" ? history.push("/play") : history.push("/company-reg");
+        tokenSubject$.next(res.data.token);
+        storage.set("token", res.data.token);
+        setRole(role);
+        role === "user" ? history.push("/play") : history.push("/preferred-language");
       })
       .finally(() => {
         setCreatingUser(false);
