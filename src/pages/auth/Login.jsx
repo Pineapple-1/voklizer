@@ -13,8 +13,10 @@ import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
 import { fmcAtom } from "../../state";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
+  const auth = getAuth();
   const [isLogging, setIsLogging] = useState(false);
   const fmcToken = useAtomValue(fmcAtom);
   const {
@@ -27,13 +29,28 @@ function Login() {
   const onSubmit = (data) => {
     setIsLogging(true);
 
-    Instance.post("auth/login/", data).then((res) => {
-      tokenSubject$.next(res.data.token);
-      storage.set("token", res.data.token);
-      setIsLogging(false);
-      history.replace("/play");
-      // history.push("/locale");
-    });
+    signInWithEmailAndPassword(auth, data.email, data.password).then(
+      (userCredential) => {
+        console.log("-->> new user", userCredential);
+
+        Instance.post("auth/login/", {
+          token: userCredential.user.accessToken,
+          fcmToken: fmcToken,
+        }).then((res) => {
+          if (!res.data.registered) {
+            console.log("not created");
+            history.push("/register");
+          } else {
+            tokenSubject$.next(res.data.token);
+            storage.set("token", res.data.token);
+            setIsLogging(false);
+            history.replace("/play");
+          }
+
+          // history.push("/locale");
+        });
+      }
+    );
   };
 
   useEffect(() => {
