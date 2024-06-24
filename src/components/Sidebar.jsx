@@ -125,7 +125,7 @@ function Sidebar({ open, setOpen }) {
                   <img className="w-[164px] h-[58px]" src="/NavBar.svg" />
                   <img
                     className="w-[164px] h-[58px]"
-                    src="logos/Nav-Logo.svg"
+                    src="/logos/Nav-Logo.svg"
                   />
                 </div>
               </div>
