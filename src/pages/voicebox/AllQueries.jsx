@@ -12,7 +12,7 @@ function Queries() {
     <Base>
       <div className="flex flex-col gap-8">
         {!isLoading &&
-          data.jobs.map((item) => (
+          data?.jobs.map((item) => (
             <MessageGroup url={item.messageLink} jobId={item.id} />
           ))}
       </div>

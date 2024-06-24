@@ -111,7 +111,7 @@ function Register() {
                     <div
                       className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer"
                       onClick={() =>
-                        setValue("countryCode", "+92", {
+                        setValue("countryCode", "+44", {
                           shouldValidate: true,
                           shouldDirty: true,
                         })
@@ -122,7 +122,7 @@ function Register() {
                     <div
                       className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer"
                       onClick={() =>
-                        setValue("countryCode", "+44", {
+                        setValue("countryCode", "+92", {
                           shouldValidate: true,
                           shouldDirty: true,
                         })
