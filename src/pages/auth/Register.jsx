@@ -11,6 +11,7 @@ function Register() {
   const social = useAtomValue(socialAtom);
   const history = useHistory();
   const [showCountry, setShowCountry] = useState(false);
+  const [removePassword, setRemovePassword] = useState(false);
   const setUser = useSetAtom(userAtom);
 
   const {
@@ -28,8 +29,13 @@ function Register() {
   });
 
   const onSubmit = (data) => {
-    const { confirmPassword, ...restOfData } = data;
-    setUser({ ...restOfData });
+    if (!removePassword) {
+      const { confirmPassword, ...restOfData } = data;
+      setUser({ ...restOfData, authType: "customPassword" });
+    } else {
+      const { password, confirmPassword, ...restOfData } = data;
+      setUser({ ...restOfData, authType: "google" });
+    }
     history.push("/selection");
   };
   const password = watch("password");
@@ -90,6 +96,7 @@ function Register() {
                   className={
                     "caret-transparent cursor-pointer rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
                   }
+                  disabled
                   placeholder="Country"
                   {...register("countryCode", {
                     required: "Required",
@@ -189,47 +196,54 @@ function Register() {
               )}
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <input
-                className={
-                  "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
-                }
-                placeholder="Password"
-                {...register("password", {
-                  required: "Minimum 8 characters eg: pass@word",
-                  pattern: {
-                    value: /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
-                    message: "Enter a Valid Password",
-                  },
-                })}
-                type="password"
-                name="password"
-              />
-              {errors.password && (
-                <p className="text-purple text-sm">{errors.password.message}</p>
-              )}
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <input
-                className={
-                  "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
-                }
-                placeholder="Confirm Password"
-                {...register("confirmPassword", {
-                  required: "Required",
-                  validate: (value) =>
-                    value === password || "Passwords do not match",
-                })}
-                type="password"
-                name="confirmPassword"
-              />
-              {errors.confirmPassword && (
-                <p className="text-purple text-sm">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
+            {!removePassword && (
+              <>
+                <div className="flex flex-col gap-1.5">
+                  <input
+                    className={
+                      "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+                    }
+                    placeholder="Password"
+                    {...register("password", {
+                      required: "Minimum 8 characters eg: pass@word",
+                      pattern: {
+                        value:
+                          /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
+                        message: "Enter a Valid Password",
+                      },
+                    })}
+                    type="password"
+                    name="password"
+                  />
+                  {errors.password && (
+                    <p className="text-purple text-sm">
+                      {errors.password.message}
+                    </p>
+                  )}
+                </div>
 
+                <div className="flex flex-col gap-1.5">
+                  <input
+                    className={
+                      "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+                    }
+                    placeholder="Confirm Password"
+                    {...register("confirmPassword", {
+                      required: "Required",
+                      validate: (value) =>
+                        value === password || "Passwords do not match",
+                    })}
+                    type="password"
+                    name="confirmPassword"
+                  />
+                  {errors.confirmPassword && (
+                    <p className="text-purple text-sm">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
             <button
               className="bg-[#D9D9D960]  flex justify-between items-center rounded-xl py-[9px] px-3"
               type="submit"
@@ -242,7 +256,7 @@ function Register() {
 
         <div className=" text-lg text-center ">OR</div>
 
-        <Socials setValue={setValue} />
+        <Socials setValue={setValue} setRemovePassword={setRemovePassword} />
       </div>
     </AuthLayout>
   );

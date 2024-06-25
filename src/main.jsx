@@ -6,11 +6,7 @@ import { SWRConfig } from "swr";
 import { storage } from "./storage";
 import { initializeApp } from "firebase/app";
 
-
-
-
 async function setup() {
-
   const firebaseConfig = {
     apiKey: "AIzaSyC_hSGTW8obPsehb_JEKKIGcasLtsXHCo0",
     authDomain: "voklizer-dev.firebaseapp.com",
@@ -27,7 +23,7 @@ async function setup() {
 
   const App = await import("./App").then((e) => e.default);
   const Instance = await import("./axios/Axios").then((e) => e.default);
-  initializeApp(firebaseConfig)
+  initializeApp(firebaseConfig);
 
   const container = document.getElementById("root");
 

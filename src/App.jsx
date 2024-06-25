@@ -51,9 +51,6 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 setupIonicReact({
   platform: {
-    /** The default `desktop` function returns false for devices with a touchscreen.
-     * This is not always wanted, so this function tests the User Agent instead.
-     **/
     desktop: (win) => {
       const isMobile =
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -64,34 +61,21 @@ setupIonicReact({
   },
 });
 import "./App.css";
+import Instance from "./axios/Axios";
 
 function App({ token }) {
   const setFMC = useSetAtom(fmcAtom);
 
-  useEffect(() => {
-    const setStatusBarStyleLight = async () => {
-      await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
-      await StatusBar.setStyle({ style: Style.Light });
-    };
-
-    setStatusBarStyleLight();
-  });
-
   useIonViewWillEnter(() => {
     const setStatusBarColor = async () => {
-      try {
-        await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
-        await StatusBar.setStyle({ style: Style.Light });
-      } catch (error) {
-        console.error("Failed to set status bar color", error);
-      }
+      await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+      await StatusBar.setStyle({ style: Style.Light });
     };
 
     setStatusBarColor();
   });
 
-  const nullEntry = [];
-  const [notifications, setnotifications] = useState(nullEntry);
+  const [notifications, setnotifications] = useState([]);
 
   useEffect(() => {
     VoiceRecorder.requestAudioRecordingPermission()
@@ -118,8 +102,9 @@ function App({ token }) {
 
   const register = () => {
     PushNotifications.register();
-    PushNotifications.addListener("registration", (token) => {
-      setFMC(token.value);
+    PushNotifications.addListener("registration", (fmcToken) => {
+      setFMC(fmcToken.value);
+      token && Instance.post("auth/add-fcm-token", { fcmToken: fmcToken.value });
     });
 
     PushNotifications.addListener("registrationError", (error) => {

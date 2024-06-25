@@ -12,8 +12,6 @@ import Loading from "../../components/Loading";
 import { useSWRConfig } from "swr";
 
 function Play() {
-  const { mutate } = useSWRConfig();
-
   const [isRecording, setIsRecording] = useState(false);
   const [audioHex, setAudioHex] = useState(null);
   const [jobPosting, setJobPosting] = useState(false);
@@ -21,6 +19,7 @@ function Play() {
   const audioRef = useRef(null);
 
   const history = useHistory();
+  const { mutate } = useSWRConfig();
 
   const cancelAudio = () => {
     setAudioHex(null);

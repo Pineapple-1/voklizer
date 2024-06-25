@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { initializeApp } from "firebase/app";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { FacebookLogin } from "@capacitor-community/facebook-login";
 import { Capacitor } from "@capacitor/core";
@@ -10,7 +9,6 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { fmcAtom, socialAtom } from "../../../state";
 import Loading from "../../../components/Loading";
 import { tokenSubject$ } from "./../TokenState";
-
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -19,19 +17,7 @@ import {
 } from "firebase/auth";
 FacebookLogin.initialize({ appId: "644429617838557" });
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC_hSGTW8obPsehb_JEKKIGcasLtsXHCo0",
-//   authDomain: "voklizer-dev.firebaseapp.com",
-//   projectId: "voklizer-dev",
-//   storageBucket: "voklizer-dev.appspot.com",
-//   messagingSenderId: "680199080385",
-//   appId: "1:680199080385:web:442d3af8a16c67d1c60740",
-//   measurementId: "G-8Y7WJ3ERBE",
-// };
-
-function Socials({ setValue }) {
-  // initializeApp(firebaseConfig);
-
+function Socials({ setValue, setRemovePassword }) {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const fmcToken = useAtomValue(fmcAtom);
@@ -62,6 +48,8 @@ function Socials({ setValue }) {
 
         if (!res.data.registered) {
           if (location.pathname === "/register") {
+            setRemovePassword(true);
+
             setValue(
               "firstName",
               firebaseUserCredential.user.displayName.split(" ")?.[0],
@@ -112,6 +100,8 @@ function Socials({ setValue }) {
 
           if (!res.data.registered) {
             if (location.pathname === "/register") {
+              setRemovePassword(true);
+
               setValue("firstName", user.displayName.split(" ")?.[0], {
                 shouldValidate: true,
                 shouldDirty: true,

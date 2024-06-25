@@ -22,18 +22,20 @@ function Selection() {
     StatusBar.setBackgroundColor({ color: "#8532D8" });
   });
 
+  console.log(user);
   const register = (role) => {
     setCreatingUser(true);
     Instance.post("auth/register/", {
       ...user,
       role: role,
-      authType: "customPassword",
     })
       .then((res) => {
         tokenSubject$.next(res.data.token);
         storage.set("token", res.data.token);
         setRole(role);
-        role === "user" ? history.push("/play") : history.push("/preferred-language");
+        role === "user"
+          ? history.push("/play")
+          : history.push("/preferred-language");
       })
       .finally(() => {
         setCreatingUser(false);

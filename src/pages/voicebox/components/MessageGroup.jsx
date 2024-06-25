@@ -6,7 +6,7 @@ import { MusicBarsSmall } from "../../../components/MusicBars";
 import clsx from "clsx";
 import { useHistory } from "react-router-dom";
 
-function MessageGroup({ url,jobId }) {
+function MessageGroup({ url, jobId }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const history = useHistory();
 
