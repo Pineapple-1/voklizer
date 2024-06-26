@@ -1,63 +1,33 @@
 import loadable from "@loadable/component";
 
-export const ServiceProviderCompanyName = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyName
-  )
-);
-
-export const ServiceProviderCompanyUser = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyUser
-  )
-);
-
-export const ServiceProviderCompanyRegistrationNumber = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyRegistrationNumber
-  )
-);
-
-export const ServiceProviderCompanyEmail = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyEmail
-  )
-);
-
-export const ServiceProviderCompanyOtp = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyOtp
-  )
-);
-
-export const ServiceProviderCompanyMobileNumber = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyMobileNumber
-  )
-);
-
-export const ServiceProviderCompanyLandLineNumber = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyLandLineNumber
-  )
-);
-
-export const ServiceProviderCompanyAddress = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyAddress
-  )
-);
-
-export const ServiceProviderCompanyPracticeArea = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderCompanyPracticeArea
-  )
-);
-
 export const ServiceProviderPreferredLanguage = loadable(() =>
-  import("./pages/ServiceProviderRegestration").then(
-    (mod) => mod.ServiceProviderPreferredLanguage
-  )
+  import("./pages/company/register/PreferredLanguage")
+);
+export const ServiceProviderName = loadable(() =>
+  import("./pages/company/register/CompanyName")
+);
+export const ServiceProviderRegistrationNumber = loadable(() =>
+  import("./pages/company/register/CompanyRegNumber")
+);
+
+export const ServiceProviderEmailWebsite = loadable(() =>
+  import("./pages/company/register/CompanyEmailWebsite")
+);
+
+export const ServiceProviderOtp = loadable(() =>
+  import("./pages/company/register/Otp")
+);
+
+export const ServiceProviderLandLineNumber = loadable(() =>
+  import("./pages/company/register/LandlineNumber")
+);
+
+export const ServiceProviderAddress = loadable(() =>
+  import("./pages/company/register/CompanyAddress")
+);
+
+export const ServiceProviderPracticeArea = loadable(() =>
+  import("./pages/company/register/PracticeArea")
 );
 
 export const Play = loadable(() => import("./pages/home/Play"));
@@ -73,7 +43,6 @@ export const PitchSuccess = loadable(() =>
 export const Replies = loadable(() => import("./pages/voicebox/Replies"));
 export const VokDiary = loadable(() => import("./pages/voicebox/VokDiary"));
 export const Queries = loadable(() => import("./pages/voicebox/AllQueries"));
-
 
 export const Register = loadable(() => import("./pages/auth/Register"));
 export const Selection = loadable(() => import("./pages/auth/Selection"));

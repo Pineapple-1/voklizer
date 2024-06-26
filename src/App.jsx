@@ -10,7 +10,6 @@ import { Route, Redirect } from "react-router-dom";
 
 import {
   Play,
-  ServiceProviderCompanyName,
   Register,
   Login,
   ForgetPass,
@@ -22,16 +21,17 @@ import {
   PitchSuccess,
   VokDiary,
   Queries,
-  ServiceProviderPreferredLanguage,
 } from "./routes";
-import { ServiceProviderCompanyUser } from "./routes";
-import { ServiceProviderCompanyRegistrationNumber } from "./routes";
-import { ServiceProviderCompanyEmail } from "./routes";
-import { ServiceProviderCompanyOtp } from "./routes";
-import { ServiceProviderCompanyMobileNumber } from "./routes";
-import { ServiceProviderCompanyLandLineNumber } from "./routes";
-import { ServiceProviderCompanyAddress } from "./routes";
-import { ServiceProviderCompanyPracticeArea } from "./routes";
+
+import { ServiceProviderPreferredLanguage } from "./routes";
+import { ServiceProviderName } from "./routes";
+import { ServiceProviderRegistrationNumber } from "./routes";
+import { ServiceProviderEmailWebsite } from "./routes";
+import { ServiceProviderOtp } from "./routes";
+import { ServiceProviderLandLineNumber } from "./routes";
+import { ServiceProviderAddress } from "./routes";
+import { ServiceProviderPracticeArea } from "./routes";
+
 import { Selection } from "./routes";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { PushNotifications } from "@capacitor/push-notifications";
@@ -104,7 +104,8 @@ function App({ token }) {
     PushNotifications.register();
     PushNotifications.addListener("registration", (fmcToken) => {
       setFMC(fmcToken.value);
-      token && Instance.post("auth/add-fcm-token", { fcmToken: fmcToken.value });
+      token &&
+        Instance.post("auth/add-fcm-token", { fcmToken: fmcToken.value });
     });
 
     PushNotifications.addListener("registrationError", (error) => {
@@ -142,90 +143,114 @@ function App({ token }) {
     );
   };
 
+  const paths = [
+    {
+      path: "/preferred-language",
+      component: <ServiceProviderPreferredLanguage />,
+    },
+    {
+      path: "/reg-name",
+      component: <ServiceProviderName />,
+    },
+
+    {
+      path: "/reg-num",
+      component: <ServiceProviderRegistrationNumber />,
+    },
+    {
+      path: "/reg-email",
+      component: <ServiceProviderEmailWebsite />,
+    },
+    {
+      path: "/otp",
+      component: <ServiceProviderOtp />,
+    },
+    {
+      path: "/landline",
+      component: <ServiceProviderLandLineNumber />,
+    },
+    {
+      path: "/address",
+      component: <ServiceProviderAddress />,
+    },
+    {
+      path: "/practice-area",
+      component: <ServiceProviderPracticeArea />,
+    },
+
+    {
+      path: "/play",
+      component: <Play />,
+    },
+    {
+      path: "/register",
+      component: <Register />,
+    },
+    {
+      path: "/selection",
+      component: <Selection />,
+    },
+    {
+      path: "/login",
+      component: <Login />,
+    },
+
+    {
+      path: "/forget-pass",
+      component: <ForgetPass />,
+    },
+
+    {
+      path: "/reset-pass",
+      component: <ResetPass />,
+    },
+
+    {
+      path: "/locale",
+      component: <Locale />,
+    },
+
+    {
+      path: "/send-success",
+      component: <SendSuccess />,
+    },
+
+    {
+      path: "/listing",
+      component: <QueryListing />,
+    },
+    {
+      path: "/pitch-success",
+      component: <PitchSuccess />,
+    },
+    {
+      path: "/queries",
+      component: <Queries />,
+    },
+    {
+      path: "/replies/:jobId",
+      component: <Replies />,
+    },
+    {
+      path: "/diary",
+      component: <VokDiary />,
+    },
+  ];
+
   return (
     <>
       <IonApp>
         <Suspense>
           <IonReactRouter>
             <IonRouterOutlet>
-              <Route exact path="/company-reg">
-                <ServiceProviderCompanyName />
-              </Route>
-              <Route exact path="/user-name">
-                <ServiceProviderCompanyUser />
-              </Route>
-              <Route exact path="/company-reg-num">
-                <ServiceProviderCompanyRegistrationNumber />
-              </Route>
-              <Route exact path="/company-email">
-                <ServiceProviderCompanyEmail />
-              </Route>
-              <Route exact path="/otp">
-                <ServiceProviderCompanyOtp />
-              </Route>
-              <Route exact path="/mobile">
-                <ServiceProviderCompanyMobileNumber />
-              </Route>
-              <Route exact path="/landline">
-                <ServiceProviderCompanyLandLineNumber />
-              </Route>
-              <Route exact path="/address">
-                <ServiceProviderCompanyAddress />
-              </Route>
-              <Route exact path="/practice-area">
-                <ServiceProviderCompanyPracticeArea />
-              </Route>
-
-              <Route exact path="/preferred-language">
-                <ServiceProviderPreferredLanguage />
-              </Route>
-
+              {paths.map((item) => (
+                <Route key={item.path} exact path={item.path}>
+                  {item.component}
+                </Route>
+              ))}
               <Route exact path="/">
                 {!token && <Redirect to="/login" />}
                 {token && <Redirect to="/play" />}
-              </Route>
-
-              <Route exact path="/play">
-                <Play />
-              </Route>
-
-              <Route exact path="/register">
-                <Register />
-              </Route>
-              <Route exact path="/selection">
-                <Selection />
-              </Route>
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/forget-pass">
-                <ForgetPass />
-              </Route>
-              <Route exact path="/reset-pass">
-                <ResetPass />
-              </Route>
-              <Route exact path="/locale">
-                <Locale />
-              </Route>
-
-              <Route exact path="/send-success">
-                <SendSuccess />
-              </Route>
-              <Route exact path="/listing">
-                <QueryListing />
-              </Route>
-              <Route exact path="/pitch-success">
-                <PitchSuccess />
-              </Route>
-              <Route exact path="/queries">
-                <Queries />
-              </Route>
-              <Route exact path="/replies/:jobId">
-                <Replies />
-              </Route>
-
-              <Route exact path="/diary">
-                <VokDiary />
               </Route>
             </IonRouterOutlet>
           </IonReactRouter>
