@@ -6,11 +6,9 @@ import { MusicBarsSmall } from "../../../components/MusicBars";
 import clsx from "clsx";
 import useSwr from "swr";
 
-
 function Message() {
   const [isPlaying, setIsPlaying] = useState(false);
   const { data, isLoading } = useSwr("user-jobs?page=1&limit=1");
-
 
   const listen = () => {
     if (!isPlaying) {
@@ -40,7 +38,7 @@ function Message() {
         )}
       >
         <div className="flex items-center gap-2 justify-end">
-          <div className="text-[9px] text-[#A3A3A3] leading-[9px]">
+          <div className="text-[9px]  text-[#8A8A8A] leading-[9px]">
             Delivered
           </div>
           <Delivered />
@@ -69,7 +67,7 @@ function Message() {
 
         <div className="flex gap-1 mt-1.5 justify-end">
           <Ticks />
-          <div className="text-[7px] leading-[9px] text-[#A3A3A3]">
+          <div className="text-[9px] leading-[9px] text-[#8A8A8A]">
             Sunday / 17:36
           </div>
         </div>

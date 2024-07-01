@@ -36,6 +36,8 @@ function Login() {
         Instance.post("auth/login/", {
           token: userCredential.user.accessToken,
           fcmToken: fmcToken,
+
+          
         }).then((res) => {
           if (!res.data.registered) {
             console.log("not created");
@@ -132,10 +134,10 @@ function Login() {
               <div
                 className="text-purple text-xs"
                 onClick={() => {
-                  history.push("/forget-pass");
+                  history.push("/video");
                 }}
               >
-                Forgot Password ?
+                Forgot Password ? 
               </div>
               <div
                 className="text-purple text-xs"

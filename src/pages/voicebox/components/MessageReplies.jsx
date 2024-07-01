@@ -65,16 +65,16 @@ function MessageReplies({ accepted, id, offer }) {
       <div className={clsx("flex flex-col gap-3 ", value === 100 && "mr-6")}>
         <div
           className={clsx(
-            "flex gap-3 items-end -mb-2",
+            "flex gap-3 items-end -mb-1",
             value === 100 ? "justify-start  ml-4" : "justify-end  mr-4"
           )}
           onClick={() => modal.current?.present()}
         >
-          <div className="flex flex-col items-start">
-            <div className="text-[6px] leading-[8px] text-[#8A8A8A]">
+          <div className="flex flex-col items-start gap-0.5">
+            <div className="text-[8px] leading-[8px] text-[#8A8A8A]">
               Rochdale
             </div>
-            <div className="text-[8px] leading-[10px] text-[#8A8A8A]">
+            <div className="text-[9px] leading-[10px] text-[#8A8A8A]">
               AB Solicitors
             </div>
           </div>
@@ -127,7 +127,7 @@ function MessageReplies({ accepted, id, offer }) {
             </div>
           </div>
         </Slider>
-        <div className="flex justify-between ">
+        <div className="flex justify-between mt-1">
           <div
             className={clsx(
               "text-[6px] leading-[8px] text-[#8A8A8A] -mt-2",
@@ -137,15 +137,22 @@ function MessageReplies({ accepted, id, offer }) {
             {value === 100 ? (
               <div className="flex gap-1">
                 <Ticks />
-                <div className="text-[7px] text-[#8A8A8A] leading-[8px]">
+                <div className="text-[9px] text-[#8A8A8A] leading-[8px]">
                   Accepted
                 </div>
               </div>
             ) : (
-              "Slide to accept"
+              <div className="text-[9px] text-[#8A8A8A] leading-[8px]">
+                Slide to accept
+              </div>
             )}
           </div>
-          <div className="text-[6px] leading-[8px] text-[#8A8A8A] -mt-2">
+          <div
+            className={clsx(
+              "text-[9px] leading-[8px] text-[#8A8A8A] -mt-2",
+              value === 100 && "mr-6"
+            )}
+          >
             12/04/2024 - 11:40
           </div>
         </div>

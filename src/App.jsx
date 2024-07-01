@@ -21,6 +21,7 @@ import {
   PitchSuccess,
   VokDiary,
   Queries,
+  ServiceProviderVideo,
 } from "./routes";
 
 import { ServiceProviderPreferredLanguage } from "./routes";
@@ -103,6 +104,8 @@ function App({ token }) {
   const register = () => {
     PushNotifications.register();
     PushNotifications.addListener("registration", (fmcToken) => {
+      console.log("Fcm registered", JSON.stringify(fmcToken));
+
       setFMC(fmcToken.value);
       token &&
         Instance.post("auth/add-fcm-token", { fcmToken: fmcToken.value });
@@ -115,6 +118,8 @@ function App({ token }) {
     PushNotifications.addListener(
       "pushNotificationReceived",
       (notification) => {
+        console.log("new notification--->>>", JSON.stringify(notification));
+
         setnotifications((notifications) => [
           ...notifications,
           {
@@ -143,6 +148,7 @@ function App({ token }) {
     );
   };
 
+  console.log("notifications List--->>>", JSON.stringify(notifications));
   const paths = [
     {
       path: "/preferred-language",
@@ -176,6 +182,11 @@ function App({ token }) {
     {
       path: "/practice-area",
       component: <ServiceProviderPracticeArea />,
+    },
+
+    {
+      path: "/video",
+      component: <ServiceProviderVideo />,
     },
 
     {

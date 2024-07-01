@@ -30,6 +30,10 @@ export const ServiceProviderPracticeArea = loadable(() =>
   import("./pages/company/register/PracticeArea")
 );
 
+export const ServiceProviderVideo = loadable(() =>
+  import("./pages/company/register/VideoAdd")
+);
+
 export const Play = loadable(() => import("./pages/home/Play"));
 export const SendSuccess = loadable(() => import("./pages/home/SendSuccess"));
 

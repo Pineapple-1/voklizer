@@ -25,6 +25,7 @@ function Selection() {
   console.log(user);
   const register = (role) => {
     setCreatingUser(true);
+
     Instance.post("auth/register/", {
       ...user,
       role: role,
@@ -32,6 +33,10 @@ function Selection() {
       .then((res) => {
         tokenSubject$.next(res.data.token);
         storage.set("token", res.data.token);
+
+
+        console.log('--->>>',res.data)
+       
         setRole(role);
         role === "user"
           ? history.push("/play")

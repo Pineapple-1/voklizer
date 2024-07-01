@@ -1,0 +1,7 @@
+{
+  "name": "voklizer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

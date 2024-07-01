@@ -46,13 +46,25 @@ function Sidebar({ open, setOpen }) {
                     </div>
                   </div>
                   <div className="flex gap-4 items-center">
-                    <div className="flex flex-col gap-5">
-                      <HomeIconSm />
-                      <SpeakerIcon />
-                      <CardIcon />
-                      <PersonIcon />
-                      <WalletIcon />
-                      <SupportIcon />
+                    <div className="flex flex-col gap-4">
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <HomeIconSm />
+                      </div>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <SpeakerIcon />
+                      </div>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <CardIcon />
+                      </div>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <PersonIcon />
+                      </div>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <WalletIcon />
+                      </div>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <SupportIcon />
+                      </div>
                     </div>
                     <div className="w-[2px] h-[226px] bg-black"></div>
                     <div className="flex flex-col gap-4">
