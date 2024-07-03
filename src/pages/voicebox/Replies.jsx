@@ -6,21 +6,21 @@ import useSwr from "swr";
 import { AnimatePresence, motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
+import { useRef } from "react";
 
 function Replies() {
   const { jobId } = useParams();
-  const { data: replies, isLoading: repliesLoading } = useSwr(
-    `user-job/${jobId}`
-  );
+  const { data, isLoading } = useSwr(`user-job/${jobId}`);
+  const vokRef = useRef();
 
   return (
     <Base>
       <div className="flex flex-col gap-10">
-        <Message />
+        <Message url={data?.job?.messageLink} vokRef={vokRef} />
 
         <div className="flex flex-col w-full justify-end items-end gap-5">
-          {!repliesLoading &&
-            replies?.job?.offers?.map((item) => (
+          {!isLoading &&
+            data?.job?.offers?.map((item) => (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -28,12 +28,12 @@ function Replies() {
                 transition={{ duration: 0.3 }}
                 className="flex flex-col w-full justify-end items-end gap-5"
               >
-                <MessageReplies offer={item} />
+                <MessageReplies offer={item} vokRef={vokRef} />
               </motion.div>
             ))}
         </div>
       </div>
-      <Loading open={repliesLoading} message={"Fetching Replies"} />
+      <Loading open={isLoading} message={"Fetching Replies"} />
     </Base>
   );
 }

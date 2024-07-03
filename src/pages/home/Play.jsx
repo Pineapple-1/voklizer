@@ -10,6 +10,8 @@ import { useState } from "react";
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading";
 import { useSWRConfig } from "swr";
+import ClockSvg from "../../components/ClockSvg";
+import Pause from "../../assets/icons/Pause";
 
 function Play() {
   const [isRecording, setIsRecording] = useState(false);
@@ -94,6 +96,12 @@ function Play() {
     }
   };
 
+  const pause = () => {
+    setIsPlaying(false);
+    audioRef.current.pause();
+    audioRef.current = null;
+  };
+
   return (
     <UserHomeLayout>
       <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
@@ -112,13 +120,16 @@ function Play() {
               />
             </>
           )}
-
           {!isRecording && audioHex ? (
             <div
               className="w-[132px] h-[132px] bg-[#161A1D] rounded-full flex items-center justify-center z-10"
-              onClick={PlayAudio}
+              onClick={isPlaying ? pause : PlayAudio}
             >
-              <img className="ml-3 " src="/Play.svg" alt="" />
+              {isPlaying ? (
+                <Pause className='text-white' />
+              ) : (
+                <img className="ml-3 " src="/Play.svg" alt="" />
+              )}
             </div>
           ) : (
             <div
@@ -158,11 +169,7 @@ function Play() {
                 transition={{ duration: 0.3 }}
                 className="w-full flex items-center justify-center "
               >
-                <img
-                  className="w-[28px] h-[33px]"
-                  src="/Stopwatch.svg"
-                  alt=""
-                />
+                <ClockSvg isRecording={isRecording} />
               </motion.div>
             </div>
           )}

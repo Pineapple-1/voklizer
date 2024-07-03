@@ -4,8 +4,8 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { storage } from "../../storage";
 import Instance from "../../axios/Axios";
 
-import { useAtomValue, useSetAtom } from "jotai";
-import { userAtom, roleAtom } from "../../state";
+import { useAtomValue } from "jotai";
+import { userAtom } from "../../state";
 import Loading from "../../components/Loading";
 import { useState } from "react";
 import { tokenSubject$ } from "./TokenState";
@@ -13,7 +13,6 @@ import { tokenSubject$ } from "./TokenState";
 function Selection() {
   const history = useHistory();
   const user = useAtomValue(userAtom);
-  const setRole = useSetAtom(roleAtom);
 
   const [creatingUser, setCreatingUser] = useState(false);
 
@@ -33,10 +32,8 @@ function Selection() {
       .then((res) => {
         tokenSubject$.next(res.data.token);
         storage.set("token", res.data.token);
+        storage.set("role", res.data.role);
 
-
-        console.log('--->>>',res.data)
-       
         setRole(role);
         role === "user"
           ? history.push("/play")

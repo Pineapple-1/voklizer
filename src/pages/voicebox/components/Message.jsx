@@ -1,42 +1,66 @@
-import { useState } from "react";
 import PlayIcon from "../../../assets/icons/PlayIcon";
 import Delivered from "../../../assets/icons/Delivered";
 import Ticks from "../../../assets/icons/Ticks";
 import { MusicBarsSmall } from "../../../components/MusicBars";
 import clsx from "clsx";
-import useSwr from "swr";
+import { useAtom } from "jotai";
+import { audioAtom } from "../../../state";
+import Pause from "../../../assets/icons/Pause";
 
-function Message() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const { data, isLoading } = useSwr("user-jobs?page=1&limit=1");
+function Message({ url, vokRef }) {
+  const [audioState, setAudioState] = useAtom(audioAtom);
 
   const listen = () => {
-    if (!isPlaying) {
-      const audio = new Audio(
-        `https://storage.googleapis.com/voklizer-dev/${data?.jobs?.[0]?.messageLink}`
+    if (audioState.url === url) {
+      if (audioState.isPaused) {
+        vokRef.current?.play();
+        setAudioState({
+          isPaused: false,
+          isPlaying: true,
+          url: url,
+        });
+      } else {
+        vokRef.current?.pause();
+
+        setAudioState({
+          isPaused: true,
+          isPlaying: true,
+          url: url,
+        });
+      }
+    } else {
+      if (vokRef?.current) {
+        vokRef.current?.pause();
+        vokRef.current = null;
+      }
+      vokRef.current = new Audio(
+        `https://storage.googleapis.com/voklizer-dev/${url}`
       );
 
-      audio.oncanplaythrough = () => {
-        console.log("in play through");
-        setIsPlaying(true);
-        audio.play();
+      vokRef.current.oncanplaythrough = () => {
+        setAudioState({
+          isPaused: false,
+          isPlaying: true,
+          url: url,
+        });
+        vokRef.current.play();
       };
 
-      audio.onended = () => {
-        setIsPlaying(false);
+      vokRef.current.onended = () => {
+        setAudioState({
+          isPaused: false,
+          isPlaying: false,
+          url: null,
+        });
       };
 
-      audio.load();
+      vokRef.current.load();
     }
   };
+
   return (
     <>
-      <div
-        className={clsx(
-          "flex flex-col  w-[196px]",
-          isLoading && "animate-pulse"
-        )}
-      >
+      <div className={clsx("flex flex-col  w-[196px]")}>
         <div className="flex items-center gap-2 justify-end">
           <div className="text-[9px]  text-[#8A8A8A] leading-[9px]">
             Delivered
@@ -46,13 +70,24 @@ function Message() {
 
         <div
           className="border border-[#ADADAD] flex gap-[9px] bg-[#F1F1F1] rounded-[35px]  items-center justify-center h-[56px]"
-          onClick={() => !isLoading && listen()}
+          onClick={() => listen()}
         >
           <div className="bg-[#D9D9D9] h-[42px] w-[42px] flex items-center justify-center rounded-full">
-            <PlayIcon className="text-purple" />
+            {audioState.isPlaying && audioState.url === url ? (
+              audioState.isPaused ? (
+                <PlayIcon className={"text-purple"} />
+              ) : (
+                <Pause className={"w-8 h-8 text-purple"} />
+              )
+            ) : (
+              <PlayIcon className={"text-purple"} />
+            )}
+
           </div>
 
-          {isPlaying ? (
+          {audioState.isPlaying &&
+          audioState.url === url &&
+          !audioState.isPaused ? (
             <div className="w-[121.02px] h-[32px] flex items-center justify-center -ml-1">
               <MusicBarsSmall isAnimating />
             </div>

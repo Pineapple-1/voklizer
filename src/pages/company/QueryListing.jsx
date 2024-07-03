@@ -1,13 +1,14 @@
-import React from "react";
 import UserHomeLayout from "../../layout/UserHomeLayout";
 
 import Pitch from "./components/Pitch";
 import useSwr from "swr";
 import Loading from "../../components/Loading";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
 
 function QueryListing() {
   const { data, isLoading } = useSwr("job-notifications?page=1");
+  const queryRef = useRef();
 
   return (
     <UserHomeLayout>
@@ -22,11 +23,13 @@ function QueryListing() {
           {!isLoading &&
             data.data.map((item, index) => (
               <Pitch
+                key={item.id}
                 location={"Lahore"}
                 area={item.category}
                 focus={index === 0 ? true : false}
                 url={item.userMessageLink}
                 jobId={item.jobId}
+                queryRef={queryRef}
               />
             ))}
         </AnimatePresence>

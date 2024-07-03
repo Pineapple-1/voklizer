@@ -12,7 +12,7 @@
       "clientId": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com"
     },
     "SplashScreen": {
-      "launchShowDuration": 3000,
+      "launchShowDuration": 2000,
       "launchAutoHide": true,
       "backgroundColor": "#000000",
       "androidSplashResourceName": "splash",
@@ -23,6 +23,9 @@
       "spinnerColor": "#999999",
       "splashFullScreen": true,
       "splashImmersive": true
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
     }
   }
 }

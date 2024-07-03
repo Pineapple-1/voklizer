@@ -13,10 +13,16 @@ import SingleTick from "../../../assets/icons/SingleTick";
 import Translate from "../../../assets/icons/Translate";
 import Retry from "../../../assets/icons/Retry";
 import { AnimatePresence } from "framer-motion";
+import { useAtom } from "jotai";
+import { audioAtom } from "../../../state";
+import Pause from "../../../assets/icons/Pause";
 
-function MessageReplies({ accepted, id, offer }) {
+function MessageReplies({ accepted, id, offer, vokRef }) {
   const [value, setValue] = useState(accepted ? 100 : 0);
+  const [audioState, setAudioState] = useAtom(audioAtom);
+
   const modal = useRef();
+
   console.log(JSON.stringify(offer));
   const data = [
     {
@@ -45,19 +51,52 @@ function MessageReplies({ accepted, id, offer }) {
     },
   ];
 
-  const playReply = () => {
-    const audio = new Audio(
-      `https://storage.googleapis.com/voklizer-dev/${offer.originalMessageLink}`
-    );
+  const listen = () => {
+    if (audioState.url === offer.originalMessageLink) {
+      if (audioState.isPaused) {
+        vokRef.current.play();
+        setAudioState({
+          isPaused: false,
+          isPlaying: true,
+          url: offer.originalMessageLink,
+        });
+      } else {
+        vokRef.current?.pause();
 
-    audio.oncanplaythrough = () => {
-      console.log("in play through");
-      audio.play();
-    };
+        setAudioState({
+          isPaused: true,
+          isPlaying: true,
+          url: offer.originalMessageLink,
+        });
+      }
+    } else {
+      if (vokRef?.current) {
+        vokRef.current?.pause();
+        vokRef.current = null;
+      }
+      vokRef.current = new Audio(
+        `https://storage.googleapis.com/voklizer-dev/${offer.originalMessageLink}`
+      );
 
-    // audio.onended = () => {};
+      vokRef.current.oncanplaythrough = () => {
+        setAudioState({
+          isPaused: false,
+          isPlaying: true,
+          url: offer.originalMessageLink,
+        });
+        vokRef.current.play();
+      };
 
-    audio.load();
+      vokRef.current.onended = () => {
+        setAudioState({
+          isPaused: false,
+          isPlaying: false,
+          url: null,
+        });
+      };
+
+      vokRef.current.load();
+    }
   };
 
   return (
@@ -93,16 +132,36 @@ function MessageReplies({ accepted, id, offer }) {
           aria-label="slider"
         >
           <SliderTrack>
-            <div onClick={playReply}>
+            <div onClick={listen}>
               <SliderThumb
                 className={clsx(
                   " w-[61px] h-[61px]  flex items-center justify-center rounded-full mt-3  z-30",
                   value === 100 ? "bg-[#000000]" : "bg-[#D9D9D9]"
                 )}
               >
-                <PlayIcon
-                  className={clsx(value === 100 ? "text-white" : "text-purple")}
-                />
+                {audioState.isPlaying &&
+                audioState.url === offer.originalMessageLink ? (
+                  audioState.isPaused ? (
+                    <PlayIcon
+                      className={clsx(
+                        value === 100 ? "text-white" : "text-purple"
+                      )}
+                    />
+                  ) : (
+                    <Pause
+                      className={clsx(
+                        "w-8 h-8",
+                        value === 100 ? "text-white" : "text-purple"
+                      )}
+                    />
+                  )
+                ) : (
+                  <PlayIcon
+                    className={clsx(
+                      value === 100 ? "text-white" : "text-purple"
+                    )}
+                  />
+                )}
               </SliderThumb>
             </div>
           </SliderTrack>

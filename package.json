@@ -24,6 +24,7 @@
     "@capacitor/status-bar": "^5.0.2",
     "@capawesome/capacitor-file-picker": "^6.0.0",
     "@codetrix-studio/capacitor-google-auth": "3.4.0-rc.0",
+    "@google-cloud/storage": "^7.11.2",
     "@headlessui/react": "^2.0.4",
     "@ionic/react": "^6.7.5",
     "@ionic/react-router": "^6.7.5",

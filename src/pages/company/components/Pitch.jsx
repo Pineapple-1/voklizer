@@ -6,16 +6,21 @@ import PlayIcon from "../../../assets/icons/PlayIcon";
 import clsx from "clsx";
 
 import { useState } from "react";
-import { useRef } from "react";
 import { VoiceRecorder } from "capacitor-voice-recorder";
 import { useHistory } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import Loading from "../../../components/Loading";
 import { useSWRConfig } from "swr";
 
-import { motion } from "framer-motion";
+import { useAtom } from "jotai";
+import { audioAtom } from "../../../state";
 
-function Pitch({ location, area, focus, url, jobId }) {
+import { motion } from "framer-motion";
+import Pause from "../../../assets/icons/Pause";
+
+function Pitch({ location, area, focus, url, jobId, queryRef }) {
+  const [audioState, setAudioState] = useAtom(audioAtom);
+
   const { mutate } = useSWRConfig();
 
   const [open, setOpen] = useState(focus ? true : false);
@@ -25,42 +30,19 @@ function Pitch({ location, area, focus, url, jobId }) {
   const [replyhex, setReplyhex] = useState(null);
 
   const [sending, setSending] = useState(false);
-
   const history = useHistory();
-  const recordedRef = useRef(null);
-  const listingRef = useRef(null);
 
   const cancel = () => {
-    recordingStop();
-    setReplyhex(null);
-    setIsReplying(false);
-
-    setisListening(false);
-    listingRef.current?.pause();
-    listingRef.current = null;
-
     if (isRecording) {
       setIsRecording(false);
-      recordedRef.current?.pause();
-      recordedRef.current = null;
+      recordingStop();
     }
-  };
 
-  const PlayRecordedAudio = () => {
-    recordedRef.current = new Audio(
-      `data:${replyhex.mimeType};base64,${replyhex.recordDataBase64}`
-    );
-
-    recordedRef.current.oncanplaythrough = () => {
-      console.log("in recorder play...");
-      recordedRef.current.play();
-    };
-
-    recordedRef.current.onended = () => {
-      setisListening(false);
-    };
-
-    recordedRef.current.load();
+    setReplyhex(null);
+    setIsReplying(false);
+    setisListening(false);
+    queryRef.current?.pause();
+    queryRef.current = null;
   };
 
   const ListenReply = () => {
@@ -74,35 +56,75 @@ function Pitch({ location, area, focus, url, jobId }) {
       }
 
       if (!isRecording && replyhex) {
-        setisListening(true);
-        console.log("in here");
-        PlayRecordedAudio();
+        const recroder = `data:${replyhex.mimeType};base64,${replyhex.recordDataBase64}`;
+
+        listen(recroder);
       }
     } else {
-      // setisListening(true);
+      listen();
+    }
+  };
 
-      if (!isListening) {
-        console.log("listning", url);
+  const listen = (recorder) => {
+    console.log("---->>>>", recorder);
+    if (audioState.url === url) {
+      if (audioState.isPaused) {
+        queryRef.current?.play();
+        setAudioState({
+          isPaused: false,
+          isPlaying: true,
+          url: url,
+        });
+      } else {
+        queryRef.current?.pause();
 
-        listingRef.current = new Audio(
-          `https://storage.googleapis.com/voklizer-dev/${url}`
-        );
-
-        listingRef.current.oncanplaythrough = () => {
-          console.log("in play through");
-          setisListening(true);
-          listingRef.current.play();
-        };
-
-        listingRef.current.onended = () => {
-          setisListening(false);
-        };
+        setAudioState({
+          isPaused: true,
+          isPlaying: true,
+          url: url,
+        });
       }
+    } else {
+      if (queryRef?.current) {
+        queryRef.current?.pause();
+        queryRef.current = null;
+      }
+      queryRef.current = recorder
+        ? new Audio(recorder)
+        : new Audio(`https://storage.googleapis.com/voklizer-dev/${url}`);
+
+      queryRef.current.oncanplaythrough = () => {
+        setAudioState({
+          isPaused: false,
+          isPlaying: true,
+          url: url,
+        });
+        queryRef.current.play();
+      };
+
+      queryRef.current.onended = () => {
+        setAudioState({
+          isPaused: false,
+          isPlaying: false,
+          url: null,
+        });
+      };
+
+      queryRef.current.load();
     }
   };
 
   const reply = () => {
     setisListening(false);
+
+    queryRef.current?.pause();
+    queryRef.current = null;
+    setAudioState({
+      isPaused: false,
+      isPlaying: false,
+      url: null,
+    });
+
     setIsReplying(true);
   };
 
@@ -124,26 +146,19 @@ function Pitch({ location, area, focus, url, jobId }) {
   };
 
   const recordingStart = () => {
-    VoiceRecorder.requestAudioRecordingPermission()
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => console.log(error));
+    VoiceRecorder.requestAudioRecordingPermission();
 
     VoiceRecorder.startRecording()
-      .then((result) => {
-        setIsRecording(true);
-      })
+      .then(() => setIsRecording(true))
       .catch((error) => console.log(error));
   };
 
   const recordingStop = () => {
     VoiceRecorder.stopRecording()
       .then((result) => {
-        console.log("-->>stop", JSON.stringify(result));
-
         setReplyhex(result.value);
         setIsRecording(false);
+        setisListening(true);
       })
       .catch((error) => console.log(error));
   };
@@ -171,14 +186,12 @@ function Pitch({ location, area, focus, url, jobId }) {
             "flex flex-col gap-6 rounded-xl px-[15px] py-[14px] w-full",
             isReplying ? "bg-[#000]" : "bg-[#8532D8]"
           )}
+          onClick={() => {
+            cancel();
+            setOpen((open) => !open);
+          }}
         >
-          <div
-            className="flex items-center justify-between text-white"
-            onClick={() => {
-              cancel();
-              setOpen((open) => !open);
-            }}
-          >
+          <div className="flex items-center justify-between text-white">
             <div className="text-[12px] leading-[15px] font-bold">{area}</div>
             <div className=" flex flex-col">
               <div className="text-[10px] leading-[12px] font-bold">Max</div>
@@ -188,19 +201,18 @@ function Pitch({ location, area, focus, url, jobId }) {
         </motion.div>
       )}
 
-      {open && (
-        <motion.section
-          key="content"
-          initial="collapsed"
-          animate="open"
-          exit="collapsed"
-          variants={{
-            open: { opacity: 1, height: "auto" },
-            collapsed: { opacity: 0, height: 0 },
-          }}
-          transition={{ duration: 0.3 }}
+      <motion.div
+        initial={false}
+        animate={{ height: open ? "auto" : 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="overflow-hidden"
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: open ? 1 : 0 }}
+          transition={{ duration: 0.2 }}
           className={clsx(
-            "flex flex-col gap-6 rounded-xl px-[15px] py-[14px] w-full overflow-hidden",
+            "flex flex-col gap-6 rounded-xl px-[15px] py-[14px] w-full transition-colors duration-300",
             isReplying ? "bg-[#000]" : "bg-[#8532D8]"
           )}
         >
@@ -266,10 +278,20 @@ function Pitch({ location, area, focus, url, jobId }) {
                   ) : (
                     <MicIcon className="text-purple" />
                   )
+                ) : audioState.isPlaying && audioState.url === url ? (
+                  audioState.isPaused ? (
+                    <PlayIcon />
+                  ) : (
+                    <Pause className={"w-8 h-8 text-purple"} />
+                  )
                 ) : (
                   <PlayIcon />
                 )}
-                {(isListening || isRecording) && (
+
+                {((audioState.isPlaying &&
+                  audioState.url === url &&
+                  !audioState.isPaused) ||
+                  isRecording) && (
                   <>
                     <div className="absolute inset-1 animate-ping border border-white w-20 h-20 rounded-full " />
                     <div className="absolute inset-1 border border-white w-20 h-20 rounded-full  animate-[ping_1s_linear_infinite]" />
@@ -291,16 +313,17 @@ function Pitch({ location, area, focus, url, jobId }) {
                   isReplying ? "bg-purple" : "bg-black"
                 )}
               />
-              <div
-                className="text-[#2B194C] text-[13px] leading-[16px] font-bold"
+              <button
+                className="text-[#2B194C] text-[13px] leading-[16px] font-bold  disabled:text-[#c3c3c3] "
                 onClick={!isReplying ? reply : send}
+                disabled={isRecording}
               >
                 {isReplying ? "Send" : "Reply"}
-              </div>
+              </button>
             </div>
           </>
-        </motion.section>
-      )}
+        </motion.div>
+      </motion.div>
 
       <Loading open={sending} message="Replying..." />
     </motion.div>

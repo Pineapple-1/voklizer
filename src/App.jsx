@@ -40,6 +40,8 @@ import { VoiceRecorder } from "capacitor-voice-recorder";
 import { fmcAtom } from "./state";
 import { useSetAtom } from "jotai";
 
+import { useSWRConfig } from "swr";
+
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/display.css";
 import "@ionic/react/css/flex-utils.css";
@@ -65,6 +67,8 @@ import "./App.css";
 import Instance from "./axios/Axios";
 
 function App({ token }) {
+  const { mutate } = useSWRConfig();
+
   const setFMC = useSetAtom(fmcAtom);
 
   useIonViewWillEnter(() => {
@@ -118,7 +122,7 @@ function App({ token }) {
     PushNotifications.addListener(
       "pushNotificationReceived",
       (notification) => {
-        console.log("new notification--->>>", JSON.stringify(notification));
+        mutate("job-notifications?page=1");
 
         setnotifications((notifications) => [
           ...notifications,

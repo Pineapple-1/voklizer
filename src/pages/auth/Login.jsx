@@ -45,6 +45,8 @@ function Login() {
           } else {
             tokenSubject$.next(res.data.token);
             storage.set("token", res.data.token);
+            storage.set("role", res.data.role);
+            console.log("--->>>>>>>>>>>>>>>>>>",res.data)
             setIsLogging(false);
             history.replace("/play");
           }
