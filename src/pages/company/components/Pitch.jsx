@@ -66,7 +66,6 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
   };
 
   const listen = (recorder) => {
-    console.log("---->>>>", recorder);
     if (audioState.url === url) {
       if (audioState.isPaused) {
         queryRef.current?.play();

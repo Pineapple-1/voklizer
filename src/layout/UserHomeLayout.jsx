@@ -4,9 +4,6 @@ import { useIonViewWillEnter, IonContent, IonPage } from "@ionic/react";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
 
-import Logo from "../assets/logos/Logo.svg";
-import BtmLogo from "../assets/logos/Logo-Alt.svg";
-
 import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import Sidebar from "../components/Sidebar";
@@ -44,8 +41,8 @@ function UserHomeLayout({ children }) {
             <div className="flex flex-col gap-3 mt-5">
               <div>
                 <img
-                  className="w-[42px] h-[38px] m-auto"
-                  src={Logo}
+                  className="w-[66px] h-[56px] m-auto"
+                  src={'/logos/Logo.svg'}
                   alt="Voklizer logo at the top"
                 />
               </div>
@@ -53,12 +50,12 @@ function UserHomeLayout({ children }) {
               <div className="flex flex-col justify-center items-center h-10">
                 <div className="flex flex-col gap-2 items-center">
                   <img
-                    className="h-5 w-[105px]"
-                    src={BtmLogo}
+                    className="h-[30px] w-[145px]"
+                    src={'/logos/Logo-Alt.svg'}
                     alt="Voklizer logo at the bottom"
                   />
-                  <div className="text-black text-[7px] leading-[8px] w-20 text-left">
-                    Press, Record, Send & Its solved.
+                  <div className="text-black text-[11px] leading-[11px] text-center">
+                    It's that simple.
                   </div>
                 </div>
               </div>

@@ -32,7 +32,7 @@ function Selection() {
       .then((res) => {
         tokenSubject$.next(res.data.token);
         storage.set("token", res.data.token);
-        storage.set("role", res.data.role);
+        storage.set("user", res.data);
 
         setRole(role);
         role === "user"
@@ -76,7 +76,7 @@ function Selection() {
             </div>
           </div>
           <img
-            className="w-[105px] h-[100px]"
+            className="w-[122px] h-[100px]"
             src="/logos/Logo-Light.svg"
             alt=""
           />

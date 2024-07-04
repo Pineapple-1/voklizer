@@ -185,8 +185,8 @@ function Play() {
                 <img src="/Ripple.svg" alt="" />
               </div>
             )}
-            <div className="text-xs leading-3 text-black w-full text-center">
-              Press to listen & Slide to send
+            <div className="text-sm text-black w-full text-center">
+            Press to listen & Slide to send
             </div>
           </div>
         </div>

@@ -54,11 +54,12 @@ function Sidebar({ open, setOpen }) {
                         <SpeakerIcon />
                       </div>
                       <div className="w-6 h-6 flex items-center justify-center">
-                        <CardIcon />
-                      </div>
-                      <div className="w-6 h-6 flex items-center justify-center">
                         <PersonIcon />
                       </div>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <CardIcon />
+                      </div>
+
                       <div className="w-6 h-6 flex items-center justify-center">
                         <WalletIcon />
                       </div>
@@ -86,12 +87,16 @@ function Sidebar({ open, setOpen }) {
                       >
                         Voice Box
                       </div>
+                      <div className="text-[20px] leading-6 text-[#000] font-semibold"               onClick={() => {
+                          history.push("/profile");
+                          setOpen(false);
+                        }}>
+                        Account
+                      </div>
                       <div className="text-[20px] leading-6 text-[#000] font-semibold">
                         Billing Info
                       </div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">
-                        Account
-                      </div>
+
                       <div className="text-[20px] leading-6 text-[#000] font-semibold">
                         Wallet
                       </div>
@@ -136,7 +141,7 @@ function Sidebar({ open, setOpen }) {
                 <div className="flex flex-col gap-14  ">
                   <img className="w-[164px] h-[58px]" src="/NavBar.svg" />
                   <img
-                    className="w-[164px] h-[58px]"
+                    className="w-[178px] h-[44px]"
                     src="/logos/Nav-Logo.svg"
                   />
                 </div>

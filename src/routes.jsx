@@ -54,3 +54,7 @@ export const Login = loadable(() => import("./pages/auth/Login"));
 export const ForgetPass = loadable(() => import("./pages/auth/ForgetPassword"));
 export const ResetPass = loadable(() => import("./pages/auth/ResetPassword"));
 export const Locale = loadable(() => import("./pages/auth/Locale"));
+
+
+
+export const Profile = loadable(()=>import("./pages/profile/UserProfile"))

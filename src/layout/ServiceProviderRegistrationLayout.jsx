@@ -3,7 +3,6 @@ import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
 
-import Logo from "../assets/logos/Logo.svg";
 import BtmLogo from "../assets/logos/Logo-Alt.svg";
 import { useHistory } from "react-router-dom";
 import { StatusBar, Style } from "@capacitor/status-bar";
@@ -36,7 +35,7 @@ function ServiceProviderRegistrationLayout({ children }) {
             </div>
             <img
               className="w-[73px] h-[66px] m-auto"
-              src={Logo}
+              src={'/logos/Logo.svg'}
               alt="Voklizer logo at the top"
             />
           </div>

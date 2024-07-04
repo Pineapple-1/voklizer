@@ -22,6 +22,7 @@ import {
   VokDiary,
   Queries,
   ServiceProviderVideo,
+  Profile,
 } from "./routes";
 
 import { ServiceProviderPreferredLanguage } from "./routes";
@@ -249,6 +250,10 @@ function App({ token }) {
     {
       path: "/diary",
       component: <VokDiary />,
+    },
+    {
+      path: "/profile",
+      component: <Profile />,
     },
   ];
 

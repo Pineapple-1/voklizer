@@ -13,7 +13,6 @@ function CompanyRegNumber() {
     register,
     handleSubmit,
     reset,
-
     formState: { errors },
   } = useForm();
 
