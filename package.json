@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@capacitor-community/facebook-login": "^5.0.3",
+    "@capacitor-community/stripe": "5",
     "@capacitor/android": "^5.7.5",
     "@capacitor/app": "^5.0.3",
     "@capacitor/core": "^5.7.5",
@@ -34,6 +35,8 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
     "@react-oauth/google": "^0.12.1",
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^4.1.0",
     "axios": "^1.7.2",
     "capacitor-voice-recorder": "^5.0.0",
     "class-variance-authority": "^0.7.0",

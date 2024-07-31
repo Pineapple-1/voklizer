@@ -1,0 +1,19 @@
+.stripe-element-custom {
+    font-size: 12px;
+    border: none;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 6px 0;
+    width: 100%;
+  }
+  
+  .stripe-element-custom::placeholder {
+    color: black;
+    font-size: 12px;
+  }
+  
+  .stripe-element-custom:focus {
+    outline: none;
+    box-shadow: none;
+  }

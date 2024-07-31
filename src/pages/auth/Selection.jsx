@@ -33,8 +33,6 @@ function Selection() {
         tokenSubject$.next(res.data.token);
         storage.set("token", res.data.token);
         storage.set("user", res.data);
-
-        setRole(role);
         role === "user"
           ? history.push("/play")
           : history.push("/preferred-language");

@@ -12,6 +12,7 @@ def capacitor_pods
   pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios'
   pod 'CapacitorCommunityFacebookLogin', :path => '../../node_modules/.pnpm/@capacitor-community+facebook-login@5.0.3/node_modules/@capacitor-community/facebook-login'
+  pod 'CapacitorCommunityStripe', :path => '../../node_modules/.pnpm/@capacitor-community+stripe@5.5.2_@capacitor+core@5.7.5_react@18.3.1_stripe-pwa-elements@2.1.0/node_modules/@capacitor-community/stripe'
   pod 'CapacitorApp', :path => '../../node_modules/.pnpm/@capacitor+app@5.0.3_@capacitor+core@5.7.5/node_modules/@capacitor/app'
   pod 'CapacitorHaptics', :path => '../../node_modules/.pnpm/@capacitor+haptics@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/haptics'
   pod 'CapacitorKeyboard', :path => '../../node_modules/.pnpm/@capacitor+keyboard@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard'

@@ -7,6 +7,7 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Redirect } from "react-router-dom";
+import { CapacitorStripeProvider } from "@capacitor-community/stripe/dist/esm/react/provider";
 
 import {
   Play,
@@ -23,6 +24,8 @@ import {
   Queries,
   ServiceProviderVideo,
   Profile,
+  Billing,
+  Wallet,
 } from "./routes";
 
 import { ServiceProviderPreferredLanguage } from "./routes";
@@ -140,6 +143,10 @@ function App({ token }) {
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
       (notification) => {
+        console.log("--->> tap");
+
+        window.location.href = "/video";
+
         setnotifications((notifications) => [
           ...notifications,
           {
@@ -255,27 +262,40 @@ function App({ token }) {
       path: "/profile",
       component: <Profile />,
     },
+    {
+      path: "/billing",
+      component: <Billing />,
+    },
+    {
+      path: "/wallet",
+      component: <Wallet />,
+    },
   ];
 
   return (
     <>
-      <IonApp>
-        <Suspense>
-          <IonReactRouter>
-            <IonRouterOutlet>
-              {paths.map((item) => (
-                <Route key={item.path} exact path={item.path}>
-                  {item.component}
+      <CapacitorStripeProvider
+        publishableKey="pk_test_51NQbGZCLy9Fig8JqAFjJIwpwszLRKH6XhdXo9aiYzpDTxIO0G0WOq19MsRfe8g7sx8Ovrf0Uh0mZcQNRl70MNpTP00eVK7qiD0"
+        fallback={<p>Loading...</p>}
+      >
+        <IonApp>
+          <Suspense>
+            <IonReactRouter>
+              <IonRouterOutlet>
+                {paths.map((item) => (
+                  <Route key={item.path} exact path={item.path}>
+                    {item.component}
+                  </Route>
+                ))}
+                <Route exact path="/">
+                  {!token && <Redirect to="/login" />}
+                  {token && <Redirect to="/play" />}
                 </Route>
-              ))}
-              <Route exact path="/">
-                {!token && <Redirect to="/login" />}
-                {token && <Redirect to="/play" />}
-              </Route>
-            </IonRouterOutlet>
-          </IonReactRouter>
-        </Suspense>
-      </IonApp>
+              </IonRouterOutlet>
+            </IonReactRouter>
+          </Suspense>
+        </IonApp>
+      </CapacitorStripeProvider>
     </>
   );
 }

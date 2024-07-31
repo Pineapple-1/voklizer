@@ -36,8 +36,6 @@ function Login() {
         Instance.post("auth/login/", {
           token: userCredential.user.accessToken,
           fcmToken: fmcToken,
-
-          
         }).then((res) => {
           if (!res.data.registered) {
             console.log("not created");
@@ -46,7 +44,7 @@ function Login() {
             tokenSubject$.next(res.data.token);
             storage.set("token", res.data.token);
             storage.set("user", res.data);
-            console.log("--->>>>>>>>>>>>>>>>>>",res.data)
+            console.log("--->>>>>>>>>>>>>>>>>>", res.data);
             setIsLogging(false);
             history.replace("/play");
           }
@@ -139,7 +137,7 @@ function Login() {
                   history.push("/video");
                 }}
               >
-                Forgot Password ? 
+                Forgot Password ?
               </div>
               <div
                 className="text-purple text-xs"

@@ -16,7 +16,7 @@ function Replies() {
   return (
     <Base>
       <div className="flex flex-col gap-10">
-        <Message url={data?.job?.messageLink} vokRef={vokRef} />
+        <Message job={data?.job} vokRef={vokRef} />
 
         <div className="flex flex-col w-full justify-end items-end gap-5">
           {!isLoading &&

@@ -6,18 +6,18 @@ import clsx from "clsx";
 import { useAtom } from "jotai";
 import { audioAtom } from "../../../state";
 import Pause from "../../../assets/icons/Pause";
+import { format } from "date-fns";
 
-function Message({ url, vokRef }) {
+function Message({ job, vokRef }) {
   const [audioState, setAudioState] = useAtom(audioAtom);
-
   const listen = () => {
-    if (audioState.url === url) {
+    if (audioState.url === job?.messageLink) {
       if (audioState.isPaused) {
         vokRef.current?.play();
         setAudioState({
           isPaused: false,
           isPlaying: true,
-          url: url,
+          url: job?.messageLink,
         });
       } else {
         vokRef.current?.pause();
@@ -25,7 +25,7 @@ function Message({ url, vokRef }) {
         setAudioState({
           isPaused: true,
           isPlaying: true,
-          url: url,
+          url: job?.messageLink,
         });
       }
     } else {
@@ -34,14 +34,14 @@ function Message({ url, vokRef }) {
         vokRef.current = null;
       }
       vokRef.current = new Audio(
-        `https://storage.googleapis.com/voklizer-dev/${url}`
+        `https://storage.googleapis.com/voklizer-dev/${job?.messageLink}`
       );
 
       vokRef.current.oncanplaythrough = () => {
         setAudioState({
           isPaused: false,
           isPlaying: true,
-          url: url,
+          url: job?.messageLink,
         });
         vokRef.current.play();
       };
@@ -73,7 +73,7 @@ function Message({ url, vokRef }) {
           onClick={() => listen()}
         >
           <div className="bg-[#D9D9D9] h-[42px] w-[42px] flex items-center justify-center rounded-full">
-            {audioState.isPlaying && audioState.url === url ? (
+            {audioState.isPlaying && audioState.url === job?.messageLink ? (
               audioState.isPaused ? (
                 <PlayIcon className={"text-purple"} />
               ) : (
@@ -82,11 +82,10 @@ function Message({ url, vokRef }) {
             ) : (
               <PlayIcon className={"text-purple"} />
             )}
-
           </div>
 
           {audioState.isPlaying &&
-          audioState.url === url &&
+          audioState.url === job?.messageLink &&
           !audioState.isPaused ? (
             <div className="w-[121.02px] h-[32px] flex items-center justify-center -ml-1">
               <MusicBarsSmall isAnimating />
@@ -103,7 +102,7 @@ function Message({ url, vokRef }) {
         <div className="flex gap-1 mt-1.5 justify-end">
           <Ticks />
           <div className="text-[9px] leading-[9px] text-[#8A8A8A]">
-            Sunday / 17:36
+            {format(job?.createdAt ?? new Date(), "EEEE / HH:mm")}
           </div>
         </div>
       </div>

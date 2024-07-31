@@ -55,6 +55,7 @@ export const ForgetPass = loadable(() => import("./pages/auth/ForgetPassword"));
 export const ResetPass = loadable(() => import("./pages/auth/ResetPassword"));
 export const Locale = loadable(() => import("./pages/auth/Locale"));
 
+export const Profile = loadable(() => import("./pages/profile/UserProfile"));
+export const Billing = loadable(() => import("./pages/profile/Billing"));
 
-
-export const Profile = loadable(()=>import("./pages/profile/UserProfile"))
+export const Wallet = loadable(() => import("./pages/profile/UserWallet"));

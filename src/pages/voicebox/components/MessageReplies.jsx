@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { Slider, SliderThumb, SliderTrack } from "react-aria-components";
-import { motion } from "framer-motion";
 import PlayIcon from "../../../assets/icons/PlayIcon";
 import clsx from "clsx";
 import Star from "../../../assets/icons/Star";
@@ -9,47 +8,19 @@ import { IonContent, IonModal } from "@ionic/react";
 import CloseIcon from "../../../assets/icons/CloseIcon";
 import CloseBadge from "../../../assets/icons/CloseBadge";
 import PersonAlt from "../../../assets/icons/PersonAlt";
-import SingleTick from "../../../assets/icons/SingleTick";
-import Translate from "../../../assets/icons/Translate";
-import Retry from "../../../assets/icons/Retry";
-import { AnimatePresence } from "framer-motion";
+
+import BookingEvent from "./BookingEvent";
+
 import { useAtom } from "jotai";
 import { audioAtom } from "../../../state";
 import Pause from "../../../assets/icons/Pause";
+import { format } from "date-fns";
 
 function MessageReplies({ accepted, id, offer, vokRef }) {
   const [value, setValue] = useState(accepted ? 100 : 0);
   const [audioState, setAudioState] = useAtom(audioAtom);
 
   const modal = useRef();
-
-  console.log(JSON.stringify(offer));
-  const data = [
-    {
-      name: "Immigration",
-      price: "£2000",
-    },
-    {
-      name: "Property",
-      price: "£3000",
-    },
-    {
-      name: "Personal Injury",
-      price: "£500",
-    },
-    {
-      name: "Criminal Law",
-      price: "£2000",
-    },
-    {
-      name: "Family Law",
-      price: "£5000",
-    },
-    {
-      name: "Property Law",
-      price: "£2000",
-    },
-  ];
 
   const listen = () => {
     if (audioState.url === offer.originalMessageLink) {
@@ -111,16 +82,16 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
         >
           <div className="flex flex-col items-start gap-0.5">
             <div className="text-[8px] leading-[8px] text-[#8A8A8A]">
-              Rochdale
+              {offer.User.ServiceProvider.city}
             </div>
             <div className="text-[9px] leading-[10px] text-[#8A8A8A]">
-              AB Solicitors
+              {offer.User.ServiceProvider.companyName}
             </div>
           </div>
 
           <div className="bg-[#8532D8] text-[15px] leading-6 text-[#FFFFFF] flex rounded-lg items-center px-[7px] gap-1">
             <Star />
-            <div>4.98</div>
+            <div> {offer.User.rating}</div>
           </div>
         </div>
 
@@ -212,7 +183,7 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
               value === 100 && "mr-6"
             )}
           >
-            12/04/2024 - 11:40
+            {format(offer.createdAt, "dd/MM/yyyy - HH:mm")}
           </div>
         </div>
 
@@ -230,11 +201,11 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
                   <div className="flex bg-[#32C889] gap-1 items-center rounded-md justify-center w-[60px] h-[25px]">
                     <Star className="text-white" />
                     <div className="leading-[18px] text-[15px] text-white">
-                      4.8
+                      {offer.User.rating}
                     </div>
                   </div>
                   <div className="text-purple font-bold text-[16px] leading-5 w-24">
-                    AB Solicitors Ltd.
+                    {offer.User.ServiceProvider.companyName}
                   </div>
                   <div className="w-full bg-black h-0.5" />
                   <div className="flex gap-1">
@@ -266,18 +237,14 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
                   Preferred Language/s
                 </div>
                 <div className="flex gap-2">
-                  <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
-                    English
-                  </div>
-                  <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
-                    Urdu
-                  </div>
-                  <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
-                    Spanish
-                  </div>
-                  <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
-                    French
-                  </div>
+                  {offer.User.ServiceProvider.PreferredLanguages.map((item) => (
+                    <div
+                      className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer"
+                      key={id}
+                    >
+                      {item.language}
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -285,17 +252,17 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
                 <div className="text-[#B2B2B2] text-[14px] leading-[18px]">
                   Areas of Expertise
                 </div>
-                {data.map((item) => (
+                {offer.User.ServiceProvider.PracticeAreas.map((item) => (
                   <div
                     className="flex gap-1"
                     onClick={() => setSelected(item)}
-                    key={item.name}
+                    key={item.id}
                   >
                     <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
-                      {item.name}
+                      {item.area}
                     </div>
                     <div className="bg-[#C9C9C9] px-3 py-0.5 text-p1 text-black w-max rounded-[14px] cursor-pointer">
-                      {item.price}
+                      {item.rate}/{item.rate_type}
                     </div>
                   </div>
                 ))}
@@ -313,56 +280,7 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
         </IonModal>
       </div>
 
-      <AnimatePresence>
-        {value === 100 && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.75 }}
-            transition={{ duration: 0.3 }}
-            className="w-full flex items-center justify-center "
-          >
-            <div className="w-full">
-              <div className="mb-1 font-bold text-[16px] text-[#161A1D]">
-                Interpreter Required?
-              </div>
-              <div className="bg-[#8532D8] h-[26px] gap-11 px-[14px] flex items-center justify-between rounded-lg mb-3">
-                <div className="text-xs font-bold text-white"> No</div>
-
-                <div className="h-2 bg-white flex-1 rounded-lg"></div>
-                <div className=" text-xs font-bold text-white">Yes</div>
-              </div>
-              <div className="bg-[#F5EBFF] p-6 rounded-2xl">
-                <div className=" font-bold text-[12px] leading-[15px] text-[#161A1D] mb-1">
-                  23/12/2003
-                </div>
-                <div className="flex  items-center justify-between gap-11 mb-1">
-                  <div className=" font-bold text-[16px] leading-[20px] text-[#161A1D]">
-                    Appointment Booked
-                  </div>
-                  <SingleTick />
-                </div>
-                <div className="h-0.5 w-full bg-[#606161] my-3"></div>
-                <div className=" font-bold text-[20px] leading-[25px] text-[#606161]">
-                  Tuesday at 15:30 PM
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className=" font-bold text-[16px] leading-[20px] text-[#606161]">
-                    Interpreter Included
-                  </div>
-                  <Translate />
-                </div>
-                <div className="w-[165px] flex items-center">
-                  <div className=" font-bold text-[19px] leading-[25px] text-purple">
-                    Re-Arrange Appointment
-                  </div>
-                  <Retry />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <BookingEvent value={value} />
     </>
   );
 }

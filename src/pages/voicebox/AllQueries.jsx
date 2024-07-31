@@ -11,7 +11,7 @@ function Queries() {
       <div className="flex flex-col gap-8">
         {!isLoading &&
           data?.jobs?.map((item) => (
-            <MessageGroup jobId={item.id} offerCount={item.offerCount} />
+            <MessageGroup job={item} />
           ))}
       </div>
       <Loading open={isLoading} message={"Fetching Queries"} />

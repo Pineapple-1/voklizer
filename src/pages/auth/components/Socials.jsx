@@ -40,6 +40,11 @@ function Socials({ setValue, setRemovePassword }) {
         googleCredential
       );
 
+      console.log(
+        "-->>>",
+        JSON.stringify(firebaseUserCredential.user.stsTokenManager.accessToken)
+      );
+
       Instance.post("auth/login", {
         token: firebaseUserCredential.user.stsTokenManager.accessToken,
         fcmToken: fmcToken ?? "",

@@ -3,7 +3,7 @@ import axios from "axios";
 import { tokenSubject$ } from "../pages/auth/TokenState";
 
 const Instance = axios.create({
-  baseURL: "https://voklizer-dev-mfdkryshgq-og.a.run.app/api/v1/",
+  baseURL: "https://voklizer-dev-mfdkryshgq-nw.a.run.app/api/v1/",
   withCredentials: true,
 });
 

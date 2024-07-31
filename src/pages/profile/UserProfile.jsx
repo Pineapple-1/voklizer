@@ -6,7 +6,7 @@ import SelectIcon from "../../assets/icons/SelectIcon";
 import { useState } from "react";
 
 function UserProfile() {
-  const user = userSubject$.value.data;
+  const user = userSubject$?.value?.data;
   const [showCountry, setShowCountry] = useState(false);
 
   const {

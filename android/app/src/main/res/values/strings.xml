@@ -7,4 +7,18 @@
     <string name="facebook_app_id">644429617838557</string>
     <string name="facebook_client_token">efd14d1c5bfde5a579bcbc5feb4b1dbb</string>
 
+
+
+    <string name="publishable_key">pk_test_51NQbGZCLy9Fig8JqAFjJIwpwszLRKH6XhdXo9aiYzpDTxIO0G0WOq19MsRfe8g7sx8Ovrf0Uh0mZcQNRl70MNpTP00eVK7qiD0</string>
+    <bool name="enable_google_pay">true</bool>
+    <string name="country_code">US</string>
+    <string name="merchant_display_name">Widget Store</string>
+    <bool name="google_pay_is_testing">true</bool>
+
+    <bool name="email_address_required">true</bool>
+    <bool name="phone_number_required">true</bool>
+    <bool name="billing_address_required">true</bool>
+    <string name="billing_address_format">Full</string>
+    <bool name="google_pay_existing_payment_method_required">false</bool>
+
 </resources>

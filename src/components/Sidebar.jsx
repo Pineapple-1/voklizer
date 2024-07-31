@@ -87,17 +87,32 @@ function Sidebar({ open, setOpen }) {
                       >
                         Voice Box
                       </div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold"               onClick={() => {
+                      <div
+                        className="text-[20px] leading-6 text-[#000] font-semibold"
+                        onClick={() => {
                           history.push("/profile");
                           setOpen(false);
-                        }}>
+                        }}
+                      >
                         Account
                       </div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">
+                      <div
+                        className="text-[20px] leading-6 text-[#000] font-semibold"
+                        onClick={() => {
+                          history.push("/billing");
+                          setOpen(false);
+                        }}
+                      >
                         Billing Info
                       </div>
 
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">
+                      <div
+                        className="text-[20px] leading-6 text-[#000] font-semibold"
+                        onClick={() => {
+                          history.push("/wallet");
+                          setOpen(false);
+                        }}
+                      >
                         Wallet
                       </div>
                       <div className="text-[20px] leading-6 text-[#000] font-semibold">
