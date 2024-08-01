@@ -7,7 +7,6 @@ import PaymentsCards from "../../assets/icons/PaymentsCards";
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading";
 
-
 import {
   Elements,
   useStripe,
@@ -40,17 +39,14 @@ const CheckoutForm = () => {
       card: elements.getElement(CardNumberElement),
     });
 
-    console.log("----->>>>", paymentMethod);
     if (error) {
       console.error("Error creating payment method:", error);
     } else {
-      console.log("Payment method created:", paymentMethod);
 
-      Instance.post("save-card", { paymentMethodId: paymentMethod.id }).then(
-        () => setLoading(false)
-      );
+      Instance.post("save-card", paymentMethod).then((res) => {
+       setLoading(false)
 
-      sendPaymentMethodToBackend(paymentMethod.id);
+      });
     }
   };
 

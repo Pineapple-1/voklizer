@@ -10,8 +10,11 @@ import { useState } from "react";
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading";
 import { useSWRConfig } from "swr";
+import useSWR from "swr";
+
 import ClockSvg from "../../components/ClockSvg";
 import Pause from "../../assets/icons/Pause";
+import { useCapacitorStripe } from "@capacitor-community/stripe/dist/esm/react/provider";
 
 function Play() {
   const [isRecording, setIsRecording] = useState(false);
@@ -21,7 +24,35 @@ function Play() {
   const audioRef = useRef(null);
 
   const history = useHistory();
+  const { stripe: capacitorStripe, isGooglePayAvailable } =
+    useCapacitorStripe();
+  const { data } = useSWR(isGooglePayAvailable && "create-payment-intent");
+
   const { mutate } = useSWRConfig();
+
+  const createPaymentToken = async () => {
+    try {
+      await capacitorStripe.createGooglePay({
+        paymentIntentClientSecret: data?.client_secret,
+
+        paymentSummaryItems: [
+          {
+            label: "Product Name",
+            amount: 10099.0,
+          },
+        ],
+        merchantIdentifier: "merchant.com.getcapacitor.stripe",
+        countryCode: "US",
+        currency: "USD",
+      });
+
+      if (isGooglePayAvailable) {
+        await capacitorStripe.presentGooglePay();
+      }
+    } catch (e) {
+      console.log("error Payment Method ID:", console.log(JSON.stringify(e)));
+    }
+  };
 
   const cancelAudio = () => {
     setAudioHex(null);
@@ -49,22 +80,27 @@ function Play() {
     }
   };
 
-  const SendAudio = () => {
+  const SendAudio = async () => {
     setJobPosting(true);
 
-    Instance.post("/add-job", {
-      audioType: audioHex.mimeType,
-      audioHex: audioHex.recordDataBase64,
-    })
-      .then((res) => {
-        setAudioHex(null);
-        setIsPlaying(false);
-        audioRef.current = null;
-        setJobPosting(false);
-        mutate("job-notifications");
-        history.push("/send-success");
-      })
-      .catch((e) => console.log("errors", JSON.stringify(e)));
+    try {
+      const paymentResult = await createPaymentToken();
+
+      await Instance.post("/add-job", {
+        audioType: audioHex.mimeType,
+        audioHex: audioHex.recordDataBase64,
+      });
+
+      setAudioHex(null);
+      setIsPlaying(false);
+      audioRef.current = null;
+      setJobPosting(false);
+      mutate("job-notifications");
+      history.push("/send-success");
+    } catch (error) {
+      console.log("Error:", JSON.stringify(error));
+      setJobPosting(false);
+    }
   };
 
   const RecordStart = () => {
@@ -126,7 +162,7 @@ function Play() {
               onClick={isPlaying ? pause : PlayAudio}
             >
               {isPlaying ? (
-                <Pause className='text-white' />
+                <Pause className="text-white" />
               ) : (
                 <img className="ml-3 " src="/Play.svg" alt="" />
               )}
@@ -186,7 +222,7 @@ function Play() {
               </div>
             )}
             <div className="text-sm text-black w-full text-center">
-            Press to listen & Slide to send
+              Press to listen & Slide to send
             </div>
           </div>
         </div>

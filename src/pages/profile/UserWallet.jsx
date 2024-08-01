@@ -4,23 +4,22 @@ import clsx from "clsx";
 import { CreditCard } from "lucide-react";
 import { useCapacitorStripe } from "@capacitor-community/stripe/dist/esm/react/provider";
 import useSWR from "swr";
-
+import Loading from "../../components/Loading";
 function UserWallet() {
   const { stripe: capacitorStripe, isGooglePayAvailable } =
     useCapacitorStripe();
 
-  const { data } = useSWR("user-payments?page=1&pageSize=10");
+  const { data, isLoading } = useSWR("user-payments-methods");
 
   const createPaymentToken = async () => {
     try {
       const result = await capacitorStripe.createGooglePay({
-        paymentIntentClientSecret:
-          "pi_3PiKpmCLy9Fig8Jq05acKoDB_secret_I0m9PZnALWCR5TDviSMb6qH00",
+        paymentIntentClientSecret: data.client_secret,
 
         paymentSummaryItems: [
           {
             label: "Product Name",
-            amount: 1099.0,
+            amount: 10099.0,
           },
         ],
         merchantIdentifier: "merchant.com.getcapacitor.stripe",
@@ -37,8 +36,6 @@ function UserWallet() {
     }
   };
 
-
-
   return (
     <Base>
       <div className="text-[24px] leading-[30px] text-[#020202] mx-auto">
@@ -48,41 +45,37 @@ function UserWallet() {
         <div className="mt-10">Payment Methods</div>
 
         <div className="flex gap-4 flex-col">
-          <div
-            className={clsx(
-              "bg-[#D9D9D960] px-6 py-5 rounded-xl w-full",
-              "border-2 border-purple"
-            )}
-          >
-            <div className="flex gap-2 items-center ">
-              <CreditCard className="text-purple " />
-              <div>Visa Card </div>
-              <div className="ml-auto text-[11px] text-[#2c2c2c]">Default</div>
-            </div>
-            <div className="flex mt-6 gap-2 items-center justify-start">
-              <div>**** **** ****</div>
-              <div> 5678</div>
-            </div>
-          </div>
-
-          <div className={clsx("bg-[#D9D9D960] px-6 py-5 rounded-xl w-full")}>
-            <div className="flex gap-2 items-center  ">
-              <CreditCard className="text-purple " />
-              <div>Master Card </div>
-              {/* <div className="ml-auto text-[11px] text-[#2c2c2c]">Default</div> */}
-            </div>
-            <div className="flex mt-6 gap-2 items-center justify-start">
-              <div>**** **** ****</div>
-              <div> 5678</div>
-            </div>
-          </div>
+          {!isLoading &&
+            data?.methods?.map((item) => (
+              <div
+                key={item.id}
+                className={clsx(
+                  "bg-[#D9D9D960] px-6 py-5 rounded-xl w-full",
+                  item.active && "border-2 border-purple"
+                )}
+                onClick={() => {}}
+              >
+                <div className="flex gap-2 items-center ">
+                  <CreditCard className="text-purple " />
+                  <div className=" capitalize">{item.brand} Card </div>
+                  {item.active && (
+                    <div className="ml-auto text-[11px] text-[#2c2c2c]">
+                      Default
+                    </div>
+                  )}
+                </div>
+                <div className="flex mt-6 gap-2 items-center justify-start">
+                  <div>**** **** ****</div>
+                  <div> {item.last4Digits}</div>
+                </div>
+              </div>
+            ))}
         </div>
 
         {isGooglePayAvailable && (
           <button
             className="bg-[#D9D9D960] rounded-xl  py-[9px] flex items-center  px-3 w-full  gap-2"
-            type="submit"
-            onClick={createPaymentToken}
+      
           >
             <img src="/google.svg" className=" w-5 h-5" alt="" />
 
@@ -90,6 +83,7 @@ function UserWallet() {
           </button>
         )}
       </div>
+      <Loading message={"Fetching Info"} open={isLoading } />
     </Base>
   );
 }
