@@ -14,10 +14,10 @@ import { auth } from "../../../firebase";
 import {
   signInWithPopup,
   GoogleAuthProvider,
-  
   signInWithCredential,
 } from "firebase/auth";
-FacebookLogin.initialize({ appId: "644429617838557" });
+
+FacebookLogin.initialize({ appId: import.meta.env.VITE_FACEBOOK_APP_ID });
 
 function Socials({ setValue, setRemovePassword }) {
   const provider = new GoogleAuthProvider();
