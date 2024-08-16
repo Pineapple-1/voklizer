@@ -1,6 +1,6 @@
 import Socials from "./components/Socials";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useState } from "react";
 import AuthLayout from "./AuthLayout";
 import SelectIcon from "../../assets/icons/SelectIcon";
@@ -10,8 +10,12 @@ import { userAtom, socialAtom } from "../../state";
 function Register() {
   const social = useAtomValue(socialAtom);
   const history = useHistory();
+  const location = useLocation();
   const [showCountry, setShowCountry] = useState(false);
-  const [removePassword, setRemovePassword] = useState(false);
+  const searchParams = new URLSearchParams(location.search);
+  const [removePassword, setRemovePassword] = useState(
+    searchParams.get("hidepass") === "true" ? true : false
+  );
   const setUser = useSetAtom(userAtom);
 
   const {
@@ -244,6 +248,8 @@ function Register() {
                 </div>
               </>
             )}
+
+            {console.log(removePassword)}
             <button
               className="bg-[#D9D9D960]  flex justify-between items-center rounded-xl py-[9px] px-3"
               type="submit"

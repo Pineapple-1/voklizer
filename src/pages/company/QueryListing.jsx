@@ -12,28 +12,36 @@ function QueryListing() {
 
   return (
     <UserHomeLayout>
-      <motion.div
-        layout
-        transition={{
-          layout: { duration: 0.3 },
-        }}
-        className="flex flex-col items-center h-full justify-end gap-6 my-6"
-      >
-        <AnimatePresence initial={false}>
-          {!isLoading &&
-            data.data.map((item, index) => (
-              <Pitch
-                key={item.id}
-                location={"Lahore"}
-                area={item.category}
-                focus={index === 0 ? true : false}
-                url={item.userMessageLink}
-                jobId={item.jobId}
-                queryRef={queryRef}
-              />
-            ))}
-        </AnimatePresence>
-      </motion.div>
+      {!isLoading && data.data.length === 0 ? (
+        <div className="h-full flex flex-col gap-8 items-center justify-center">
+          <img src="/empty-notifications.svg" alt="" className="w-56 h-56 " />
+          <div className=" capitalize">No Leads available at the moment!</div>
+        </div>
+      ) : (
+        <motion.div
+          layout
+          transition={{
+            layout: { duration: 0.3 },
+          }}
+          className="flex flex-col items-center h-full justify-end gap-6 my-6"
+        >
+          <AnimatePresence initial={false}>
+            {!isLoading &&
+              data.data.map((item, index) => (
+                <Pitch
+                  key={item.id}
+                  location={"Lahore"}
+                  area={item.category}
+                  focus={index === 0 ? true : false}
+                  url={item.userMessageLink}
+                  jobId={item.jobId}
+                  queryRef={queryRef}
+                />
+              ))}
+          </AnimatePresence>
+        </motion.div>
+      )}
+
       <Loading open={isLoading} message={"Fetching jobs"} />
     </UserHomeLayout>
   );

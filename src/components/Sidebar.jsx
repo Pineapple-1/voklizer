@@ -2,6 +2,7 @@ import React from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useHistory } from "react-router-dom";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import PersonIcon from "../assets/icons/PersonIcon";
 import WalletIcon from "../assets/icons/WalletIcon";
@@ -72,7 +73,7 @@ function Sidebar({ open, setOpen }) {
                       <div
                         className="text-[20px] leading-6 text-[#000] font-semibold"
                         onClick={() => {
-                          history.push("/play");
+                          history.push("/landing");
                           setOpen(false);
                         }}
                       >
@@ -145,8 +146,13 @@ function Sidebar({ open, setOpen }) {
 
                   <div
                     className="text-[13px] leading-4 text-[#000] font-semibold"
-                    onClick={() => {
+                    onClick={async () => {
+                      const result = await GoogleAuth?.signOut();
+
+                      console.log("--apple >>>>>>", JSON.stringify(result));
+
                       history.push("/login");
+
                       setOpen(false);
                     }}
                   >

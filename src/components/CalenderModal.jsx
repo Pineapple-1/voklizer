@@ -32,7 +32,7 @@ function CalenderModal({ open, onClose }) {
       >
         <IonContent>
           <div className="px-4 py-8 flex flex-col gap-6">
-            <div className=""> Select Time Avalible Slot</div>
+            <div className=" capitalize"> Select Time available Slot</div>
             <div className="bg-purple text-white rounded-2xl text-[14px] w-max px-3 py-2 ">
               {format(date ?? new Date(), "EEEE, MMMM do yyyy")}
             </div>

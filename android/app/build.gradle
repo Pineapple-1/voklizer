@@ -3,13 +3,13 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         debug {
-            storeFile file('/Users/abdulrehmanajmal/Desktop/voklizer/android/app/debug.keystore')
+            storeFile file('debug.keystore')
             storePassword 'Voklizer'
             keyAlias 'key0'
             keyPassword 'Voklizer'
         }
         release {
-            storeFile file('/Users/abdulrehmanajmal/Desktop/voklizer/android/app/production.keystore')
+            storeFile file('production.keystore')
             storePassword 'Voklizer'
             keyAlias 'key0'
             keyPassword 'Voklizer'

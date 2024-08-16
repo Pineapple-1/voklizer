@@ -9,16 +9,17 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { fmcAtom, socialAtom } from "../../../state";
 import Loading from "../../../components/Loading";
 import { tokenSubject$ } from "./../TokenState";
+import { storage } from "../../../storage";
+import { auth } from "../../../firebase";
 import {
   signInWithPopup,
   GoogleAuthProvider,
-  getAuth,
+  
   signInWithCredential,
 } from "firebase/auth";
 FacebookLogin.initialize({ appId: "644429617838557" });
 
 function Socials({ setValue, setRemovePassword }) {
-  const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const fmcToken = useAtomValue(fmcAtom);
   const setSocial = useSetAtom(socialAtom);
@@ -82,11 +83,13 @@ function Socials({ setValue, setRemovePassword }) {
               lastname: firebaseUserCredential.user.displayName.split(" ")?.[1],
               email: firebaseUserCredential.user.email,
             });
-            history.push("/register");
+            history.push("/register?hidepass=true");
           }
         } else {
           tokenSubject$.next(res.data.token);
-          history.push("/play");
+          storage.set("user", res.data);
+
+          history.push("/landing");
         }
       });
     } else {
@@ -125,11 +128,13 @@ function Socials({ setValue, setRemovePassword }) {
                 lastname: user.displayName.split(" ")?.[1],
                 email: user.email,
               });
-              history.push("/register");
+              history.push("/register?hidepass=true");
             }
           } else {
             tokenSubject$.next(res.data.token);
-            history.push("/play");
+            storage.set("user", res.data);
+
+            history.push("/landing");
           }
         });
       });

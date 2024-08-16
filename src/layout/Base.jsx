@@ -25,9 +25,9 @@ function Base({ children }) {
     <IonPage>
       <IonContent>
         <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
-          <div className="flex flex-col gap-5">
+          <div className="flex h-full flex-col gap-5">
             <div className=" flex justify-between items-center">
-              <div onClick={() => history.push("/play")}>
+              <div onClick={() => history.push("/landing")}>
                 <HomeIcon />
               </div>
 
@@ -36,7 +36,7 @@ function Base({ children }) {
               </div>
             </div>
 
-            <div className="flex flex-col">{children}</div>
+            <div className="h-max flex flex-1 flex-col">{children}</div>
           </div>
           <Sidebar open={isOpen} setOpen={setIsOpen} />
         </div>

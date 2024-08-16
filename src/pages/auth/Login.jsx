@@ -13,10 +13,10 @@ import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
 import { fmcAtom } from "../../state";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
-  const auth = getAuth();
   const [isLogging, setIsLogging] = useState(false);
   const fmcToken = useAtomValue(fmcAtom);
   const {
@@ -39,6 +39,7 @@ function Login() {
         }).then((res) => {
           if (!res.data.registered) {
             console.log("not created");
+            
             history.push("/register");
           } else {
             tokenSubject$.next(res.data.token);
@@ -46,7 +47,7 @@ function Login() {
             storage.set("user", res.data);
             console.log("--->>>>>>>>>>>>>>>>>>", res.data);
             setIsLogging(false);
-            history.replace("/play");
+            history.replace("/landing");
           }
 
           // history.push("/locale");

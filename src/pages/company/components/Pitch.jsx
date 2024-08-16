@@ -11,12 +11,15 @@ import { useHistory } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import Loading from "../../../components/Loading";
 import { useSWRConfig } from "swr";
+import useSWR from "swr";
 
 import { useAtom } from "jotai";
 import { audioAtom } from "../../../state";
 
 import { motion } from "framer-motion";
 import Pause from "../../../assets/icons/Pause";
+
+import { useCapacitorStripe } from "@capacitor-community/stripe/dist/esm/react/provider";
 
 function Pitch({ location, area, focus, url, jobId, queryRef }) {
   const [audioState, setAudioState] = useAtom(audioAtom);
@@ -31,6 +34,10 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
 
   const [sending, setSending] = useState(false);
   const history = useHistory();
+
+  const { stripe, isGooglePayAvailable } = useCapacitorStripe();
+  const { data: me } = useSWR("auth/me");
+  const { data } = useSWR(isGooglePayAvailable && "create-payment-intent");
 
   const cancel = () => {
     if (isRecording) {
@@ -62,6 +69,31 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
       }
     } else {
       listen();
+    }
+  };
+
+  const createPaymentToken = async () => {
+    try {
+      await stripe.createGooglePay({
+        paymentIntentClientSecret: data?.paymentIntent?.client_secret,
+
+        paymentSummaryItems: [
+          {
+            label: "Voklizer",
+            amount: data?.amount,
+          },
+        ],
+        merchantIdentifier: "merchant.com.getcapacitor.stripe",
+        countryCode: "US",
+        currency: "USD",
+      });
+
+      if (isGooglePayAvailable) {
+        const result = await stripe.presentGooglePay();
+        return result;
+      }
+    } catch (e) {
+      console.log("error Payment Method ID:", console.log(JSON.stringify(e)));
     }
   };
 
@@ -127,21 +159,53 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
     setIsReplying(true);
   };
 
-  const send = () => {
+
+
+  const send = async () => {
     setSending(true);
-    Instance.post(`job-service-provider-offer/${jobId}`, {
-      audioType: replyhex.mimeType,
-      audioHex: replyhex.recordDataBase64,
-    }).then(() => {
-      mutate(`user-job/${jobId}`);
+  
+    if (!me?.data?.defaultPaymentMethod) {
+      setSending(false);
+      history.push("/billing");
+      return;
+    }
+  
+    try {
+      if (me?.data?.defaultPaymentMethod === "google-pay") {
+        const paymentResult = await createPaymentToken();
+        if (paymentResult?.paymentResult !== "googlePayCompleted") {
+          throw new Error("Payment Was Not Completed");
+        }
+      } else {
+        await Instance.post("/charge-card", {
+          title: "Immigration",
+          serviceType: "Lead",
+        });
+      }
+  
+      await Instance.post(`job-service-provider-offer/${jobId}`, {
+        audioType: replyhex.mimeType,
+        audioHex: replyhex.recordDataBase64,
+      });
+  
       setSending(false);
       setReplyhex(null);
       setIsReplying(false);
       setIsRecording(false);
       setisListening(false);
-
+      
+      mutate(`user-job/${jobId}`);
+      mutate("create-payment-intent");
+      mutate("user-payments");
       history.push("/pitch-success");
-    });
+    } catch (error) {
+      setSending(false);
+    
+      if (me?.data?.defaultPaymentMethod === "google-pay" && error.message === "Payment Was Not Completed") {
+        history.push(`/error?message=${encodeURIComponent(error.message)}`);
+      }
+    
+    }
   };
 
   const recordingStart = () => {
@@ -315,7 +379,7 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
               <button
                 className="text-[#2B194C] text-[13px] leading-[16px] font-bold  disabled:text-[#c3c3c3] "
                 onClick={!isReplying ? reply : send}
-                disabled={isRecording}
+                disabled={isReplying?!replyhex:isRecording}
               >
                 {isReplying ? "Send" : "Reply"}
               </button>

@@ -48,8 +48,8 @@ function BookingEvent({ value }) {
                     className="flex  items-center justify-between gap-11 mb-1"
                     onClick={() => {}}
                   >
-                    <div className=" font-bold text-[16px] leading-[20px] text-[#161A1D]">
-                      Book Avalible time
+                    <div className=" font-bold text-[16px] leading-[20px] text-[#161A1D] capitalize">
+                      Book available time
                     </div>
 
                     <CalendarCheck className="w-6 h-6 text-purple" />

@@ -59,3 +59,10 @@ export const Profile = loadable(() => import("./pages/profile/UserProfile"));
 export const Billing = loadable(() => import("./pages/profile/Billing"));
 
 export const Wallet = loadable(() => import("./pages/profile/UserWallet"));
+
+export const Error = loadable(()=>import("./pages/utils/Error"))
+
+export const Landing = loadable(()=>import("./pages/home/LandingPage"))
+export const ReelPlayer = loadable(()=>import("./pages/home/ReelPlayer"))
+
+

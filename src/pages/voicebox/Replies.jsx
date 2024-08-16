@@ -3,7 +3,7 @@ import Base from "../../layout/Base";
 import Message from "./components/Message";
 import MessageReplies from "./components/MessageReplies";
 import useSwr from "swr";
-import { AnimatePresence, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
 import { useRef } from "react";

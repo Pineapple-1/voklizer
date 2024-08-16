@@ -11,6 +11,11 @@ const redirectToLoginPage = () => {
   window.location.href = "/login";
 };
 
+const redirectToErrorPage = (message) => {
+  const encodedMessage = encodeURIComponent(message);
+  window.location.href = `/error?message=${encodedMessage}`;
+};
+
 
 tokenSubject$.subscribe((token) => {
   console.log("subscription ran for token", token);
@@ -26,6 +31,8 @@ Instance.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       redirectToLoginPage();
+    }else{
+      redirectToErrorPage(`Message:${error.message} Url:${error.config.url}`)    
     }
     return Promise.reject(error);
   }

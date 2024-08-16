@@ -22,23 +22,22 @@ function Play() {
   const [jobPosting, setJobPosting] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
-
   const history = useHistory();
-  const { stripe: capacitorStripe, isGooglePayAvailable } =
-    useCapacitorStripe();
+
+  const { stripe, isGooglePayAvailable } = useCapacitorStripe();
   const { data } = useSWR(isGooglePayAvailable && "create-payment-intent");
+  const { data: me } = useSWR("auth/me");
 
   const { mutate } = useSWRConfig();
 
   const createPaymentToken = async () => {
     try {
-      await capacitorStripe.createGooglePay({
-        paymentIntentClientSecret: data?.client_secret,
-
+      await stripe.createGooglePay({
+        paymentIntentClientSecret: data?.paymentIntent?.client_secret,
         paymentSummaryItems: [
           {
-            label: "Product Name",
-            amount: 10099.0,
+            label: "Voklizer",
+            amount: data?.amount,
           },
         ],
         merchantIdentifier: "merchant.com.getcapacitor.stripe",
@@ -47,7 +46,8 @@ function Play() {
       });
 
       if (isGooglePayAvailable) {
-        await capacitorStripe.presentGooglePay();
+        const result = await stripe.presentGooglePay();
+        return result;
       }
     } catch (e) {
       console.log("error Payment Method ID:", console.log(JSON.stringify(e)));
@@ -75,31 +75,56 @@ function Play() {
       audioRef.current.onended = () => {
         setIsPlaying(false);
       };
-
       audioRef.current.load();
     }
   };
 
+
+
   const SendAudio = async () => {
     setJobPosting(true);
-
+  
+    if (!me.data.defaultPaymentMethod) {
+      setJobPosting(false);
+      history.push("/billing?recorded=true");
+      return;
+    }
+  
     try {
-      const paymentResult = await createPaymentToken();
-
+      if (me?.data?.defaultPaymentMethod === "google-pay") {
+        const paymentResult = await createPaymentToken();
+        if (paymentResult?.paymentResult !== "googlePayCompleted") {
+          throw new Error("Google Pay payment was not completed");
+        }
+      } else {
+        await Instance.post("/charge-card", {
+          title: "Immigration",
+          serviceType: "JOB",
+        });
+      }
+  
       await Instance.post("/add-job", {
         audioType: audioHex.mimeType,
         audioHex: audioHex.recordDataBase64,
       });
-
+  
       setAudioHex(null);
       setIsPlaying(false);
       audioRef.current = null;
       setJobPosting(false);
       mutate("job-notifications");
+      mutate("create-payment-intent");
+      mutate("user-payments");
+
       history.push("/send-success");
     } catch (error) {
-      console.log("Error:", JSON.stringify(error));
       setJobPosting(false);
+      console.error(error);
+  
+      if (me?.data?.defaultPaymentMethod === "google-pay" && error.message === "Google Pay payment was not completed") {
+        history.push(`/error?message=${encodeURIComponent(error.message)}`);
+      }
+
     }
   };
 

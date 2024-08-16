@@ -6,7 +6,7 @@ function ChipButton({ children, className, ...props }) {
     <button
       {...props}
       className={clsx(
-        "bg-purple px-8 py-3 text-p1 text-white w-max rounded-[14px] cursor-pointer",
+        "bg-purple px-8 py-3 text-p1 text-white w-max rounded-[14px] cursor-pointer disabled:bg-slate-400",
         className
       )}
     >

@@ -28,7 +28,7 @@ function UserHomeLayout({ children }) {
           <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
             <div className="flex flex-col gap-5">
               <div className=" flex justify-between">
-                <div onClick={() => history.push("/play")}>
+                <div onClick={() => history.push("/landing")}>
                   <HomeIcon />
                 </div>
 

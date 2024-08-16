@@ -4,8 +4,15 @@ import { loadStripe } from "@stripe/stripe-js";
 import "./billing.css";
 
 import PaymentsCards from "../../assets/icons/PaymentsCards";
+import useSWR from "swr";
+
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading";
+import { mutate } from "swr";
+import { useLocation, useHistory } from "react-router-dom";
+import clsx from "clsx";
+import { CreditCard } from "lucide-react";
+import { useCapacitorStripe } from "@capacitor-community/stripe/dist/esm/react/provider";
 
 import {
   Elements,
@@ -15,17 +22,21 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+import { motion } from "framer-motion";
+
 import { useState } from "react";
-import clsx from "clsx";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE);
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-
   const [loading, setLoading] = useState(false);
   const [billingAddress, setBillingAddress] = useState(true);
+  const location = useLocation();
+  const history = useHistory();
+
+  const searchParams = new URLSearchParams(location.search);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,10 +53,15 @@ const CheckoutForm = () => {
     if (error) {
       console.error("Error creating payment method:", error);
     } else {
-
       Instance.post("save-card", paymentMethod).then((res) => {
-       setLoading(false)
-
+        Instance.post("set-default-payment-method", {
+          defaultPaymentMethod: "Card",
+        }).then(() => {
+          setLoading(false);
+          mutate("user-payments-methods");
+          mutate("auth/me");
+          searchParams.get("recorded") === "true" && history.push("/play");
+        });
       });
     }
   };
@@ -165,11 +181,98 @@ const CheckoutForm = () => {
 };
 
 function Billing() {
+  const { isGooglePayAvailable } = useCapacitorStripe();
+  const { data, isLoading } = useSWR("user-payments-methods");
+  const { data: me, isLoading: isMeLoading } = useSWR("auth/me");
+  const [postLoading, setPostLoading] = useState(false);
+
   return (
     <Base>
       <div className="text-[24px] leading-[30px] text-[#020202] mx-auto">
         Billing Info
       </div>
+
+      <div className="mt-10  mb-4">Payment Methods</div>
+
+      <div className="flex gap-3 flex-col">
+        {!isLoading &&
+          !isMeLoading &&
+          data?.methods?.map((item) => (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.75 }}
+              transition={{ duration: 0.3 }}
+              className="w-full flex items-center justify-center"
+            >
+              <div
+                key={item.id}
+                className={clsx(
+                  "bg-[#D9D9D960] px-6 py-5 rounded-xl w-full",
+                  me?.data?.defaultPaymentMethod == "Card" &&
+                    "border-2 border-purple"
+                )}
+                onClick={() => {
+                  setPostLoading(true);
+                  Instance.post("/set-default-payment-method", {
+                    defaultPaymentMethod: "Card",
+                  }).then(() => {
+                    mutate("auth/me");
+                    setPostLoading(false);
+                  });
+                }}
+              >
+                <div className="flex gap-2 items-center ">
+                  <CreditCard className="text-purple " />
+                  <div className=" capitalize">{item.brand} Card </div>
+                  {me?.data?.defaultPaymentMethod == "Card" && (
+                    <div className="ml-auto text-[11px] text-[#2c2c2c]">
+                      Default
+                    </div>
+                  )}
+                </div>
+                <div className="flex mt-6 gap-2 items-center justify-start">
+                  <div>**** **** ****</div>
+                  <div> {item.last4Digits}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+
+        {!isMeLoading && isGooglePayAvailable && (
+          <div
+            className={clsx(
+              "bg-[#D9D9D960] rounded-xl  py-[9px] flex items-center  px-3 w-full  gap-2",
+              me?.data?.defaultPaymentMethod == "google-pay" &&
+                "border-2 border-purple"
+            )}
+            onClick={() => {
+              setPostLoading(true);
+
+              Instance.post("/set-default-payment-method", {
+                defaultPaymentMethod: "google-pay",
+              }).then(() => {
+                mutate("auth/me");
+                setPostLoading(false);
+              });
+            }}
+          >
+            <img src="/google.svg" className=" w-5 h-5" alt="" />
+
+            <div className=" w-full flex flex-between">
+              <div className="text-[11px] font-medium">Google Pay</div>
+
+              {me?.data?.defaultPaymentMethod == "google-pay" && (
+                <div className="ml-auto text-[11px] text-[#2c2c2c]">
+                  Default
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="mt-10  -mb-4">Add Payment Methods</div>
+
       <div className="w-full mx-auto">
         <Elements stripe={stripePromise}>
           <div className="mt-10">
@@ -177,6 +280,11 @@ function Billing() {
           </div>
         </Elements>
       </div>
+
+      <Loading
+        message={"Fetching Info"}
+        open={isLoading || isMeLoading || postLoading}
+      />
     </Base>
   );
 }

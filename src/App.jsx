@@ -26,6 +26,9 @@ import {
   Profile,
   Billing,
   Wallet,
+  Error,
+  Landing,
+  ReelPlayer,
 } from "./routes";
 
 import { ServiceProviderPreferredLanguage } from "./routes";
@@ -143,9 +146,7 @@ function App({ token }) {
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
       (notification) => {
-        console.log("--->> tap");
-
-        window.location.href = "/video";
+        window.location.href = "/listing";
 
         setnotifications((notifications) => [
           ...notifications,
@@ -269,6 +270,18 @@ function App({ token }) {
     {
       path: "/wallet",
       component: <Wallet />,
+    },
+    {
+      path: "/error",
+      component: <Error />,
+    },
+    {
+      path: "/landing",
+      component: <Landing />,
+    },
+    {
+      path: "/player/:id",
+      component: <ReelPlayer />,
     },
   ];
 

@@ -1,16 +1,17 @@
-// import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+};
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC_hSGTW8obPsehb_JEKKIGcasLtsXHCo0",
-//   authDomain: "voklizer-dev.firebaseapp.com",
-//   projectId: "voklizer-dev",
-//   storageBucket: "voklizer-dev.appspot.com",
-//   messagingSenderId: "680199080385",
-//   appId: "1:680199080385:web:442d3af8a16c67d1c60740",
-//   measurementId: "G-8Y7WJ3ERBE",
-// };
-
-// const app = initializeApp(firebaseConfig);
-
-
+const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);
+export const auth = getAuth(app);

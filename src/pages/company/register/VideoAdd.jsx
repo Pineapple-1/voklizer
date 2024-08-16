@@ -5,9 +5,21 @@ import { FilePicker } from "@capawesome/capacitor-file-picker";
 
 import { useState, useRef } from "react";
 
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../../firebase";
+import Instance from "../../../axios/Axios";
+import Loading from "../../../components/Loading";
+import { useHistory } from "react-router-dom";
+
 function VideoAdd() {
   const [videoSrc, setVideoUrl] = useState(null);
   const videoRef = useRef(null);
+  const history = useHistory();
+
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadError, setUploadError] = useState(null);
+  const [downloadURL, setDownloadURL] = useState(null);
+  const [uploadStart, setUploadStart] = useState(null);
 
   const pickMedia = async () => {
     const result = await FilePicker.pickMedia({ readData: true });
@@ -18,7 +30,7 @@ function VideoAdd() {
   };
 
   const nothing = () => {
-    console.log("apple mango");
+    history.push("/landing");
   };
 
   const togglePlay = () => {
@@ -31,6 +43,39 @@ function VideoAdd() {
     }
   };
 
+  const sendToFirebase = async () => {
+    const response = await fetch(videoSrc);
+    const storageRef = ref(storage, "intro/" + `${Date.now()}`);
+    const blob = await response.blob();
+    const uploadTask = uploadBytesResumable(storageRef, blob);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        setUploadStart(true);
+        setUploadProgress(progress);
+      },
+      (error) => {
+        console.error("Upload error:", error);
+        setUploadError(error.message);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          Instance.post("service-provider/video-link", {
+            videoLink: url,
+          }).then(() => {
+            setUploadStart(false);
+            history.push("/landing");
+          });
+          setDownloadURL(url);
+
+          console.log("File available at", url);
+        });
+      }
+    );
+  };
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
@@ -58,11 +103,19 @@ function VideoAdd() {
             </div>
           </div>
         )}
+        <div className="h-5 w-full">
+          {uploadProgress > 0 && (
+            <p>Upload Progress: {uploadProgress.toFixed(2)}%</p>
+          )}
+        </div>
+
         <div className="flex justify-between mt-6">
           <ChipButton onClick={nothing}>Skip</ChipButton>
-          <ChipButton onClick={pickMedia}>Upload</ChipButton>
+          <ChipButton onClick={pickMedia}>Select</ChipButton>
+          <ChipButton onClick={sendToFirebase}>Upload</ChipButton>
         </div>
       </div>
+      <Loading message={"Uploading"} open={uploadStart} />
     </ServiceProviderRegistrationLayout>
   );
 }

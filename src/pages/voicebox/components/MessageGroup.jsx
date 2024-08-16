@@ -27,7 +27,7 @@ function MessageGroup({ job }) {
         </div>
 
         <div
-          className="border relative border-[#ADADAD] flex gap-[9px] bg-[#F1F1F1] rounded-[35px]  items-center justify-start h-[56px] px-2.5"
+          className="border relative border-[#ADADAD] flex gap-[18px] bg-[#F1F1F1] rounded-[35px]  items-center justify-start h-[56px] px-2.5"
           onClick={() => {
             history.push(`replies/${job.id}`);
           }}
@@ -42,11 +42,7 @@ function MessageGroup({ job }) {
             {job.offerCount}
           </div>
 
-          <img
-            className="w-[121.02px] h-[32px]"
-            src="/Ripple.svg"
-            alt="ripple"
-          />
+          <img className="w-[155px] h-[42px] " src="/Ripple.svg" alt="ripple" />
         </div>
       </div>
     </>

@@ -1,32 +1,36 @@
 PODS:
-  - AppAuth (1.7.4):
-    - AppAuth/Core (= 1.7.4)
-    - AppAuth/ExternalUserAgent (= 1.7.4)
-  - AppAuth/Core (1.7.4)
-  - AppAuth/ExternalUserAgent (1.7.4):
+  - AppAuth (1.7.5):
+    - AppAuth/Core (= 1.7.5)
+    - AppAuth/ExternalUserAgent (= 1.7.5)
+  - AppAuth/Core (1.7.5)
+  - AppAuth/ExternalUserAgent (1.7.5):
     - AppAuth/Core
-  - Capacitor (5.7.5):
+  - Capacitor (5.7.7):
     - CapacitorCordova
-  - CapacitorApp (5.0.3):
+  - CapacitorApp (5.0.8):
     - Capacitor
   - CapacitorCommunityFacebookLogin (5.0.3):
     - Capacitor
     - FBSDKCoreKit (= 16.1.3)
     - FBSDKLoginKit (= 16.1.3)
-  - CapacitorCordova (5.7.5)
-  - CapacitorHaptics (5.0.2):
+  - CapacitorCommunityStripe (5.5.2):
     - Capacitor
-  - CapacitorKeyboard (5.0.2):
+    - StripeApplePay (~> 23.27.0)
+    - StripePaymentSheet (~> 23.27.0)
+  - CapacitorCordova (5.7.7)
+  - CapacitorHaptics (5.0.8):
     - Capacitor
-  - CapacitorPushNotifications (5.0.2):
+  - CapacitorKeyboard (5.0.9):
     - Capacitor
-  - CapacitorSplashScreen (5.0.2):
+  - CapacitorPushNotifications (5.1.2):
     - Capacitor
-  - CapacitorStatusBar (5.0.2):
+  - CapacitorSplashScreen (5.0.8):
+    - Capacitor
+  - CapacitorStatusBar (5.0.8):
     - Capacitor
   - CapacitorVoiceRecorder (5.0.0):
     - Capacitor
-  - CapawesomeCapacitorFilePicker (6.0.0):
+  - CapawesomeCapacitorFilePicker (6.0.1):
     - Capacitor
   - CodetrixStudioCapacitorGoogleAuth (0.0.1):
     - Capacitor
@@ -47,20 +51,40 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.3.0)
+  - StripeApplePay (23.27.6):
+    - StripeCore (= 23.27.6)
+  - StripeCore (23.27.6)
+  - StripePayments (23.27.6):
+    - StripeCore (= 23.27.6)
+    - StripePayments/Stripe3DS2 (= 23.27.6)
+  - StripePayments/Stripe3DS2 (23.27.6):
+    - StripeCore (= 23.27.6)
+  - StripePaymentSheet (23.27.6):
+    - StripeApplePay (= 23.27.6)
+    - StripeCore (= 23.27.6)
+    - StripePayments (= 23.27.6)
+    - StripePaymentsUI (= 23.27.6)
+  - StripePaymentsUI (23.27.6):
+    - StripeCore (= 23.27.6)
+    - StripePayments (= 23.27.6)
+    - StripeUICore (= 23.27.6)
+  - StripeUICore (23.27.6):
+    - StripeCore (= 23.27.6)
 
 DEPENDENCIES:
-  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@5.0.3_@capacitor+core@5.7.5/node_modules/@capacitor/app`)"
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/app`)"
   - "CapacitorCommunityFacebookLogin (from `../../node_modules/.pnpm/@capacitor-community+facebook-login@5.0.3/node_modules/@capacitor-community/facebook-login`)"
-  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios`)"
-  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/haptics`)"
-  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard`)"
-  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications`)"
-  - "CapacitorSplashScreen (from `../../node_modules/.pnpm/@capacitor+splash-screen@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen`)"
-  - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/status-bar`)"
-  - "CapacitorVoiceRecorder (from `../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.5/node_modules/capacitor-voice-recorder`)"
-  - "CapawesomeCapacitorFilePicker (from `../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.0.0_@capacitor+core@5.7.5/node_modules/@capawesome/capacitor-file-picker`)"
-  - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.5/node_modules/@codetrix-studio/capacitor-google-auth`)"
+  - "CapacitorCommunityStripe (from `../../node_modules/.pnpm/@capacitor-community+stripe@5.5.2_@capacitor+core@5.7.7_react@18.3.1_stripe-pwa-elements@2.1.0/node_modules/@capacitor-community/stripe`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios`)"
+  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@5.0.9_@capacitor+core@5.7.7/node_modules/@capacitor/keyboard`)"
+  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@5.1.2_@capacitor+core@5.7.7/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorSplashScreen (from `../../node_modules/.pnpm/@capacitor+splash-screen@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/splash-screen`)"
+  - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/status-bar`)"
+  - "CapacitorVoiceRecorder (from `../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.7/node_modules/capacitor-voice-recorder`)"
+  - "CapawesomeCapacitorFilePicker (from `../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.0.1_@capacitor+core@5.7.7/node_modules/@capawesome/capacitor-file-picker`)"
+  - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.7/node_modules/@codetrix-studio/capacitor-google-auth`)"
 
 SPEC REPOS:
   trunk:
@@ -72,46 +96,55 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - StripeApplePay
+    - StripeCore
+    - StripePayments
+    - StripePaymentSheet
+    - StripePaymentsUI
+    - StripeUICore
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../node_modules/.pnpm/@capacitor+app@5.0.3_@capacitor+core@5.7.5/node_modules/@capacitor/app"
+    :path: "../../node_modules/.pnpm/@capacitor+app@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/app"
   CapacitorCommunityFacebookLogin:
     :path: "../../node_modules/.pnpm/@capacitor-community+facebook-login@5.0.3/node_modules/@capacitor-community/facebook-login"
+  CapacitorCommunityStripe:
+    :path: "../../node_modules/.pnpm/@capacitor-community+stripe@5.5.2_@capacitor+core@5.7.7_react@18.3.1_stripe-pwa-elements@2.1.0/node_modules/@capacitor-community/stripe"
   CapacitorCordova:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.5_@capacitor+core@5.7.5/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios"
   CapacitorHaptics:
-    :path: "../../node_modules/.pnpm/@capacitor+haptics@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/haptics"
+    :path: "../../node_modules/.pnpm/@capacitor+haptics@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/haptics"
   CapacitorKeyboard:
-    :path: "../../node_modules/.pnpm/@capacitor+keyboard@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/keyboard"
+    :path: "../../node_modules/.pnpm/@capacitor+keyboard@5.0.9_@capacitor+core@5.7.7/node_modules/@capacitor/keyboard"
   CapacitorPushNotifications:
-    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/push-notifications"
+    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@5.1.2_@capacitor+core@5.7.7/node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
-    :path: "../../node_modules/.pnpm/@capacitor+splash-screen@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/splash-screen"
+    :path: "../../node_modules/.pnpm/@capacitor+splash-screen@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
-    :path: "../../node_modules/.pnpm/@capacitor+status-bar@5.0.2_@capacitor+core@5.7.5/node_modules/@capacitor/status-bar"
+    :path: "../../node_modules/.pnpm/@capacitor+status-bar@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/status-bar"
   CapacitorVoiceRecorder:
-    :path: "../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.5/node_modules/capacitor-voice-recorder"
+    :path: "../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.7/node_modules/capacitor-voice-recorder"
   CapawesomeCapacitorFilePicker:
-    :path: "../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.0.0_@capacitor+core@5.7.5/node_modules/@capawesome/capacitor-file-picker"
+    :path: "../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.0.1_@capacitor+core@5.7.7/node_modules/@capawesome/capacitor-file-picker"
   CodetrixStudioCapacitorGoogleAuth:
-    :path: "../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.5/node_modules/@codetrix-studio/capacitor-google-auth"
+    :path: "../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.7/node_modules/@codetrix-studio/capacitor-google-auth"
 
 SPEC CHECKSUMS:
-  AppAuth: 182c5b88630569df5acb672720534756c29b3358
-  Capacitor: 7d42085cb786b2d3ea9ac8a17ebd7e3305be7b72
-  CapacitorApp: 7a5dec8b33573707164b293475d5c89ba684364a
+  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
+  Capacitor: 0039e9b67cfde2d5e9111b3ddca8c0097f4cf2f4
+  CapacitorApp: 102e553c3b1fdc255969c39aa19b529675690ef4
   CapacitorCommunityFacebookLogin: c0e2bb54cb567d90443a80ae20569fdac0df3f89
-  CapacitorCordova: c946a6052b547e1e185fc46862003f7b9130ead1
-  CapacitorHaptics: 864585542a435bd41eaabf7f30d9ff5ec03024d3
-  CapacitorKeyboard: e628d4e66d621c69e449945ebabded17c5b9c2e8
-  CapacitorPushNotifications: 0566429afa72fe083a4142a58321f0ad83837096
-  CapacitorSplashScreen: bd2a056394ba0b8807e7bb3e746424f67c426e03
-  CapacitorStatusBar: 48f2899f6846cc7d8431b251ebfc58e1c10e3d58
+  CapacitorCommunityStripe: 8c0226f2bca3a6d902c51d8323041f529cce0ed0
+  CapacitorCordova: d906edead798c9bb1b07274f15615878d27507d5
+  CapacitorHaptics: f59c880aa8fad7f47bb54b48d6f2d6b26279602a
+  CapacitorKeyboard: f2e78b60a5cb981b4ea9e511e80693ca355169bb
+  CapacitorPushNotifications: 18108623c4f6a2629e7560c07c157820a511bcdd
+  CapacitorSplashScreen: 7a69e693bc1ef83e4bd3fb073bd8c8fa33e9059e
+  CapacitorStatusBar: 51af549cfcf35aac3ab072b062967ae5971ee485
   CapacitorVoiceRecorder: 872ea857b497ce2c71afe3e4eb5de0a74290c0db
-  CapawesomeCapacitorFilePicker: 983e8d272d200897cf1c12cf9a62439fa2fb2c35
+  CapawesomeCapacitorFilePicker: c80c30759ba48986ff34a2b51b23ac2babfd3774
   CodetrixStudioCapacitorGoogleAuth: fcce058390347c1ce5d8ac4764bdf1f5c1ee233b
   FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
   FBSDKCoreKit: 19e2e18b3be578d7a51fed8fdd8c152bef0b9511
@@ -120,7 +153,13 @@ SPEC CHECKSUMS:
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  StripeApplePay: 5f017e8dfe259fafbab70137776189deef754bb2
+  StripeCore: 01ec57f0dddfe742054dc6a322f811426c25313d
+  StripePayments: 6adf11faf1b7038e77aa97019410305c6adca79d
+  StripePaymentSheet: 3eaf870c4388e44b0cc37e4c69d00b6957fd8bd7
+  StripePaymentsUI: 59ccddeacad592b09fa67e8d641340820ddb4751
+  StripeUICore: 879bbf5889265db13f52fac8aad7a176ba62481f
 
-PODFILE CHECKSUM: 6a90c9950d8219d825f6da044ea4dd7b22d98a1e
+PODFILE CHECKSUM: 46c2df8c9480d440e33970ad32a9d15b8a5e250d
 
 COCOAPODS: 1.15.2

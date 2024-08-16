@@ -75,7 +75,7 @@ function PreferredLanguage() {
         </div>
 
         <div className="flex justify-end">
-          <ChipButton onClick={() => submit()}>Next</ChipButton>
+          <ChipButton onClick={() => submit()} disabled = {value.length===0}>Next</ChipButton>
         </div>
       </div>
       <Loading open={loading} message={"Saving Info"} />

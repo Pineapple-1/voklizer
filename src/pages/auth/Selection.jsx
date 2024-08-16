@@ -32,9 +32,9 @@ function Selection() {
       .then((res) => {
         tokenSubject$.next(res.data.token);
         storage.set("token", res.data.token);
-        storage.set("user", res.data);
+        storage.set("user", res.data.data);
         role === "user"
-          ? history.push("/play")
+          ? history.push("/landing")
           : history.push("/preferred-language");
       })
       .finally(() => {
