@@ -17,8 +17,7 @@ function VideoAdd() {
   const history = useHistory();
 
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadError, setUploadError] = useState(null);
-  const [downloadURL, setDownloadURL] = useState(null);
+
   const [uploadStart, setUploadStart] = useState(null);
 
   const pickMedia = async () => {
@@ -44,6 +43,9 @@ function VideoAdd() {
   };
 
   const sendToFirebase = async () => {
+    if (!videoSrc) {
+      return;
+    }
     const response = await fetch(videoSrc);
     const storageRef = ref(storage, "intro/" + `${Date.now()}`);
     const blob = await response.blob();
@@ -59,7 +61,6 @@ function VideoAdd() {
       },
       (error) => {
         console.error("Upload error:", error);
-        setUploadError(error.message);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
@@ -69,8 +70,6 @@ function VideoAdd() {
             setUploadStart(false);
             history.push("/landing");
           });
-          setDownloadURL(url);
-
           console.log("File available at", url);
         });
       }
@@ -89,18 +88,17 @@ function VideoAdd() {
           <div className="relative w-full max-w-4xl aspect-video bg-black overflow-hidden">
             <video
               ref={videoRef}
-              className="w-full h-full object-contain"
-              src={videoSrc}
+              className="w-full h-full object-fit"
+              autoPlay
+              controls
+              playsInline
               onClick={togglePlay}
-            />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-              <button
-                className="p-4 text-white text-4xl bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 transition-colors duration-300"
-                onClick={togglePlay}
-              >
-                {videoRef.current?.paused ? "▶" : "❚❚"}
-              </button>
-            </div>
+              poster="path/to/your/poster-image.jpg" // Replace with your actual poster image path
+            >
+              <source src={videoSrc} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
           </div>
         )}
         <div className="h-5 w-full">
@@ -112,7 +110,9 @@ function VideoAdd() {
         <div className="flex justify-between mt-6">
           <ChipButton onClick={nothing}>Skip</ChipButton>
           <ChipButton onClick={pickMedia}>Select</ChipButton>
-          <ChipButton onClick={sendToFirebase}>Upload</ChipButton>
+          <ChipButton onClick={sendToFirebase} disabled={!videoSrc}>
+            Upload
+          </ChipButton>
         </div>
       </div>
       <Loading message={"Uploading"} open={uploadStart} />

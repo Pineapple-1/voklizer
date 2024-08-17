@@ -42,7 +42,7 @@ function PracticeArea() {
     })
       .then((res) => {
         console.log(res);
-        history.push("/landing");
+        history.push("/video");
       })
       .finally(() => setLoading(false));
   };

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 
 import { VoiceRecorder } from "capacitor-voice-recorder";
+import {Geolocation} from '@capacitor/geolocation';
+
 
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
