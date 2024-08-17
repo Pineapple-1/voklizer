@@ -24,15 +24,6 @@ function ServiceProviderRegistrationLayout({ children }) {
       <IonContent>
         <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
           <div className="flex flex-col gap-5">
-            <div className=" flex justify-between">
-              <div onClick={() => history.push("/")}>
-                <HomeIcon />
-              </div>
-
-              <div>
-                <BurgerIcon />
-              </div>
-            </div>
             <img
               className="w-[73px] h-[66px] m-auto"
               src={'/logos/Logo.svg'}
