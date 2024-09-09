@@ -15,12 +15,42 @@ import { useAtom } from "jotai";
 import { audioAtom } from "../../../state";
 import Pause from "../../../assets/icons/Pause";
 import { format } from "date-fns";
+import CalenderBooking from "./CalenderBooking";
+import SelectIcon from "../../../assets/icons/SelectIcon";
+import { getDate, getMonth, getYear } from "date-fns";
 
-function MessageReplies({ accepted, id, offer, vokRef }) {
-  const [value, setValue] = useState(accepted ? 100 : 0);
+import useSWR, { mutate } from "swr";
+import Loading from "../../../components/Loading";
+import Instance from "../../../axios/Axios";
+
+function MessageReplies({ id, offer, vokRef }) {
+  const [value, setValue] = useState(offer.isBooked ? 100 : 0);
   const [audioState, setAudioState] = useAtom(audioAtom);
-
+  const [date, setDate] = useState(new Date());
+  const [booked, setBooked] = useState(offer.isBooked);
+  const calenderRef = useRef();
+  const day = getDate(date);
+  const month = getMonth(date) + 1;
+  const year = getYear(date);
+  const { data, isLoading } = useSWR(
+    `available-time-slots?year=${year}&month=${month}&day=${day}`
+  );
   const modal = useRef();
+
+  const book = (start, end) => {
+    Instance.post(`book-time-slot/${offer.id}`, {
+      jobId: id,
+      date: format(date, "MM-dd-yy"),
+      startTime: start,
+      endTime: end,
+      serviceProviderId: offer.User.ServiceProvider.id,
+    }).then(() => {
+      calenderRef.current?.dismiss();
+      setBooked(true);
+      mutate(`available-time-slots?year=${year}&month=${month}&day=${day}`);
+      mutate(`user-job/${id}`);
+    });
+  };
 
   const listen = () => {
     if (audioState.url === offer.originalMessageLink) {
@@ -97,13 +127,19 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
 
         <Slider
           defaultValue={0}
-          className="py-2 px-1 border border-[#ADADAD] rounded-[13px] w-[230px] relative h-[45px] bg-[#F1F1F1] z-10"
+          className={clsx(
+            "py-2 px-1 border border-[#ADADAD] rounded-[13px] w-[230px] relative h-[45px] bg-[#F1F1F1] z-10",
+
+          
+          )}
           value={value}
           onChange={setValue}
           aria-label="slider"
+          isDisabled = {offer.isBooked}
         >
           <SliderTrack>
             <div onClick={listen}>
+              
               <SliderThumb
                 className={clsx(
                   " w-[61px] h-[61px]  flex items-center justify-center rounded-full mt-3  z-30",
@@ -280,7 +316,51 @@ function MessageReplies({ accepted, id, offer, vokRef }) {
         </IonModal>
       </div>
 
-      <BookingEvent value={value} />
+      <IonModal
+        isOpen={value === 100 && !booked}
+        initialBreakpoint={1}
+        breakpoints={[0, 1]}
+        handleBehavior="cycle"
+        className="rounded-modal"
+        onWillDismiss={() => setValue(0)}
+        ref={calenderRef}
+      >
+        <div className="bg-white w-full h-max">
+          <div className="flex flex-col gap-6 w-full py-6">
+            <CalenderBooking
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className={"bg-white"}
+            />
+            <div className="flex flex-col  gap-1.5 px-6">
+              <div className="flex justify-between border-b-2 border-purple pb-[10px] items-end">
+                <div className="text-purple">10:00 till 10:45</div>
+
+                <SelectIcon className={"pb-1"} />
+              </div>
+              <div className="text-[#8A8A8A] text-xs">Available slots</div>
+
+              <div className="flex flex-wrap gap-3 mt-4">
+                {!isLoading &&
+                  data?.data?.map((date) => (
+                    <div
+                      onClick={(item) => {
+                        book(date.start.slice(0, -3), date.end.slice(0, -3));
+                      }}
+                      className="bg-purple px-4 py-1.5 text-p1 text-white w-max rounded-[14px] cursor-pointer disabled:bg-slate-400"
+                    >
+                      {date.start.slice(0, -3)}-{date.end.slice(0, -3)}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <Loading open={isLoading} message={"fetching"} />
+      </IonModal>
+
+      <BookingEvent value={offer.isBooked ? 100 : 0} />
     </>
   );
 }

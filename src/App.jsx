@@ -29,6 +29,7 @@ import {
   Error,
   Landing,
   ReelPlayer,
+  PaymentError,
 } from "./routes";
 
 import { ServiceProviderPreferredLanguage } from "./routes";
@@ -283,12 +284,20 @@ function App({ token }) {
       path: "/player/:id",
       component: <ReelPlayer />,
     },
+    {
+      path:'/payment-error',
+      component: <PaymentError/>
+    },
+    {
+      path:"/location-error",
+      component:<LocationError/>
+    }
   ];
 
   return (
     <>
       <CapacitorStripeProvider
-        publishableKey="pk_test_51NQbGZCLy9Fig8JqAFjJIwpwszLRKH6XhdXo9aiYzpDTxIO0G0WOq19MsRfe8g7sx8Ovrf0Uh0mZcQNRl70MNpTP00eVK7qiD0"
+        publishableKey={import.meta.env.VITE_STRIPE}
         fallback={<p>Loading...</p>}
       >
         <IonApp>

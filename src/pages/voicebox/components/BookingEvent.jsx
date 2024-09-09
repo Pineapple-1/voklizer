@@ -6,11 +6,10 @@ import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 import { CalendarCheck } from "lucide-react";
 import { useState } from "react";
-import CalenderModal from "../../../components/CalenderModal";
 
 function BookingEvent({ value }) {
   const [booking, setBooking] = useState(false);
-  const [open, setOpen] = useState(false);
+
   return (
     <AnimatePresence>
       {value === 100 && (
@@ -55,8 +54,7 @@ function BookingEvent({ value }) {
                     <CalendarCheck className="w-6 h-6 text-purple" />
                   </div>
                   <div>
-                    <button onClick={() => setOpen(true)}>open calender</button>
-                    <CalenderModal open={open} onClose={() => setOpen(false)} />
+                    <button>open calender</button>
                   </div>
                 </div>
               )}

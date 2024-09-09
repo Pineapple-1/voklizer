@@ -14,7 +14,7 @@ function Loading({ open, message }) {
             animate={{ opacity: 100, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3 }}
-            className=" z-40 bg-gray-80 fixed inset-0 flex items-center justify-center "
+            className=" z-50 bg-gray-80 fixed inset-0 flex items-center justify-center "
           >
             <div className="bg-[#EEEEEE] shadow-lg  h-[120px]  w-[120px] rounded-lg flex flex-col items-center justify-between relative ">
               <div className="text-xs opacity-0 ">Transmitting</div>

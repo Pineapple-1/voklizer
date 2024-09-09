@@ -2,13 +2,23 @@ import Base from "../../layout/Base";
 import Reel from "./components/Reel";
 import useSWR from "swr";
 
-import Meet from "../home/components/Meet";
+import Meet from "../../components/Meet";
 import Refer from "../../assets/icons/Refer";
 
 import { useHistory } from "react-router-dom";
+import { getMonth, getYear } from "date-fns";
+import Loading from "../../components/Loading";
 
 const LandingPage = () => {
-  const { data } = useSWR("auth/me");
+  const { data,isLoading } = useSWR("auth/me");
+
+  const { data: meetings, isloading: meetingsLoading } = useSWR(
+    `booked-time-slots-${
+      data?.data?.role === "serviceProvider" ? "user" : "user"
+    }?year=${getYear(new Date())}&month=${getMonth(new Date()) + 1}`
+  );
+
+  console.log("-->>>>>", meetings, data);
 
   const history = useHistory();
 
@@ -119,9 +129,10 @@ const LandingPage = () => {
         </div>
         <div className="capitalize font-bold">My Appointments</div>
 
-        <Meet />
-        <Meet />
+        {!meetingsLoading &&
+          meetings?.data?.map((item) => <Meet meet={item} />)}
       </div>
+      <Loading open={meetingsLoading||isLoading} message={"Fetching"}/>
     </Base>
   );
 };

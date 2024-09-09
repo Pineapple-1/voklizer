@@ -5,6 +5,8 @@ import { useRef } from "react";
 
 import { VoiceRecorder } from "capacitor-voice-recorder";
 import {Geolocation} from '@capacitor/geolocation';
+import { useIonAlert } from '@ionic/react';
+
 
 
 import { useHistory } from "react-router-dom";
@@ -20,6 +22,8 @@ import { useCapacitorStripe } from "@capacitor-community/stripe/dist/esm/react/p
 
 function Play() {
   const [isRecording, setIsRecording] = useState(false);
+  const [presentAlert] = useIonAlert();
+
   const [audioHex, setAudioHex] = useState(null);
   const [jobPosting, setJobPosting] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -86,6 +90,17 @@ function Play() {
   const SendAudio = async () => {
     setJobPosting(true);
   
+
+    const locationPermission = await Geolocation.requestPermissions();
+    const hasNoLocation = !locationPermission || locationPermission.location !== 'granted';
+
+    if (hasNoLocation) {
+    
+        history.push('/location-error')
+
+    }
+
+
     if (!me.data.defaultPaymentMethod) {
       setJobPosting(false);
       history.push("/billing?recorded=true");
@@ -108,6 +123,7 @@ function Play() {
       await Instance.post("/add-job", {
         audioType: audioHex.mimeType,
         audioHex: audioHex.recordDataBase64,
+
       });
   
       setAudioHex(null);
@@ -124,7 +140,7 @@ function Play() {
       console.error(error);
   
       if (me?.data?.defaultPaymentMethod === "google-pay" && error.message === "Google Pay payment was not completed") {
-        history.push(`/error?message=${encodeURIComponent(error.message)}`);
+        history.push(`/payment-error`);
       }
 
     }
@@ -164,6 +180,10 @@ function Play() {
     audioRef.current.pause();
     audioRef.current = null;
   };
+
+
+
+
 
   return (
     <UserHomeLayout>

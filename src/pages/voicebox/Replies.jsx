@@ -1,4 +1,3 @@
-import React from "react";
 import Base from "../../layout/Base";
 import Message from "./components/Message";
 import MessageReplies from "./components/MessageReplies";
@@ -15,20 +14,21 @@ function Replies() {
 
   return (
     <Base>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 pb-10">
         <Message job={data?.job} vokRef={vokRef} />
 
         <div className="flex flex-col w-full justify-end items-end gap-5">
           {!isLoading &&
             data?.job?.offers?.map((item) => (
               <motion.div
+                key={item.id}
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.75 }}
                 transition={{ duration: 0.3 }}
                 className="flex flex-col w-full justify-end items-end gap-5"
               >
-                <MessageReplies offer={item} vokRef={vokRef} />
+                <MessageReplies  id={jobId} offer={item} vokRef={vokRef} />
               </motion.div>
             ))}
         </div>

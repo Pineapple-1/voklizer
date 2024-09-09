@@ -3,10 +3,13 @@ import useSwr from "swr";
 import Base from "../../layout/Base";
 import MessageGroup from "./components/MessageGroup";
 import Loading from "../../components/Loading";
+import { useRef } from "react";
 
 function Queries() {
   const { data, isLoading } = useSwr("user-jobs?page=1");
-  return (
+  const messageRef = useRef()
+
+return (
     <Base>
       {!isLoading && data?.jobs?.length === 0 ? (
         <div className="h-full flex flex-col gap-8 items-center justify-center">
@@ -15,7 +18,7 @@ function Queries() {
         </div>
       ) : (
         <div className="flex flex-col gap-8  py-5">
-          {!isLoading && data?.jobs?.map((item) => <MessageGroup job={item} />)}
+          {!isLoading && data?.jobs?.map((item) => <MessageGroup key={item.id} job={item}  messageRef={messageRef}/>)}
         </div>
       )}
 

@@ -202,7 +202,7 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
       setSending(false);
     
       if (me?.data?.defaultPaymentMethod === "google-pay" && error.message === "Payment Was Not Completed") {
-        history.push(`/error?message=${encodeURIComponent(error.message)}`);
+        history.push(`/payment-error`);
       }
     
     }

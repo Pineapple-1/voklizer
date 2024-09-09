@@ -2,11 +2,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import { clsx } from "clsx";
 
-function Calender({ className, classNames, showOutsideDays = true, ...props }) {
+function CalenderBooking({ className, classNames, showOutsideDays = true, ...props }) {
   return (
+
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={clsx("p-6 bg-[#F9F3FF] w-full border-y border-black")}
+      className={clsx(" p-6 bg-white w-full ")}
       classNames={{
         months: "flex flex-col ",
         month: "space-y-6",
@@ -19,7 +20,7 @@ function Calender({ className, classNames, showOutsideDays = true, ...props }) {
         table: "w-full ",
         head_row: "flex justify-between  ",
         head_cell: "text-[#263238] rounded-md w-10 font-bold text-[0.8rem]",
-        row: "flex w-full mt-2 justify-between  ",
+        row: "flex w-full mt-2 justify-between",
         day: "h-10 w-10 p-0 font-normal aria-selected:opacity-100",
         cell: "h-10 w-10 text-center text-[12px] p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
 
@@ -47,4 +48,4 @@ function Calender({ className, classNames, showOutsideDays = true, ...props }) {
   );
 }
 
-export default Calender;
+export default CalenderBooking;
