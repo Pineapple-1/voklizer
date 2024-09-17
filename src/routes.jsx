@@ -63,6 +63,8 @@ export const Wallet = loadable(() => import("./pages/profile/UserWallet"));
 export const Error = loadable(()=>import("./pages/utils/Error"))
 export const PaymentError = loadable(()=>import("./pages/utils/PaymentError"))
 export const LocationError = loadable(()=>import("./pages/utils/LocationError"))
+export const MicError = loadable(()=>import("./pages/utils/MicError"))
+
 
 
 export const Landing = loadable(()=>import("./pages/home/LandingPage"))

@@ -1,9 +1,9 @@
 import { useHistory } from "react-router-dom";
 import UserHomeLayout from "../../layout/UserHomeLayout";
-import Goback from "../../assets/icons/Goback";
 import Error from "../../assets/icons/Error";
 import { Geolocation } from "@capacitor/geolocation";
 import { useIonViewWillEnter } from "@ionic/react";
+import { VoiceRecorder } from "capacitor-voice-recorder";
 
 import {
   NativeSettings,
@@ -11,20 +11,9 @@ import {
   IOSSettings,
 } from "capacitor-native-settings";
 
-function LocationError() {
+function MicError() {
   const history = useHistory();
 
-  useIonViewWillEnter(async () => {
-
-    const locationPermission = await Geolocation.requestPermissions();
-    const hasNoLocation =
-      !locationPermission || locationPermission.location !== "granted";
-
-    if (!hasNoLocation) {
-      console.log("given");
-      history.push("/play")
-    }
-  });
 
   return (
     <UserHomeLayout>
@@ -35,8 +24,8 @@ function LocationError() {
           <div className="flex flex-col gap-4 items-center">
             <Error />
             <div>
-              <div className="text-[20px]">Location</div>
-              <div className="text-[20px]">Error!</div>
+              <div className="text-[20px]">Voice Input</div>
+              <div className="text-[20px]">Permission Error!</div>
             </div>
           </div>
           <div
@@ -46,12 +35,11 @@ function LocationError() {
                 optionAndroid: AndroidSettings.ApplicationDetails, 
                 optionIOS: IOSSettings.App
               })
-              
             }}
           >
             <div>
               <div className="text-[13px]">Press Here To</div>
-              <div className="text-[13px]">Enable Location</div>
+              <div className="text-[13px]">Enable Voice Input</div>
             </div>
           </div>
         </div>
@@ -60,4 +48,4 @@ function LocationError() {
   );
 }
 
-export default LocationError;
+export default MicError;

@@ -89,6 +89,9 @@ importers:
       axios:
         specifier: ^1.7.2
         version: 1.7.5
+      capacitor-native-settings:
+        specifier: ^6.0.1
+        version: 6.0.1(@capacitor/core@5.7.8)
       capacitor-voice-recorder:
         specifier: ^5.0.0
         version: 5.0.0(@capacitor/core@5.7.8)
@@ -2077,6 +2080,11 @@ packages:
 
   caniuse-lite@1.0.30001651:
     resolution: {integrity: sha512-9Cf+Xv1jJNe1xPZLGuUXLNkE1BoDkqRqYyFJ9TDYSqhduqA4hu4oR9HluGoWYQC/aj8WHjsGVV+bwkh0+tegRg==}
+
+  capacitor-native-settings@6.0.1:
+    resolution: {integrity: sha512-GdmGgK54tqs9ZZd8+gOgAVitDbKkhcuzGG8OlzcK0LBRv+Bc18v7/wabThknOduFwwjr7D8o+08egtjyPWkdNQ==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
 
   capacitor-voice-recorder@5.0.0:
     resolution: {integrity: sha512-rCZgbmdmj9eXlotziRnIXWoo+7/aGKM1dSeSrgaEmayu9aTs8xkwhpx9eeVe24VDC6sfMHTnwMl5311Ryr/yFA==}
@@ -6115,6 +6123,10 @@ snapshots:
   camelcase-css@2.0.1: {}
 
   caniuse-lite@1.0.30001651: {}
+
+  capacitor-native-settings@6.0.1(@capacitor/core@5.7.8):
+    dependencies:
+      '@capacitor/core': 5.7.8
 
   capacitor-voice-recorder@5.0.0(@capacitor/core@5.7.8):
     dependencies:

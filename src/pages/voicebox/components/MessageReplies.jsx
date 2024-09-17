@@ -37,6 +37,14 @@ function MessageReplies({ id, offer, vokRef }) {
   );
   const modal = useRef();
 
+
+
+
+
+
+  
+
+  console.log('---->>>',JSON.stringify(offer))
   const book = (start, end) => {
     Instance.post(`book-time-slot/${offer.id}`, {
       jobId: id,

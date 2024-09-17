@@ -30,6 +30,8 @@ import {
   Landing,
   ReelPlayer,
   PaymentError,
+  LocationError,
+  MicError
 } from "./routes";
 
 import { ServiceProviderPreferredLanguage } from "./routes";
@@ -60,6 +62,8 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
+
+
 setupIonicReact({
   platform: {
     desktop: (win) => {
@@ -71,13 +75,17 @@ setupIonicReact({
     },
   },
 });
+
 import "./App.css";
 import Instance from "./axios/Axios";
 
 function App({ token }) {
   const { mutate } = useSWRConfig();
+  const [notifications, setnotifications] = useState([]);
+
 
   const setFMC = useSetAtom(fmcAtom);
+
 
   useIonViewWillEnter(() => {
     const setStatusBarColor = async () => {
@@ -87,8 +95,6 @@ function App({ token }) {
 
     setStatusBarColor();
   });
-
-  const [notifications, setnotifications] = useState([]);
 
   useEffect(() => {
     VoiceRecorder.requestAudioRecordingPermission()
@@ -291,6 +297,10 @@ function App({ token }) {
     {
       path:"/location-error",
       component:<LocationError/>
+    },
+    {
+      path:"/mic-error",
+      component:<MicError/>
     }
   ];
 

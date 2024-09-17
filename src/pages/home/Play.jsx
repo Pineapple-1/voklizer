@@ -4,10 +4,8 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 
 import { VoiceRecorder } from "capacitor-voice-recorder";
-import {Geolocation} from '@capacitor/geolocation';
-import { useIonAlert } from '@ionic/react';
-
-
+import { Geolocation } from "@capacitor/geolocation";
+import { useIonAlert } from "@ionic/react";
 
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
@@ -85,28 +83,34 @@ function Play() {
     }
   };
 
-
-
   const SendAudio = async () => {
     setJobPosting(true);
-  
 
     const locationPermission = await Geolocation.requestPermissions();
-    const hasNoLocation = !locationPermission || locationPermission.location !== 'granted';
+    const hasNoLocation = !locationPermission || locationPermission.location !== "granted";
 
     if (hasNoLocation) {
-    
-        history.push('/location-error')
-
+      history.push("/location-error");
+      return;
     }
-
 
     if (!me.data.defaultPaymentMethod) {
       setJobPosting(false);
       history.push("/billing?recorded=true");
       return;
     }
-  
+
+    const currentPosition = await Geolocation.getCurrentPosition();
+
+
+
+
+
+    console.log(
+      "---->>>> current locationnsssssss ",
+      JSON.stringify(currentPosition)
+    );
+
     try {
       if (me?.data?.defaultPaymentMethod === "google-pay") {
         const paymentResult = await createPaymentToken();
@@ -119,13 +123,13 @@ function Play() {
           serviceType: "JOB",
         });
       }
-  
+
       await Instance.post("/add-job", {
         audioType: audioHex.mimeType,
         audioHex: audioHex.recordDataBase64,
-
+        
       });
-  
+
       setAudioHex(null);
       setIsPlaying(false);
       audioRef.current = null;
@@ -138,11 +142,13 @@ function Play() {
     } catch (error) {
       setJobPosting(false);
       console.error(error);
-  
-      if (me?.data?.defaultPaymentMethod === "google-pay" && error.message === "Google Pay payment was not completed") {
+
+      if (
+        me?.data?.defaultPaymentMethod === "google-pay" &&
+        error.message === "Google Pay payment was not completed"
+      ) {
         history.push(`/payment-error`);
       }
-
     }
   };
 
@@ -180,10 +186,6 @@ function Play() {
     audioRef.current.pause();
     audioRef.current = null;
   };
-
-
-
-
 
   return (
     <UserHomeLayout>

@@ -22,6 +22,7 @@ def capacitor_pods
   pod 'CapacitorStatusBar', :path => '../../node_modules/.pnpm/@capacitor+status-bar@5.0.8_@capacitor+core@5.7.8/node_modules/@capacitor/status-bar'
   pod 'CapawesomeCapacitorFilePicker', :path => '../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.0.1_@capacitor+core@5.7.8/node_modules/@capawesome/capacitor-file-picker'
   pod 'CodetrixStudioCapacitorGoogleAuth', :path => '../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.8/node_modules/@codetrix-studio/capacitor-google-auth'
+  pod 'CapacitorNativeSettings', :path => '../../node_modules/.pnpm/capacitor-native-settings@6.0.1_@capacitor+core@5.7.8/node_modules/capacitor-native-settings'
   pod 'CapacitorVoiceRecorder', :path => '../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.8/node_modules/capacitor-voice-recorder'
 end
 
