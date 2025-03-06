@@ -1,4 +1,3 @@
-import React from "react";
 import SingleTick from "../../../assets/icons/SingleTick";
 import Translate from "../../../assets/icons/Translate";
 import Retry from "../../../assets/icons/Retry";

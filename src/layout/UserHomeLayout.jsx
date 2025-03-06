@@ -1,44 +1,48 @@
-import { useState } from "react";
-import { useIonViewWillEnter, IonContent, IonPage } from "@ionic/react";
+import {useState} from "react";
+import {useIonViewWillEnter, IonContent, IonPage} from "@ionic/react";
 
 import HomeIcon from "../assets/icons/HomeIcon";
 import BurgerIcon from "../assets/icons/BurgerIcon";
 
-import { useHistory } from "react-router-dom";
-import { StatusBar, Style } from "@capacitor/status-bar";
+import {useHistory} from "react-router-dom";
+import {StatusBar, Style} from "@capacitor/status-bar";
 import Sidebar from "../components/Sidebar";
+import {isPlatform} from "@ionic/react";
+import clsx from "clsx";
 
-function UserHomeLayout({ children }) {
+
+function UserHomeLayout({children}) {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
+
   const setStatusBarStyleLight = async () => {
-    await StatusBar.setStyle({ style: Style.Light });
-    await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+    await StatusBar.setStyle({style: Style.Light});
+    await StatusBar.setBackgroundColor({color: "#F5F5F5"});
   };
 
   useIonViewWillEnter(() => {
     setStatusBarStyleLight();
   });
 
-  return (
-    <>
+
+  return (<>
       <IonPage>
         <IonContent>
-          <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
+          <div className={clsx("h-full bg-gray/50 px-6 pb-10 flex flex-col ", isPlatform("ios") ? "pt-16" : "pt-10")}>
             <div className="flex flex-col gap-5">
               <div className=" flex justify-between">
                 <div onClick={() => history.push("/landing")}>
-                  <HomeIcon />
+                  <HomeIcon/>
                 </div>
 
                 <div onClick={() => setIsOpen((open) => !open)}>
-                  <BurgerIcon />
+                  <BurgerIcon/>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 mt-5">
+            <div className="flex flex-col gap-3 mt-12 w-[145px] h-[116px] mx-auto">
               <div>
                 <img
                   className="w-[66px] h-[56px] m-auto"
@@ -62,12 +66,11 @@ function UserHomeLayout({ children }) {
             </div>
 
             <div className="h-max flex flex-1 flex-col">{children}</div>
-            <Sidebar open={isOpen} setOpen={setIsOpen} />
+            <Sidebar open={isOpen} setOpen={setIsOpen}/>
           </div>
         </IonContent>
       </IonPage>
-    </>
-  );
+    </>);
 }
 
 export default UserHomeLayout;

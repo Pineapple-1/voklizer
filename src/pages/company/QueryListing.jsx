@@ -4,11 +4,36 @@ import Pitch from "./components/Pitch";
 import useSwr from "swr";
 import Loading from "../../components/Loading";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRef } from "react";
+import {useRef, useState} from "react";
+import {useIonViewWillLeave} from "@ionic/react";
+import {useAtom} from "jotai";
+import {audioAtom} from "../../state";
 
 function QueryListing() {
   const { data, isLoading } = useSwr("job-notifications?page=1");
   const queryRef = useRef();
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const [_, setAudioState] = useAtom(audioAtom);
+
+
+
+  useIonViewWillLeave(() => {
+    console.log("leaving.........");
+    setTimeout(() => {
+      queryRef.current.pause()
+      queryRef.current = null
+    }, 0);
+
+    setTimeout(() => {
+      setAudioState({
+        isPaused: false,
+        isPlaying: false,
+        url: null,
+      });
+    }, 0);
+  });
+
+
 
   return (
     <UserHomeLayout>
@@ -32,7 +57,9 @@ function QueryListing() {
                   key={item.id}
                   location={"Lahore"}
                   area={item.category}
-                  focus={index === 0 ? true : false}
+                  index={index}
+                  focus={index === focusedIndex}
+                  setFocusedIndex={setFocusedIndex}
                   url={item.userMessageLink}
                   jobId={item.jobId}
                   queryRef={queryRef}

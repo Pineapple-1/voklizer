@@ -1,8 +1,6 @@
-import React from "react";
+import {motion, AnimatePresence} from "framer-motion";
+import {useHistory} from "react-router-dom";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useHistory } from "react-router-dom";
-import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 import PersonIcon from "../assets/icons/PersonIcon";
 import WalletIcon from "../assets/icons/WalletIcon";
@@ -11,17 +9,17 @@ import SpeakerIcon from "../assets/icons/SpeakerIcon";
 import HomeIconSm from "../assets/icons/HomeIconSm";
 import CardIcon from "../assets/icons/CardIcon";
 
+import {SocialLogin} from '@capgo/capacitor-social-login';
+import useSWR from "swr";
+
 function Sidebar({ open, setOpen }) {
   const history = useHistory();
+  const { data, isLoading } = useSWR("auth/me");
+
 
   return (
     <div>
-      {open && (
-        <div
-          className="absolute inset-0 bg-black/0 z-40"
-          onClick={() => setOpen(false)}
-        />
-      )}
+      {open && <div className="absolute inset-0 bg-black/0 z-40" onClick={() => setOpen(false)} />}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -31,140 +29,55 @@ function Sidebar({ open, setOpen }) {
             transition={{ duration: 0.3 }}
             className="w-64 z-40 h-full bg-gray-800 text-white fixed top-0 left-0 shadow-lg"
           >
-            <div className="bg-[#EEEEEE]  h-screen flex flex-col justify-between">
-              <div className="bg-[#EEEEEE] h-screen pl-9 pr-4">
+            <div className="bg-[#EEEEEE] h-screen flex flex-col justify-between">
+              <div className="bg-[#EEEEEE] h-screen pl-9 pr-4 pt-16 pb-10">
                 <div className="flex flex-col gap-7">
-                  <div className="flex justify-between">
-                    <div className="text-[#CCCCCC] text-[20px] leading-[23px] w-24 mt-7">
+                  <div className="flex justify-between items-start">
+                    <div className="text-[#CCCCCC] text-[20px] leading-[23px] w-24">
                       It's that simple.
                     </div>
-
-                    <div
-                      className="text-[40px] leading-[50px] text-black "
-                      onClick={() => setOpen(false)}
-                    >
+                    <div className="text-[40px] leading-[40px] text-black" onClick={() => setOpen(false)}>
                       x
                     </div>
                   </div>
-                  <div className="flex gap-4 items-center">
-                    <div className="flex flex-col gap-4">
-                      <div className="w-6 h-6 flex items-center justify-center">
-                        <HomeIconSm />
-                      </div>
-                      <div className="w-6 h-6 flex items-center justify-center">
-                        <SpeakerIcon />
-                      </div>
-                      <div className="w-6 h-6 flex items-center justify-center">
-                        <PersonIcon />
-                      </div>
-                      <div className="w-6 h-6 flex items-center justify-center">
-                        <CardIcon />
-                      </div>
-
-                      <div className="w-6 h-6 flex items-center justify-center">
-                        <WalletIcon />
-                      </div>
-                      <div className="w-6 h-6 flex items-center justify-center">
-                        <SupportIcon />
-                      </div>
+                  <div className="flex gap-4 items-stretch">
+                    <div className="flex flex-col gap-6">
+                      <div className="w-6 h-6 flex items-center justify-center"><HomeIconSm /></div>
+                      <div className="w-6 h-6 flex items-center justify-center"><SpeakerIcon /></div>
+                      <div className="w-6 h-6 flex items-center justify-center"><PersonIcon /></div>
+                      <div className="w-6 h-6 flex items-center justify-center"><CardIcon /></div>
+                      <div className="w-6 h-6 flex items-center justify-center"><WalletIcon /></div>
+                      <div className="w-6 h-6 flex items-center justify-center"><SupportIcon /></div>
                     </div>
-                    <div className="w-[2px] h-[226px] bg-black"></div>
-                    <div className="flex flex-col gap-4">
-                      <div
-                        className="text-[20px] leading-6 text-[#000] font-semibold"
-                        onClick={() => {
-                          history.push("/landing");
-                          setOpen(false);
-                        }}
-                      >
-                        Home
-                      </div>
-                      <div
-                        className="text-[20px] leading-6 text-[#000] font-semibold"
-                        onClick={() => {
-                          history.push("/queries");
-                          setOpen(false);
-                        }}
-                      >
-                        Voice Box
-                      </div>
-                      <div
-                        className="text-[20px] leading-6 text-[#000] font-semibold"
-                        onClick={() => {
-                          history.push("/profile");
-                          setOpen(false);
-                        }}
-                      >
-                        Account
-                      </div>
-                      <div
-                        className="text-[20px] leading-6 text-[#000] font-semibold"
-                        onClick={() => {
-                          history.push("/billing");
-                          setOpen(false);
-                        }}
-                      >
-                        Billing Info
-                      </div>
-
-                      <div
-                        className="text-[20px] leading-6 text-[#000] font-semibold"
-                        onClick={() => {
-                          history.push("/wallet");
-                          setOpen(false);
-                        }}
-                      >
-                        Wallet
-                      </div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">
-                        Support
-                      </div>
+                    <div className="w-[2px] bg-black"></div>
+                    <div className="flex flex-col gap-6">
+                      <div className="text-[20px] leading-6 text-[#000] font-semibold" onClick={() => { history.push("/landing"); setOpen(false); }}>Home</div>
+                      <div className="text-[20px] leading-6 text-[#000] font-semibold" onClick={() => { history.push("/queries"); setOpen(false); }}>Voice Box</div>
+                      <div className="text-[20px] leading-6 text-[#000] font-semibold" onClick={() => { history.push("/profile"); setOpen(false); }}>Account</div>
+                      <div className="text-[20px] leading-6 text-[#000] font-semibold" onClick={() => { history.push("/billing"); setOpen(false); }}>Billing Info</div>
+                      <div className="text-[20px] leading-6 text-[#000] font-semibold" onClick={() => { history.push("/wallet"); setOpen(false); }}>Wallet</div>
+                      <div className="text-[20px] leading-6 text-[#000] font-semibold">Support</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-6 pl-9 pb-10">
-                <div className="flex flex-col gap-4">
-                  <div
-                    className="text-[13px] leading-4 text-[#000] font-semibold"
-                    onClick={() => {
-                      history.push("/listing");
-                      setOpen(false);
-                    }}
-                  >
-                    Listings
-                  </div>
-                  <div
-                    className="text-[13px] leading-4 text-[#000] font-semibold"
-                    onClick={() => {
-                      history.push("/diary");
-                      setOpen(false);
-                    }}
-                  >
-                    Vok Diary
-                  </div>
 
-                  <div
-                    className="text-[13px] leading-4 text-[#000] font-semibold"
-                    onClick={async () => {
-                      const result = await GoogleAuth?.signOut();
-
-                      console.log("--apple >>>>>>", JSON.stringify(result));
-
-                      history.push("/login");
-
-                      setOpen(false);
-                    }}
-                  >
-                    Logout
+              {/* Conditional rendering based on role */}
+              {!isLoading &&data.data?.role === "serviceProvider" && (
+                <div className="flex flex-col gap-6 pl-9 pb-10">
+                  <div className="flex flex-col gap-6 mb-3">
+                    <div className="text-[16px] leading-4 text-[#000] font-semibold" onClick={() => { history.push("/listing"); setOpen(false); }}>All Jobs</div>
+                    <div className="text-[16px] leading-4 text-[#000] font-semibold" onClick={() => { history.push("/all-replies"); setOpen(false); }}>All Replies</div>
+                    <div className="text-[16px] leading-4 text-[#000] font-semibold" onClick={() => { history.push("/diary"); setOpen(false); }}>Vok Diary</div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-14  ">
+              )}
+
+              <div className="flex flex-col gap-6 pl-9 pb-10">
+                <div className="text-[16px] leading-4 text-[#000] font-semibold" onClick={async () => { await SocialLogin.logout({ provider: "google" }); history.push("/login"); setOpen(false); }}>Logout</div>
+                <div className="flex flex-col gap-14">
                   <img className="w-[164px] h-[58px]" src="/NavBar.svg" />
-                  <img
-                    className="w-[178px] h-[44px]"
-                    src="/logos/Nav-Logo.svg"
-                  />
+                  <img className="w-[178px] h-[44px]" src="/logos/Nav-Logo.svg" />
                 </div>
               </div>
             </div>

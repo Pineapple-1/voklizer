@@ -1,7 +1,5 @@
-import React from "react";
-
 import UserHomeLayout from "../../layout/UserHomeLayout";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 function PitchSuccess() {
   const history = useHistory();
@@ -17,11 +15,11 @@ function PitchSuccess() {
               alt=""
             />
           </div>
-          <div className="flex flex-col gap-5 text-[#030303] ml-4">
-            <div className=" text-xl  w-24 ">
+          <div className="flex flex-col gap-5 text-[#030303] items-center">
+            <div className=" text-[20px] leading-[25px] text-center  w-[230px] break-words">
               Sit tight, Pitch has been sent
             </div>
-            <div className=" text-xs">you shall be notified soon</div>
+            <div className="text-[13px] text-purple pt-12">you shall be notified soon</div>
           </div>
         </div>
       </div>

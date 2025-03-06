@@ -1,7 +1,5 @@
-import React from "react";
-import Socials from "./components/Socials";
-import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import {useForm} from "react-hook-form";
+import {useHistory} from "react-router-dom";
 
 import AuthLayout from "./AuthLayout";
 
@@ -9,7 +7,7 @@ function ForgetPassword() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
   const history = useHistory();
 
@@ -22,7 +20,7 @@ function ForgetPassword() {
   return (
     <AuthLayout>
       <div className="flex justify-between flex-col gap-8 h-full">
-        <div />
+        <div/>
 
         <div className="text-2xl leading-8 w-full text-center">
           Password Reset
@@ -63,7 +61,7 @@ function ForgetPassword() {
             <div className="text-sm">Reset Password</div>
           </button>
         </form>
-        <div />
+        <div/>
       </div>
     </AuthLayout>
   );

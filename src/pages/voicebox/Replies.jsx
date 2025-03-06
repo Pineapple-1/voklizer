@@ -6,11 +6,35 @@ import {  motion } from "framer-motion";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
 import { useRef } from "react";
+import {useAtom} from "jotai";
+import {audioAtom} from "../../state.js";
+import {useIonViewWillLeave} from "@ionic/react";
 
 function Replies() {
   const { jobId } = useParams();
   const { data, isLoading } = useSwr(`user-job/${jobId}`);
   const vokRef = useRef();
+
+
+  const [_, setAudioState] = useAtom(audioAtom);
+
+
+  useIonViewWillLeave(() => {
+    console.log("leaving.........");
+    setTimeout(() => {
+      vokRef.current.pause()
+      vokRef.current = null
+    }, 0);
+
+    setTimeout(() => {
+      setAudioState({
+        isPaused: false,
+        isPlaying: false,
+        url: null,
+      });
+    }, 0);
+  });
+
 
   return (
     <Base>

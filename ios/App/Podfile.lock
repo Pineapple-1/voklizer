@@ -1,101 +1,175 @@
 PODS:
-  - AppAuth (1.7.5):
-    - AppAuth/Core (= 1.7.5)
-    - AppAuth/ExternalUserAgent (= 1.7.5)
-  - AppAuth/Core (1.7.5)
-  - AppAuth/ExternalUserAgent (1.7.5):
+  - Alamofire (5.10.2)
+  - AppAuth (1.7.6):
+    - AppAuth/Core (= 1.7.6)
+    - AppAuth/ExternalUserAgent (= 1.7.6)
+  - AppAuth/Core (1.7.6)
+  - AppAuth/ExternalUserAgent (1.7.6):
     - AppAuth/Core
-  - Capacitor (5.7.7):
+  - AppCheckCore (11.2.0):
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/UserDefaults (~> 8.0)
+    - PromisesObjC (~> 2.4)
+  - Capacitor (6.2.0):
     - CapacitorCordova
-  - CapacitorApp (5.0.8):
+  - CapacitorApp (6.0.2):
     - Capacitor
-  - CapacitorCommunityFacebookLogin (5.0.3):
+  - CapacitorCommunityStripe (6.4.3):
     - Capacitor
-    - FBSDKCoreKit (= 16.1.3)
-    - FBSDKLoginKit (= 16.1.3)
-  - CapacitorCommunityStripe (5.5.2):
+    - StripeApplePay (~> 24.1.0)
+    - StripePaymentSheet (~> 24.1.0)
+  - CapacitorCordova (6.2.0)
+  - CapacitorFirebaseAuthentication (7.0.0):
     - Capacitor
-    - StripeApplePay (~> 23.27.0)
-    - StripePaymentSheet (~> 23.27.0)
-  - CapacitorCordova (5.7.7)
-  - CapacitorHaptics (5.0.8):
+    - CapacitorFirebaseAuthentication/Lite (= 7.0.0)
+    - FirebaseAuth (~> 11.7.0)
+  - CapacitorFirebaseAuthentication/Lite (7.0.0):
     - Capacitor
-  - CapacitorKeyboard (5.0.9):
+    - FirebaseAuth (~> 11.7.0)
+  - CapacitorGeolocation (6.1.0):
     - Capacitor
-  - CapacitorPushNotifications (5.1.2):
+  - CapacitorHaptics (6.0.2):
     - Capacitor
-  - CapacitorSplashScreen (5.0.8):
+  - CapacitorKeyboard (6.0.3):
     - Capacitor
-  - CapacitorStatusBar (5.0.8):
+  - CapacitorNativeSettings (6.0.2):
     - Capacitor
-  - CapacitorVoiceRecorder (5.0.0):
+  - CapacitorPushNotifications (6.0.4):
     - Capacitor
-  - CapawesomeCapacitorFilePicker (6.0.1):
+  - CapacitorSplashScreen (6.0.3):
     - Capacitor
-  - CodetrixStudioCapacitorGoogleAuth (0.0.1):
+  - CapacitorStatusBar (6.0.2):
     - Capacitor
-    - GoogleSignIn (~> 6.2.4)
-  - FBAEMKit (16.1.3):
-    - FBSDKCoreKit_Basics (= 16.1.3)
-  - FBSDKCoreKit (16.1.3):
-    - FBAEMKit (= 16.1.3)
-    - FBSDKCoreKit_Basics (= 16.1.3)
-  - FBSDKCoreKit_Basics (16.1.3)
-  - FBSDKLoginKit (16.1.3):
-    - FBSDKCoreKit (= 16.1.3)
-  - GoogleSignIn (6.2.4):
-    - AppAuth (~> 1.5)
-    - GTMAppAuth (~> 1.3)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - GTMAppAuth (1.3.1):
-    - AppAuth/Core (~> 1.6)
-    - GTMSessionFetcher/Core (< 3.0, >= 1.5)
-  - GTMSessionFetcher/Core (2.3.0)
-  - StripeApplePay (23.27.6):
-    - StripeCore (= 23.27.6)
-  - StripeCore (23.27.6)
-  - StripePayments (23.27.6):
-    - StripeCore (= 23.27.6)
-    - StripePayments/Stripe3DS2 (= 23.27.6)
-  - StripePayments/Stripe3DS2 (23.27.6):
-    - StripeCore (= 23.27.6)
-  - StripePaymentSheet (23.27.6):
-    - StripeApplePay (= 23.27.6)
-    - StripeCore (= 23.27.6)
-    - StripePayments (= 23.27.6)
-    - StripePaymentsUI (= 23.27.6)
-  - StripePaymentsUI (23.27.6):
-    - StripeCore (= 23.27.6)
-    - StripePayments (= 23.27.6)
-    - StripeUICore (= 23.27.6)
-  - StripeUICore (23.27.6):
-    - StripeCore (= 23.27.6)
+  - CapacitorVoiceRecorder (6.0.3):
+    - Capacitor
+  - CapawesomeCapacitorFilePicker (6.2.0):
+    - Capacitor
+  - CapgoCapacitorSocialLogin (0.3.0):
+    - Alamofire
+    - Capacitor
+    - FBSDKCoreKit (= 17.1.0)
+    - FBSDKLoginKit (= 17.1.0)
+    - GoogleSignIn (~> 8.0.0)
+  - FBAEMKit (17.1.0):
+    - FBSDKCoreKit_Basics (= 17.1.0)
+  - FBSDKCoreKit (17.1.0):
+    - FBAEMKit (= 17.1.0)
+    - FBSDKCoreKit_Basics (= 17.1.0)
+  - FBSDKCoreKit_Basics (17.1.0)
+  - FBSDKLoginKit (17.1.0):
+    - FBSDKCoreKit (= 17.1.0)
+  - FirebaseAppCheckInterop (11.8.0)
+  - FirebaseAuth (11.7.0):
+    - FirebaseAppCheckInterop (~> 11.0)
+    - FirebaseAuthInterop (~> 11.0)
+    - FirebaseCore (~> 11.7.0)
+    - FirebaseCoreExtension (~> 11.7.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - GTMSessionFetcher/Core (< 5.0, >= 3.4)
+    - RecaptchaInterop (~> 100.0)
+  - FirebaseAuthInterop (11.8.0)
+  - FirebaseCore (11.7.0):
+    - FirebaseCoreInternal (~> 11.7.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/Logger (~> 8.0)
+  - FirebaseCoreExtension (11.7.0):
+    - FirebaseCore (~> 11.7.0)
+  - FirebaseCoreInternal (11.7.0):
+    - "GoogleUtilities/NSData+zlib (~> 8.0)"
+  - GoogleSignIn (8.0.0):
+    - AppAuth (< 2.0, >= 1.7.3)
+    - AppCheckCore (~> 11.0)
+    - GTMAppAuth (< 5.0, >= 4.1.1)
+    - GTMSessionFetcher/Core (~> 3.3)
+  - GoogleUtilities/AppDelegateSwizzler (8.0.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Environment (8.0.2):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Logger (8.0.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (8.0.2):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (8.0.2)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (8.0.2)
+  - GoogleUtilities/Reachability (8.0.2):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/UserDefaults (8.0.2):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GTMAppAuth (4.1.1):
+    - AppAuth/Core (~> 1.7)
+    - GTMSessionFetcher/Core (< 4.0, >= 3.3)
+  - GTMSessionFetcher/Core (3.5.0)
+  - PromisesObjC (2.4.0)
+  - RecaptchaInterop (100.0.0)
+  - StripeApplePay (24.1.3):
+    - StripeCore (= 24.1.3)
+  - StripeCore (24.1.3)
+  - StripePayments (24.1.3):
+    - StripeCore (= 24.1.3)
+    - StripePayments/Stripe3DS2 (= 24.1.3)
+  - StripePayments/Stripe3DS2 (24.1.3):
+    - StripeCore (= 24.1.3)
+  - StripePaymentSheet (24.1.3):
+    - StripeApplePay (= 24.1.3)
+    - StripeCore (= 24.1.3)
+    - StripePayments (= 24.1.3)
+    - StripePaymentsUI (= 24.1.3)
+  - StripePaymentsUI (24.1.3):
+    - StripeCore (= 24.1.3)
+    - StripePayments (= 24.1.3)
+    - StripeUICore (= 24.1.3)
+  - StripeUICore (24.1.3):
+    - StripeCore (= 24.1.3)
 
 DEPENDENCIES:
-  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/app`)"
-  - "CapacitorCommunityFacebookLogin (from `../../node_modules/.pnpm/@capacitor-community+facebook-login@5.0.3/node_modules/@capacitor-community/facebook-login`)"
-  - "CapacitorCommunityStripe (from `../../node_modules/.pnpm/@capacitor-community+stripe@5.5.2_@capacitor+core@5.7.7_react@18.3.1_stripe-pwa-elements@2.1.0/node_modules/@capacitor-community/stripe`)"
-  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios`)"
-  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/haptics`)"
-  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@5.0.9_@capacitor+core@5.7.7/node_modules/@capacitor/keyboard`)"
-  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@5.1.2_@capacitor+core@5.7.7/node_modules/@capacitor/push-notifications`)"
-  - "CapacitorSplashScreen (from `../../node_modules/.pnpm/@capacitor+splash-screen@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/splash-screen`)"
-  - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/status-bar`)"
-  - "CapacitorVoiceRecorder (from `../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.7/node_modules/capacitor-voice-recorder`)"
-  - "CapawesomeCapacitorFilePicker (from `../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.0.1_@capacitor+core@5.7.7/node_modules/@capawesome/capacitor-file-picker`)"
-  - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.7/node_modules/@codetrix-studio/capacitor-google-auth`)"
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/app`)"
+  - "CapacitorCommunityStripe (from `../../node_modules/.pnpm/@capacitor-community+stripe@6.4.3_@capacitor+core@6.2.0_react@18.3.1_stripe-pwa-elements@2.1.0/node_modules/@capacitor-community/stripe`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios`)"
+  - "CapacitorFirebaseAuthentication (from `../../node_modules/.pnpm/@capacitor-firebase+authentication@7.0.0_@capacitor+core@6.2.0_firebase@10.14.1/node_modules/@capacitor-firebase/authentication`)"
+  - "CapacitorGeolocation (from `../../node_modules/.pnpm/@capacitor+geolocation@6.1.0_@capacitor+core@6.2.0/node_modules/@capacitor/geolocation`)"
+  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/keyboard`)"
+  - "CapacitorNativeSettings (from `../../node_modules/.pnpm/capacitor-native-settings@6.0.2_@capacitor+core@6.2.0/node_modules/capacitor-native-settings`)"
+  - "CapacitorPushNotifications (from `../../node_modules/.pnpm/@capacitor+push-notifications@6.0.4_@capacitor+core@6.2.0/node_modules/@capacitor/push-notifications`)"
+  - "CapacitorSplashScreen (from `../../node_modules/.pnpm/@capacitor+splash-screen@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/splash-screen`)"
+  - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/status-bar`)"
+  - "CapacitorVoiceRecorder (from `../../node_modules/.pnpm/capacitor-voice-recorder@6.0.3_@capacitor+core@6.2.0/node_modules/capacitor-voice-recorder`)"
+  - "CapawesomeCapacitorFilePicker (from `../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.2.0_@capacitor+core@6.2.0/node_modules/@capawesome/capacitor-file-picker`)"
+  - "CapgoCapacitorSocialLogin (from `../../node_modules/.pnpm/@capgo+capacitor-social-login@0.3.0_@capacitor+core@6.2.0/node_modules/@capgo/capacitor-social-login`)"
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AppAuth
+    - AppCheckCore
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
     - FBSDKLoginKit
+    - FirebaseAppCheckInterop
+    - FirebaseAuth
+    - FirebaseAuthInterop
+    - FirebaseCore
+    - FirebaseCoreExtension
+    - FirebaseCoreInternal
     - GoogleSignIn
+    - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - PromisesObjC
+    - RecaptchaInterop
     - StripeApplePay
     - StripeCore
     - StripePayments
@@ -105,61 +179,78 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../node_modules/.pnpm/@capacitor+app@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/app"
-  CapacitorCommunityFacebookLogin:
-    :path: "../../node_modules/.pnpm/@capacitor-community+facebook-login@5.0.3/node_modules/@capacitor-community/facebook-login"
+    :path: "../../node_modules/.pnpm/@capacitor+app@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/app"
   CapacitorCommunityStripe:
-    :path: "../../node_modules/.pnpm/@capacitor-community+stripe@5.5.2_@capacitor+core@5.7.7_react@18.3.1_stripe-pwa-elements@2.1.0/node_modules/@capacitor-community/stripe"
+    :path: "../../node_modules/.pnpm/@capacitor-community+stripe@6.4.3_@capacitor+core@6.2.0_react@18.3.1_stripe-pwa-elements@2.1.0/node_modules/@capacitor-community/stripe"
   CapacitorCordova:
-    :path: "../../node_modules/.pnpm/@capacitor+ios@5.7.7_@capacitor+core@5.7.7/node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@6.2.0_@capacitor+core@6.2.0/node_modules/@capacitor/ios"
+  CapacitorFirebaseAuthentication:
+    :path: "../../node_modules/.pnpm/@capacitor-firebase+authentication@7.0.0_@capacitor+core@6.2.0_firebase@10.14.1/node_modules/@capacitor-firebase/authentication"
+  CapacitorGeolocation:
+    :path: "../../node_modules/.pnpm/@capacitor+geolocation@6.1.0_@capacitor+core@6.2.0/node_modules/@capacitor/geolocation"
   CapacitorHaptics:
-    :path: "../../node_modules/.pnpm/@capacitor+haptics@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/haptics"
+    :path: "../../node_modules/.pnpm/@capacitor+haptics@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/haptics"
   CapacitorKeyboard:
-    :path: "../../node_modules/.pnpm/@capacitor+keyboard@5.0.9_@capacitor+core@5.7.7/node_modules/@capacitor/keyboard"
+    :path: "../../node_modules/.pnpm/@capacitor+keyboard@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/keyboard"
+  CapacitorNativeSettings:
+    :path: "../../node_modules/.pnpm/capacitor-native-settings@6.0.2_@capacitor+core@6.2.0/node_modules/capacitor-native-settings"
   CapacitorPushNotifications:
-    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@5.1.2_@capacitor+core@5.7.7/node_modules/@capacitor/push-notifications"
+    :path: "../../node_modules/.pnpm/@capacitor+push-notifications@6.0.4_@capacitor+core@6.2.0/node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
-    :path: "../../node_modules/.pnpm/@capacitor+splash-screen@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/splash-screen"
+    :path: "../../node_modules/.pnpm/@capacitor+splash-screen@6.0.3_@capacitor+core@6.2.0/node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
-    :path: "../../node_modules/.pnpm/@capacitor+status-bar@5.0.8_@capacitor+core@5.7.7/node_modules/@capacitor/status-bar"
+    :path: "../../node_modules/.pnpm/@capacitor+status-bar@6.0.2_@capacitor+core@6.2.0/node_modules/@capacitor/status-bar"
   CapacitorVoiceRecorder:
-    :path: "../../node_modules/.pnpm/capacitor-voice-recorder@5.0.0_@capacitor+core@5.7.7/node_modules/capacitor-voice-recorder"
+    :path: "../../node_modules/.pnpm/capacitor-voice-recorder@6.0.3_@capacitor+core@6.2.0/node_modules/capacitor-voice-recorder"
   CapawesomeCapacitorFilePicker:
-    :path: "../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.0.1_@capacitor+core@5.7.7/node_modules/@capawesome/capacitor-file-picker"
-  CodetrixStudioCapacitorGoogleAuth:
-    :path: "../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.0_@capacitor+core@5.7.7/node_modules/@codetrix-studio/capacitor-google-auth"
+    :path: "../../node_modules/.pnpm/@capawesome+capacitor-file-picker@6.2.0_@capacitor+core@6.2.0/node_modules/@capawesome/capacitor-file-picker"
+  CapgoCapacitorSocialLogin:
+    :path: "../../node_modules/.pnpm/@capgo+capacitor-social-login@0.3.0_@capacitor+core@6.2.0/node_modules/@capgo/capacitor-social-login"
 
 SPEC CHECKSUMS:
-  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
-  Capacitor: 0039e9b67cfde2d5e9111b3ddca8c0097f4cf2f4
-  CapacitorApp: 102e553c3b1fdc255969c39aa19b529675690ef4
-  CapacitorCommunityFacebookLogin: c0e2bb54cb567d90443a80ae20569fdac0df3f89
-  CapacitorCommunityStripe: 8c0226f2bca3a6d902c51d8323041f529cce0ed0
-  CapacitorCordova: d906edead798c9bb1b07274f15615878d27507d5
-  CapacitorHaptics: f59c880aa8fad7f47bb54b48d6f2d6b26279602a
-  CapacitorKeyboard: f2e78b60a5cb981b4ea9e511e80693ca355169bb
-  CapacitorPushNotifications: 18108623c4f6a2629e7560c07c157820a511bcdd
-  CapacitorSplashScreen: 7a69e693bc1ef83e4bd3fb073bd8c8fa33e9059e
-  CapacitorStatusBar: 51af549cfcf35aac3ab072b062967ae5971ee485
-  CapacitorVoiceRecorder: 872ea857b497ce2c71afe3e4eb5de0a74290c0db
-  CapawesomeCapacitorFilePicker: c80c30759ba48986ff34a2b51b23ac2babfd3774
-  CodetrixStudioCapacitorGoogleAuth: fcce058390347c1ce5d8ac4764bdf1f5c1ee233b
-  FBAEMKit: af2972f39bb0f3f7c45998f435b007833c32ffb2
-  FBSDKCoreKit: 19e2e18b3be578d7a51fed8fdd8c152bef0b9511
-  FBSDKCoreKit_Basics: dd9826ce3c9fd9f8cdf8dbbd0ef0a53e6c0c9e7e
-  FBSDKLoginKit: c395c63a1a6cf4a8a1e6103fd94b8c46329ee81c
-  GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
-  GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
-  GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  StripeApplePay: 5f017e8dfe259fafbab70137776189deef754bb2
-  StripeCore: 01ec57f0dddfe742054dc6a322f811426c25313d
-  StripePayments: 6adf11faf1b7038e77aa97019410305c6adca79d
-  StripePaymentSheet: 3eaf870c4388e44b0cc37e4c69d00b6957fd8bd7
-  StripePaymentsUI: 59ccddeacad592b09fa67e8d641340820ddb4751
-  StripeUICore: 879bbf5889265db13f52fac8aad7a176ba62481f
+  Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
+  AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
+  Capacitor: 1f3c7b9802d958cd8c4eb63895fff85dff2e1eea
+  CapacitorApp: 2a8c3a0b0814322e5e6e15fe595f02c3808f0f8b
+  CapacitorCommunityStripe: 0c79c75ed18d649d9649c292106529ab350a0621
+  CapacitorCordova: b33e7f4aa4ed105dd43283acdd940964374a87d9
+  CapacitorFirebaseAuthentication: 871cec2966a90d5e4dd9c64088d9faffeead3757
+  CapacitorGeolocation: d994ee64ee41909e2089e575c9d3a976007c2812
+  CapacitorHaptics: b53409aaca1203f79c6d0eb3ed5de40556339518
+  CapacitorKeyboard: 460c6f9ec5e52c84f2742d5ce2e67bbc7ab0ebb0
+  CapacitorNativeSettings: 9afe075b1ab9ae0ce44c0fd717670383e0796046
+  CapacitorPushNotifications: 1fc22ae360214a0ac0625c348d3aea217085163d
+  CapacitorSplashScreen: 68893659d77b5f82d753b3a70475082845e3039c
+  CapacitorStatusBar: 3b9ac7d0684770522c532d1158a1434512ab1477
+  CapacitorVoiceRecorder: d44c1da901cc3918eb9c92c24834d8dc90f071f4
+  CapawesomeCapacitorFilePicker: c14df1f5a23226039e0cb82b171cf5a351470459
+  CapgoCapacitorSocialLogin: e5f90cfc34e850cb1d3ba41a6318e33df4fd914f
+  FBAEMKit: cb719c53575a3be86ea873279f30d6a2c4e15881
+  FBSDKCoreKit: ecdb980a24633ccb012700299ceb16d0235e14d2
+  FBSDKCoreKit_Basics: 045101c4a9ef10c845347424d73a29aae02c3e43
+  FBSDKLoginKit: 69eb59b2f839aba635616df6e422acd0ca88030a
+  FirebaseAppCheckInterop: 7bf86d55a2b7e9bd91464120eba3e52e4b63b2e2
+  FirebaseAuth: 77e25aa24f3e1c626c5babd3338551fc1669ee0e
+  FirebaseAuthInterop: 651756e70d9a0b9160db39ead71fd5507dbb6c84
+  FirebaseCore: 3227e35f4197a924206fbcdc0349325baf4f5de4
+  FirebaseCoreExtension: 206c1b399f0d103055207c16f299b28e3dbd1949
+  FirebaseCoreInternal: d6c17dafc8dc33614733a8b52df78fcb4394c881
+  GoogleSignIn: ce8c89bb9b37fb624b92e7514cc67335d1e277e4
+  GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
+  GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
+  GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  StripeApplePay: 78464d0dd9a61e3577eb9530a3710dc99137cb57
+  StripeCore: d69d4c1d020ec0a2fe0061734cb216639ecbad71
+  StripePayments: d247dbf00ad9f5a3bbd567778550b02299e3773e
+  StripePaymentSheet: cf8d2caa4b535e9678f3b6d5aa0da98ccfc76f41
+  StripePaymentsUI: 5dcbc863e9e971ed230d8dd14951ccb63397cd78
+  StripeUICore: d4528b5b5f24a9f444a60e6ee7149b82699a0dad
 
-PODFILE CHECKSUM: 46c2df8c9480d440e33970ad32a9d15b8a5e250d
+PODFILE CHECKSUM: 8d55654e589e942f896bfec09518941e59a787a9
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

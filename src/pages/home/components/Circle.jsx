@@ -1,4 +1,3 @@
-import React from "react";
 
 const CircleProgressBar = ({ percentage }) => {
   // Calculate the angle to fill based on the percentage

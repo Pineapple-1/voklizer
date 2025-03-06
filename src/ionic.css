@@ -1,20 +1,18 @@
 :root {
-  --ion-background-color: #f5f5f5;
-  --ion-font-family: "Lexend", sans-serif;
-  --ion-safe-area-top: 100px;
-
+	--ion-background-color: #f5f5f5;
+	--ion-font-family: "Lexend", sans-serif;
 }
+
 
 ion-header {
-  box-shadow: none;
-  background-size: cover;
+	box-shadow: none;
+	background-size: cover;
 }
 
-
 .rounded-modal {
-  --border-radius: 40px 40px 0 0 ;
-  --width: 100%;
-  --height:auto;
+	--border-radius: 40px 40px 0 0;
+	--width: 100%;
+	--height: auto;
 }
 
 

@@ -31,7 +31,8 @@ import {
   ReelPlayer,
   PaymentError,
   LocationError,
-  MicError
+  MicError,
+  AllReplies
 } from "./routes";
 
 import { ServiceProviderPreferredLanguage } from "./routes";
@@ -49,7 +50,6 @@ import { PushNotifications } from "@capacitor/push-notifications";
 import { VoiceRecorder } from "capacitor-voice-recorder";
 import { fmcAtom } from "./state";
 import { useSetAtom } from "jotai";
-
 import { useSWRConfig } from "swr";
 
 import "@ionic/react/css/core.css";
@@ -62,6 +62,7 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
+
 
 
 setupIonicReact({
@@ -126,7 +127,7 @@ function App({ token }) {
 
       setFMC(fmcToken.value);
       token &&
-        Instance.post("auth/add-fcm-token", { fcmToken: fmcToken.value });
+        Instance.post("auth/add-fcm-token/", { fcmToken: fmcToken.value });
     });
 
     PushNotifications.addListener("registrationError", (error) => {
@@ -168,7 +169,6 @@ function App({ token }) {
     );
   };
 
-  console.log("notifications List--->>>", JSON.stringify(notifications));
   const paths = [
     {
       path: "/preferred-language",
@@ -301,6 +301,10 @@ function App({ token }) {
     {
       path:"/mic-error",
       component:<MicError/>
+    },
+    {
+      path:"/all-replies",
+      component: <AllReplies/>
     }
   ];
 

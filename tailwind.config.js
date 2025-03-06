@@ -43,7 +43,6 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-
         "slide-out-to-right": "slide-out-to-right 0.5s ease-in-out",
         "slide-in-from-right": "slide-in-from-right 0.5s ease-in-out",
       },

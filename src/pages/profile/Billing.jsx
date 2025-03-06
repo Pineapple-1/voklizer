@@ -1,6 +1,6 @@
 import Base from "../../layout/Base";
 
-import { loadStripe } from "@stripe/stripe-js";
+import {loadStripe} from "@stripe/stripe-js";
 import "./billing.css";
 
 import PaymentsCards from "../../assets/icons/PaymentsCards";
@@ -8,11 +8,11 @@ import useSWR from "swr";
 
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading";
-import { mutate } from "swr";
-import { useLocation, useHistory } from "react-router-dom";
+import {mutate} from "swr";
+import {useLocation, useHistory} from "react-router-dom";
 import clsx from "clsx";
-import { CreditCard } from "lucide-react";
-import { useCapacitorStripe } from "@capacitor-community/stripe/dist/esm/react/provider";
+import {CreditCard} from "lucide-react";
+import {useCapacitorStripe} from "@capacitor-community/stripe/dist/esm/react/provider";
 
 import {
   Elements,
@@ -22,9 +22,9 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
-import { useState } from "react";
+import {useState} from "react";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE);
 
@@ -45,7 +45,7 @@ const CheckoutForm = () => {
     }
 
     setLoading(true);
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardNumberElement),
     });
@@ -69,17 +69,17 @@ const CheckoutForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-8">
           <div className=" relative">
-            <div className="absolute w-[70px] h-[12px] right-0 bottom-2.5">
-              <PaymentsCards />
+            <div className="absolute w-[70px] h-[16px] right-0 bottom-2.5">
+              <PaymentsCards/>
             </div>
 
             <CardNumberElement
               options={{
                 style: {
                   base: {
-                    fontSize: "12px",
+                    fontSize: "15px",
                     color: "black",
                     "::placeholder": {
                       color: "black",
@@ -103,7 +103,7 @@ const CheckoutForm = () => {
                 options={{
                   style: {
                     base: {
-                      fontSize: "12px",
+                      fontSize: "15px",
                       color: "black",
                       "::placeholder": {
                         color: "black",
@@ -126,7 +126,7 @@ const CheckoutForm = () => {
                 options={{
                   style: {
                     base: {
-                      fontSize: "12px",
+                      fontSize: "15px",
                       color: "black",
                       "::placeholder": {
                         color: "black",
@@ -161,7 +161,7 @@ const CheckoutForm = () => {
               )}
             />
           </div>
-          <div className="text-[12px] leading-3 font-medium text-[#000000]">
+          <div className="text-[14px] leading-3 font-medium text-[#000000]">
             Same as registration address
           </div>
         </div>
@@ -175,15 +175,15 @@ const CheckoutForm = () => {
           <div className="text-[11px]">Save Payment Info</div>
         </button>
       </form>
-      <Loading open={loading} message={"Saving Info"} />
+      <Loading open={loading} message={"Saving Info"}/>
     </>
   );
 };
 
 function Billing() {
-  const { isGooglePayAvailable } = useCapacitorStripe();
-  const { data, isLoading } = useSWR("user-payments-methods");
-  const { data: me, isLoading: isMeLoading } = useSWR("auth/me");
+  const {isGooglePayAvailable, isApplePayAvailable} = useCapacitorStripe();
+  const {data, isLoading} = useSWR("user-payments-methods");
+  const {data: me, isLoading: isMeLoading} = useSWR("auth/me");
   const [postLoading, setPostLoading] = useState(false);
 
   return (
@@ -199,10 +199,10 @@ function Billing() {
           !isMeLoading &&
           data?.methods?.map((item) => (
             <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.75 }}
-              transition={{ duration: 0.3 }}
+              initial={{opacity: 0, scale: 0.75}}
+              animate={{opacity: 1, scale: 1}}
+              exit={{opacity: 0, scale: 0.75}}
+              transition={{duration: 0.2}}
               className="w-full flex items-center justify-center"
             >
               <div
@@ -210,7 +210,7 @@ function Billing() {
                 className={clsx(
                   "bg-[#D9D9D960] px-6 py-5 rounded-xl w-full",
                   me?.data?.defaultPaymentMethod == "Card" &&
-                    "border-2 border-purple"
+                  "border-2 border-purple"
                 )}
                 onClick={() => {
                   setPostLoading(true);
@@ -223,17 +223,17 @@ function Billing() {
                 }}
               >
                 <div className="flex gap-2 items-center ">
-                  <CreditCard className="text-purple " />
-                  <div className=" capitalize">{item.brand} Card </div>
+                  <CreditCard className="text-purple "/>
+                  <div className=" capitalize">{item.brand} Card</div>
                   {me?.data?.defaultPaymentMethod == "Card" && (
-                    <div className="ml-auto text-[11px] text-[#2c2c2c]">
+                    <div className="ml-auto text-[15px] text-[#2c2c2c]">
                       Default
                     </div>
                   )}
                 </div>
                 <div className="flex mt-6 gap-2 items-center justify-start">
                   <div>**** **** ****</div>
-                  <div> {item.last4Digits}</div>
+                  <div className='text-[15px] text-[#2c2c2c]'> {item.last4Digits}</div>
                 </div>
               </div>
             </motion.div>
@@ -244,7 +244,7 @@ function Billing() {
             className={clsx(
               "bg-[#D9D9D960] rounded-xl  py-[9px] flex items-center  px-3 w-full  gap-2",
               me?.data?.defaultPaymentMethod == "google-pay" &&
-                "border-2 border-purple"
+              "border-2 border-purple"
             )}
             onClick={() => {
               setPostLoading(true);
@@ -257,7 +257,7 @@ function Billing() {
               });
             }}
           >
-            <img src="/google.svg" className=" w-5 h-5" alt="" />
+            <img src="/google.svg" className=" w-5 h-5" alt=""/>
 
             <div className=" w-full flex flex-between">
               <div className="text-[11px] font-medium">Google Pay</div>
@@ -270,13 +270,56 @@ function Billing() {
             </div>
           </div>
         )}
+
+
+        {/*{!isMeLoading && isApplePayAvailable && (*/}
+        {/*  <div*/}
+        {/*    className={clsx(*/}
+        {/*      "bg-[#D9D9D960] rounded-xl  py-[9px] flex items-center  px-3 w-full  gap-2",*/}
+        {/*      me?.data?.defaultPaymentMethod == "google-pay" &&*/}
+        {/*      "border-2 border-purple"*/}
+        {/*    )}*/}
+        {/*    onClick={() => {*/}
+        {/*      setPostLoading(true);*/}
+
+        {/*      Instance.post("/set-default-payment-method", {*/}
+        {/*        defaultPaymentMethod: "apple-pay",*/}
+        {/*      }).then(() => {*/}
+        {/*        mutate("auth/me");*/}
+        {/*        setPostLoading(false);*/}
+        {/*      });*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    <img src="/google.svg" className=" w-5 h-5" alt="" />*/}
+
+        {/*    <div className=" w-full flex flex-between">*/}
+        {/*      <div className="text-[11px] font-medium">Apple Pay</div>*/}
+
+        {/*      {me?.data?.defaultPaymentMethod == "google-pay" && (*/}
+        {/*        <div className="ml-auto text-[11px] text-[#2c2c2c]">*/}
+        {/*          Default*/}
+        {/*        </div>*/}
+        {/*      )}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*)}*/}
       </div>
+
+
+
+
+      <div className="mt-10 text-sm italic text-[#8A8A8A] -mb-4">Hint Use</div>
+      <div className="mt-6  text-sm italic text-[#8A8A8A] -mb-4">Card: 4242-4242-4242-4242</div>
+      <div className="mt-6  text-sm italic text-[#8A8A8A] -mb-4">CVV: 123 -- EXP: 02/35</div>
+
+
       <div className="mt-10  -mb-4">Add Payment Methods</div>
 
       <div className="w-full mx-auto">
+
         <Elements stripe={stripePromise}>
           <div className="mt-10">
-            <CheckoutForm />
+            <CheckoutForm/>
           </div>
         </Elements>
       </div>

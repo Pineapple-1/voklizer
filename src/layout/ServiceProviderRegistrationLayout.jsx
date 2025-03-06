@@ -1,18 +1,15 @@
-import React from "react";
-import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
-import HomeIcon from "../assets/icons/HomeIcon";
-import BurgerIcon from "../assets/icons/BurgerIcon";
+import {IonContent, IonPage, useIonViewWillEnter} from "@ionic/react";
 
+import clsx from "clsx";
+import {isPlatform} from "@ionic/react";
 import BtmLogo from "../assets/logos/Logo-Alt.svg";
-import { useHistory } from "react-router-dom";
-import { StatusBar, Style } from "@capacitor/status-bar";
+import {StatusBar, Style} from "@capacitor/status-bar";
 
-function ServiceProviderRegistrationLayout({ children }) {
-  const history = useHistory();
+function ServiceProviderRegistrationLayout({children}) {
 
   const setStatusBarStyleLight = async () => {
-    await StatusBar.setStyle({ style: Style.Light });
-    await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
+    await StatusBar.setStyle({style: Style.Light});
+    await StatusBar.setBackgroundColor({color: "#F5F5F5"});
   };
 
   useIonViewWillEnter(() => {
@@ -22,7 +19,8 @@ function ServiceProviderRegistrationLayout({ children }) {
   return (
     <IonPage>
       <IonContent>
-        <div className="h-full bg-gray/50 px-6 py-10 flex flex-col">
+        <div className={clsx("h-full bg-gray/50 px-6 pb-10 flex flex-col  pt-20")}>
+
           <div className="flex flex-col gap-5">
             <img
               className="w-[73px] h-[66px] m-auto"

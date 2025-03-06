@@ -1,15 +1,21 @@
 {
-  "appId": "com.voklizer",
+  "appId": "com.voklizer.app",
   "appName": "voklizer",
   "webDir": "dist",
   "server": {
     "androidScheme": "https"
   },
   "plugins": {
-    "GoogleAuth": {
-      "scopes": ["profile", "email"],
-      "androidClientId": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com",
-      "clientId": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com"
+    "SocialLogin": {
+      "google": {
+        "webClientId": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com",
+        "iOSClientId": "680199080385-2tgqhj0ht8ve12v5c6d5eq2la8s7uu17.apps.googleusercontent.com"
+      }
+    },
+    "StatusBar": {
+      "overlaysWebView": false,
+      "style": "LIGHT",
+      "backgroundColor": "#f5f5f5"
     },
     "SplashScreen": {
       "launchShowDuration": 2000,
@@ -17,15 +23,16 @@
       "backgroundColor": "#000000",
       "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_CROP",
-      "showSpinner": true,
       "androidSpinnerStyle": "large",
-      "iosSpinnerStyle": "small",
-      "spinnerColor": "#999999",
       "splashFullScreen": true,
       "splashImmersive": true
     },
     "PushNotifications": {
-      "presentationOptions": ["badge", "sound", "alert"]
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
     }
   }
 }

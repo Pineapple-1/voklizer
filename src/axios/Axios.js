@@ -32,7 +32,8 @@ Instance.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       redirectToLoginPage();
     }else{
-      redirectToErrorPage(`Message:${error.message} Url:${error.config.url}`)    
+      console.log("error---->>", JSON.stringify(error.config.data));
+      redirectToErrorPage(`Message:${error.message} Url:${error.config.url}`)
     }
     return Promise.reject(error);
   }

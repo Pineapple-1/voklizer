@@ -47,6 +47,8 @@ export const PitchSuccess = loadable(() =>
 export const Replies = loadable(() => import("./pages/voicebox/Replies"));
 export const VokDiary = loadable(() => import("./pages/voicebox/VokDiary"));
 export const Queries = loadable(() => import("./pages/voicebox/AllQueries"));
+export const AllReplies = loadable(() => import("./pages/voicebox/AllReplies.jsx"));
+
 
 export const Register = loadable(() => import("./pages/auth/Register"));
 export const Selection = loadable(() => import("./pages/auth/Selection"));

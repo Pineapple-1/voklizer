@@ -1,4 +1,3 @@
-import React from "react";
 import "./MusicBar.css";
 
 export const MusicBars = ({ isAnimating }) => {

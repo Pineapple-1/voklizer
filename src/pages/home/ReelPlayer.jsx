@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { X } from "lucide-react";
-import { IonContent, IonPage, useIonViewWillEnter } from "@ionic/react";
-import { StatusBar, Style } from "@capacitor/status-bar";
+import {useState} from "react";
+import {useParams, useHistory} from "react-router-dom";
+import {X} from "lucide-react";
+import {IonContent, IonPage, useIonViewWillEnter} from "@ionic/react";
+import {StatusBar, Style} from "@capacitor/status-bar";
 
 const ReelPlayer = () => {
-  const { id } = useParams();
+  const {id} = useParams();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,23 +16,23 @@ const ReelPlayer = () => {
   };
 
   useIonViewWillEnter(() => {
-    StatusBar.setStyle({ style: Style.Dark });
-    StatusBar.setBackgroundColor({ color: "#000000" });
+    StatusBar.setStyle({style: Style.Dark});
+    StatusBar.setBackgroundColor({color: "#000000"});
   });
 
   return (
     <IonPage>
       <IonContent>
-        <div className="h-screen w-screen bg-black relative">
+        <div className="h-screen w-screen bg-black relative pt-20 pb-10 relative">
           <button
-            className="absolute right-6 top-6 flex w-8 h-8 items-center justify-center bg-slate-500 rounded-full z-10"
+            className="absolute right-5 top-10 flex w-8 h-8 items-center justify-center bg-slate-500 rounded-full z-10"
             onClick={() => history.go(-1)}
           >
-            <X className="w-5 h-5 text-white" />
+            <X className="w-5 h-5 text-white"/>
           </button>
 
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center z-20" />
+            <div className="absolute inset-0 flex items-center justify-center z-20"/>
           )}
 
           <video

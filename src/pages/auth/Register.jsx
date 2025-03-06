@@ -1,11 +1,13 @@
 import Socials from "./components/Socials";
-import { useForm } from "react-hook-form";
-import { useHistory, useLocation } from "react-router-dom";
-import { useState } from "react";
+import {useForm} from "react-hook-form";
+import {useHistory, useLocation} from "react-router-dom";
+import {useState} from "react";
 import AuthLayout from "./AuthLayout";
 import SelectIcon from "../../assets/icons/SelectIcon";
-import { useSetAtom, useAtomValue } from "jotai";
-import { userAtom, socialAtom } from "../../state";
+import {useSetAtom, useAtomValue} from "jotai";
+import {userAtom, socialAtom} from "../../state";
+import {motion} from "framer-motion";
+import {useEffect, useRef} from "react";
 
 function Register() {
   const social = useAtomValue(socialAtom);
@@ -23,7 +25,7 @@ function Register() {
     handleSubmit,
     watch,
     setValue,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       firstName: social?.firstname || "",
@@ -34,11 +36,11 @@ function Register() {
 
   const onSubmit = (data) => {
     if (!removePassword) {
-      const { confirmPassword, ...restOfData } = data;
-      setUser({ ...restOfData, authType: "customPassword" });
+      const {confirmPassword, ...restOfData} = data;
+      setUser({...restOfData, authType: "customPassword"});
     } else {
-      const { password, confirmPassword, ...restOfData } = data;
-      setUser({ ...restOfData, authType: "google" });
+      const {password, confirmPassword, ...restOfData} = data;
+      setUser({...restOfData, authType: "google"});
     }
     history.push("/selection");
   };
@@ -51,14 +53,14 @@ function Register() {
           <div className="text-2xl leading-8 w-full text-center">Sign Up</div>
 
           <form
-            className="flex justify-between flex-col gap-6"
+            className="flex justify-between flex-col gap-8"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               <div className="flex gap-2 ">
                 <input
                   className={
-                    "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none w-full"
+                    "rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-sm focus:outline-none focus:ring-none w-full"
                   }
                   placeholder="First Name"
                   {...register("firstName", {
@@ -72,7 +74,7 @@ function Register() {
 
                 <input
                   className={
-                    "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none w-full"
+                    "rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-sm focus:outline-none focus:ring-none w-full"
                   }
                   placeholder="Last Name"
                   {...register("lastName", {
@@ -92,69 +94,19 @@ function Register() {
             </div>
 
             <div className="flex gap-4 w-full">
-              <div
-                className="flex flex-col gap-1.5 w-1/4 relative"
-                onClick={() => setShowCountry((showCountry) => !showCountry)}
-              >
+
+              <CountrySelect
+                register={register}
+                errors={errors}
+                setValue={setValue}
+                showCountry={showCountry}
+                setShowCountry={setShowCountry}
+              />
+
+              <div className="flex flex-col gap-2 w-full">
                 <input
                   className={
-                    "caret-transparent cursor-pointer rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
-                  }
-                  disabled
-                  placeholder="Country"
-                  {...register("countryCode", {
-                    required: "Required",
-                    pattern: {
-                      value: /^(\+92|\+44)$/,
-                      message: "Select valid country code",
-                    },
-                  })}
-                  type="text"
-                  name="countryCode"
-                  autoComplete="off"
-                  aria-invalid={errors.countryCode ? "true" : "false"}
-                />
-                <div className="absolute top-3 right-0">
-                  <SelectIcon />
-                </div>
-                {showCountry && (
-                  <div className="flex gap-2">
-                    <div
-                      className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer"
-                      onClick={() =>
-                        setValue("countryCode", "+44", {
-                          shouldValidate: true,
-                          shouldDirty: true,
-                        })
-                      }
-                    >
-                      UK
-                    </div>
-                    <div
-                      className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer"
-                      onClick={() =>
-                        setValue("countryCode", "+92", {
-                          shouldValidate: true,
-                          shouldDirty: true,
-                        })
-                      }
-                    >
-                      PK
-                    </div>
-                  </div>
-                )}
-
-                {errors.countryCode && (
-                  <p className="text-purple text-sm">
-                    {errors.countryCode.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-1.5 w-full">
-                <input
-                  className={
-                    "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none "
+                    "rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-sm focus:outline-none focus:ring-none "
                   }
                   placeholder="Mobile Number"
                   {...register("mobileNumber", {
@@ -177,10 +129,10 @@ function Register() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               <input
                 className={
-                  "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+                  "rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-sm focus:outline-none focus:ring-none"
                 }
                 placeholder="Email Address"
                 {...register("email", {
@@ -202,10 +154,10 @@ function Register() {
 
             {!removePassword && (
               <>
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <input
                     className={
-                      "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+                      "rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-sm focus:outline-none focus:ring-none"
                     }
                     placeholder="Password"
                     {...register("password", {
@@ -226,10 +178,10 @@ function Register() {
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <input
                     className={
-                      "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+                      "rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-sm focus:outline-none focus:ring-none"
                     }
                     placeholder="Confirm Password"
                     {...register("confirmPassword", {
@@ -262,10 +214,89 @@ function Register() {
 
         <div className=" text-lg text-center ">OR</div>
 
-        <Socials setValue={setValue} setRemovePassword={setRemovePassword} />
+        <Socials setValue={setValue} setRemovePassword={setRemovePassword}/>
       </div>
     </AuthLayout>
   );
 }
+
+
+export const CountrySelect = ({register, errors, setValue, setShowCountry, showCountry}) => {
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowCountry(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowCountry]);
+
+  const handleSelect = (value) => {
+    setValue("countryCode", value, {shouldValidate: true, shouldDirty: true});
+    setShowCountry(false);
+  };
+
+  return (
+    <div ref={dropdownRef} className="flex flex-col gap-1.5 w-1/4 relative cursor-pointer"
+         onClick={() => setShowCountry((prev) => !prev)}>
+      <input
+        className="caret-transparent cursor-pointer rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-sm focus:outline-none focus:ring-none"
+        placeholder="Country"
+        {...register("countryCode", {
+          required: "Required",
+          pattern: {
+            value: /^(\+92|\+44)$/,
+            message: "Select valid country code",
+          },
+        })}
+        type="text"
+        name="countryCode"
+        autoComplete="off"
+        aria-invalid={errors.countryCode ? "true" : "false"}
+        onFocus={(e) => e.target.blur()}
+      />
+      <div className="absolute top-3 right-0">
+        <SelectIcon/>
+      </div>
+      {showCountry && (
+        <motion.div
+          initial={{opacity: 0, y: -10}}
+          animate={{opacity: 1, y: 0}}
+          exit={{opacity: 0, y: -10}}
+          transition={{duration: 0.2}}
+          className="absolute top-full left-0 mt-1 bg-white border border-black rounded-lg shadow-md p-2  flex flex-col gap-2"
+        >
+          <div
+            className="bg-black px-4 py-0.5 text-sm text-white w-max rounded-lg cursor-pointer font-semibold"
+            onClick={() => {
+
+              handleSelect("+44")
+              setShowCountry((prev) => !prev)
+            }}
+          >
+            UK
+          </div>
+          <div
+            className="bg-black px-4 py-0.5 text-sm text-white w-max rounded-lg cursor-pointer font-semibold"
+            onClick={() => {
+              handleSelect("+92")
+              setShowCountry((prev) => !prev)
+            }}
+          >
+            PK
+          </div>
+        </motion.div>
+      )}
+      {errors.countryCode && (
+        <p className="text-purple text-sm">{errors.countryCode.message}</p>
+      )}
+    </div>
+  );
+};
 
 export default Register;

@@ -4,6 +4,12 @@ import "./index.css";
 import "./ionic.css";
 import { SWRConfig } from "swr";
 import { storage } from "./storage";
+import { StatusBar, Style } from '@capacitor/status-bar';
+
+const setStatusBarStyleLight = async () => {
+  await StatusBar.setStyle({style: Style.Light});
+  await StatusBar.setBackgroundColor({color: "#F5F5F5"});
+};
 
 async function setup() {
 
@@ -30,3 +36,4 @@ async function setup() {
 }
 
 setup();
+setStatusBarStyleLight()

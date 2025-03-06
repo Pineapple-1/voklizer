@@ -17,7 +17,7 @@ const Textbox = forwardRef(
         />
         <div className="flex justify-between mt-2.5">
           <div className="text-p1 text-start">{label}</div>
-          <div className="text-[10px] leading-[13px] text-[#B8B8B8]">
+          <div className="text-[14px] leading-[13px] text-[#B8B8B8]">
             {subtitle}
           </div>
         </div>

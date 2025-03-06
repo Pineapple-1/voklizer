@@ -1,16 +1,15 @@
-import React from "react";
 
 function Meet({ meet }) {
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-2">
-        <div className="bg-purple text-white rounded-md pl-1.5 text-[11px] pr-4">
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-3">
+        <div className="bg-purple text-white rounded-md pl-1.5 text-[13px] pr-4 py-0.5">
           {meet.date}
         </div>
-        <div className="text-[10px]">{meet.title}</div>
+        <div className="text-[12px] capitalize">{meet.title.toLowerCase()}</div>
       </div>
       <div className="flex justify-between">
-        <div>{meet.description}</div>
+        <div className='capitalize'>{meet.description.toLowerCase()}</div>
 
         <div className="flex gap-3 items-center justify-center">
           <div>{meet.startTime}</div>

@@ -1,32 +1,30 @@
-import React from "react";
 import StopWatchIcon from "../../../assets/icons/StopWatchIcon";
 import MicIcon from "../../../assets/icons/Mic";
 import MicSm from "../../../assets/icons/MicSm";
 import PlayIcon from "../../../assets/icons/PlayIcon";
 import clsx from "clsx";
 
-import { useState } from "react";
-import { VoiceRecorder } from "capacitor-voice-recorder";
-import { useHistory } from "react-router-dom";
+import {useState} from "react";
+import {VoiceRecorder} from "capacitor-voice-recorder";
+import {useHistory} from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import Loading from "../../../components/Loading";
-import { useSWRConfig } from "swr";
+import {useSWRConfig} from "swr";
 import useSWR from "swr";
 
-import { useAtom } from "jotai";
-import { audioAtom } from "../../../state";
+import {useAtom} from "jotai";
+import {audioAtom} from "../../../state";
 
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 import Pause from "../../../assets/icons/Pause";
 
-import { useCapacitorStripe } from "@capacitor-community/stripe/dist/esm/react/provider";
+import {useCapacitorStripe} from "@capacitor-community/stripe/dist/esm/react/provider";
 
-function Pitch({ location, area, focus, url, jobId, queryRef }) {
+function Pitch({location, area, focus, url, jobId, queryRef, setFocusedIndex, index}) {
   const [audioState, setAudioState] = useAtom(audioAtom);
 
-  const { mutate } = useSWRConfig();
+  const {mutate} = useSWRConfig();
 
-  const [open, setOpen] = useState(focus ? true : false);
   const [isReplying, setIsReplying] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setisListening] = useState(false);
@@ -35,9 +33,9 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
   const [sending, setSending] = useState(false);
   const history = useHistory();
 
-  const { stripe, isGooglePayAvailable } = useCapacitorStripe();
-  const { data: me } = useSWR("auth/me");
-  const { data } = useSWR(isGooglePayAvailable && "create-payment-intent");
+  const {stripe, isGooglePayAvailable} = useCapacitorStripe();
+  const {data: me} = useSWR("auth/me");
+  const {data} = useSWR(isGooglePayAvailable && "create-payment-intent");
 
   const cancel = () => {
     if (isRecording) {
@@ -160,16 +158,15 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
   };
 
 
-
   const send = async () => {
     setSending(true);
-  
+
     if (!me?.data?.defaultPaymentMethod) {
       setSending(false);
       history.push("/billing");
       return;
     }
-  
+
     try {
       if (me?.data?.defaultPaymentMethod === "google-pay") {
         const paymentResult = await createPaymentToken();
@@ -182,29 +179,29 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
           serviceType: "Lead",
         });
       }
-  
+
       await Instance.post(`job-service-provider-offer/${jobId}`, {
         audioType: replyhex.mimeType,
         audioHex: replyhex.recordDataBase64,
       });
-  
+
       setSending(false);
       setReplyhex(null);
       setIsReplying(false);
       setIsRecording(false);
       setisListening(false);
-      
+
       mutate(`user-job/${jobId}`);
       mutate("create-payment-intent");
       mutate("user-payments");
       history.push("/pitch-success");
     } catch (error) {
       setSending(false);
-    
+
       if (me?.data?.defaultPaymentMethod === "google-pay" && error.message === "Payment Was Not Completed") {
         history.push(`/payment-error`);
       }
-    
+
     }
   };
 
@@ -228,22 +225,23 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, translateY: 50 }}
-      animate={{ opacity: 1, translateY: 0 }}
-      transition={{ duration: 0.3 }}
+      initial={{opacity: 0, translateY: 50}}
+      animate={{opacity: 1, translateY: 0}}
+      transition={{duration: 0.3}}
       className="bg-[#EFEFEF] w-full rounded-xl"
     >
       <div
         className="p-[15px] flex  justify-between"
         onClick={() => {
           cancel();
-          setOpen((open) => !open);
+          setFocusedIndex(index);
+
         }}
       >
         <div className=" text-2xl font-bold">{location}</div>
-        <StopWatchIcon className="text-purple" />
+        <StopWatchIcon className="text-purple"/>
       </div>
-      {!open && (
+      {!focus && (
         <motion.div
           className={clsx(
             "flex flex-col gap-6 rounded-xl px-[15px] py-[14px] w-full",
@@ -251,14 +249,17 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
           )}
           onClick={() => {
             cancel();
-            setOpen((open) => !open);
+            setFocusedIndex(index);
+
+            console.log(focus);
+
           }}
         >
           <div className="flex items-center justify-between text-white">
             <div className="text-[12px] leading-[15px] font-bold">{area}</div>
             <div className=" flex flex-col">
-              <div className="text-[10px] leading-[12px] font-bold">Max</div>
-              <div className="text-[10px] leading-[12px] font-bold">£500</div>
+              <div className="text-[14px] leading-[12px] font-bold">Max</div>
+              <div className="text-[14px] leading-[12px] font-bold">£500</div>
             </div>
           </div>
         </motion.div>
@@ -266,14 +267,14 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
 
       <motion.div
         initial={false}
-        animate={{ height: open ? "auto" : 0 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        animate={{height: focus ? "auto" : 0}}
+        transition={{duration: 0.3, ease: "easeInOut"}}
         className="overflow-hidden"
       >
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: open ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
+          initial={{opacity: 0}}
+          animate={{opacity: focus ? 1 : 0}}
+          transition={{duration: 0.2}}
           className={clsx(
             "flex flex-col gap-6 rounded-xl px-[15px] py-[14px] w-full transition-colors duration-300",
             isReplying ? "bg-[#000]" : "bg-[#8532D8]"
@@ -284,46 +285,48 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
               className="flex items-center justify-between"
               onClick={() => {
                 cancel();
-                setOpen(() => false);
+                setFocusedIndex(Math.random());
+
               }}
             >
               <div className="flex gap-2 items-center w-full">
                 <div className="text-[#231F20] text-2xl bg-white rounded-3xl font-bold px-3 flex items-center gap-2">
                   {isReplying ? (
                     <>
-                      <MicSm className="text-purple" />
+                      <MicSm className="text-purple"/>
                       {isListening ? <div>Listen</div> : <div>Record</div>}
                     </>
                   ) : (
                     <>
-                      <PlayIcon className="text-purple" />
+                      <PlayIcon className="text-purple"/>
                       <div>Lead</div>
                     </>
                   )}
                 </div>
                 {isReplying ? (
                   <div className=" flex justify-end w-full">
-                    <div className=" h-[1px] w-1/2 bg-white" />
+                    <div className=" h-[1px] w-1/2 bg-white"/>
                   </div>
                 ) : (
-                  <StopWatchIcon className="text-white" />
+                  <StopWatchIcon className="text-white"/>
                 )}
               </div>
 
               {!isReplying && (
-                <div className="text-white text-[24px] font-bold border border-white w-[30px] h-[30px] flex items-center justify-center rounded-lg">
+                <div
+                  className="text-white text-[24px] font-bold border border-white w-[30px] h-[30px] flex items-center justify-center rounded-lg">
                   X
                 </div>
               )}
             </div>
             <div className="flex flex-col gap-1">
               {isReplying ? (
-                <div className="h-10" />
+                <div className="h-10"/>
               ) : (
                 <>
                   <div className="flex gap-3 items-center ">
                     <div className="text-white">{area}</div>
-                    <div className="flex-1 h-[1px] bg-white " />
+                    <div className="flex-1 h-[1px] bg-white "/>
                   </div>
                   <div className="text-white font-bold  text-right">
                     <div className="text-[14px] leading-[18px]">Max</div>
@@ -337,27 +340,28 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
               >
                 {isReplying ? (
                   replyhex ? (
-                    <PlayIcon />
+                    <PlayIcon/>
                   ) : (
-                    <MicIcon className="text-purple" />
+                    <MicIcon className="text-purple"/>
                   )
                 ) : audioState.isPlaying && audioState.url === url ? (
                   audioState.isPaused ? (
-                    <PlayIcon />
+                    <PlayIcon/>
                   ) : (
-                    <Pause className={"w-8 h-8 text-purple"} />
+                    <Pause className={"w-8 h-8 text-purple"}/>
                   )
                 ) : (
-                  <PlayIcon />
+                  <PlayIcon/>
                 )}
 
                 {((audioState.isPlaying &&
-                  audioState.url === url &&
-                  !audioState.isPaused) ||
+                    audioState.url === url &&
+                    !audioState.isPaused) ||
                   isRecording) && (
                   <>
-                    <div className="absolute inset-1 animate-ping border border-white w-20 h-20 rounded-full " />
-                    <div className="absolute inset-1 border border-white w-20 h-20 rounded-full  animate-[ping_1s_linear_infinite]" />
+                    <div className="absolute  animate-ping border border-white w-20 h-20 rounded-full "/>
+                    <div
+                      className="absolute  border border-white w-20 h-20 rounded-full  animate-[ping_1s_linear_infinite]"/>
                   </>
                 )}
               </div>
@@ -379,7 +383,7 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
               <button
                 className="text-[#2B194C] text-[13px] leading-[16px] font-bold  disabled:text-[#c3c3c3] "
                 onClick={!isReplying ? reply : send}
-                disabled={isReplying?!replyhex:isRecording}
+                disabled={isReplying ? !replyhex : isRecording}
               >
                 {isReplying ? "Send" : "Reply"}
               </button>
@@ -388,7 +392,7 @@ function Pitch({ location, area, focus, url, jobId, queryRef }) {
         </motion.div>
       </motion.div>
 
-      <Loading open={sending} message="Replying..." />
+      <Loading open={sending} message="Replying..."/>
     </motion.div>
   );
 }
