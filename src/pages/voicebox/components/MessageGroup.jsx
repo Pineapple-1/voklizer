@@ -124,8 +124,8 @@ function MessageGroup({job, messageRef}) {
                   {job.offerCount}
                 </div>
                 <div className="flex flex-col items-start">
-                  <div className=" text-[12px] leading-0 ">Press here to</div>
-                  <div className="text-[14px] -mt-1"> see replies</div>
+                  <div className=" text-[13px] leading-0 ">Press here to</div>
+                  <div className="text-[13px] -mt-1"> see replies</div>
                 </div>
               </div>
             </div>

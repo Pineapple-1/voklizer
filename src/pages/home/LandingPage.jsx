@@ -109,25 +109,25 @@ const LandingPage = () => {
             onClick={() => history.push("/queries")}
           >
             <img src="/speaker.svg" alt="" className="w-14 h-14"/>
-            <div className="text-[11px] leading-3">Voice Box</div>
+            <div className="text-[14px] leading-3">Voice Box</div>
           </div>
           <div
             className="flex flex-col items-center justify-between h-20"
             onClick={() => history.push("/profile")}
           >
             <img src="/user.svg" alt="" className="w-14 h-14"/>
-            <div className="text-[13px] leading-3">Account</div>
+            <div className="text-[14px] leading-3">Account</div>
           </div>
           <div
             className="flex flex-col items-center justify-between h-20"
             onClick={() => history.push("/billing")}
           >
             <img src="/card.svg" alt="" className="w-18 h-14"/>
-            <div className="text-[13px] leading-3">Billing</div>
+            <div className="text-[14px] leading-3">Billing</div>
           </div>
           <div className="flex flex-col items-center justify-between h-20">
             <img src="/support.svg" alt="" className="w-14 h-14"/>
-            <div className="text-[13px] leading-3">Support</div>
+            <div className="text-[14px] leading-3">Support</div>
           </div>
         </div>
 

@@ -13,7 +13,7 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={clsx("p-6 bg-[#F9F3FF] w-full border-y border-black", className)}
+      className={clsx("py-6 bg-[#F9F3FF] w-full border-y border-black", className)}
       classNames={{
         months: "flex flex-col ",
         month: "space-y-6",
