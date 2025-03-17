@@ -2,18 +2,22 @@ import { useState } from "react";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
 import ChipButton from "../../../components/ChipButton";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import { useForm } from "react-hook-form";
 
 function CompanyEmailWebsite() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const location = useLocation();
+
+  // Check if we're in edit mode
+  const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
+
   const {
     register,
     handleSubmit,
     reset,
-
     formState: { errors },
   } = useForm();
 
@@ -22,7 +26,15 @@ function CompanyEmailWebsite() {
     Instance.post("service-provider/company-info", data)
       .then(() => {
         setLoading(false);
-        history.push("/otp");
+        if (isEditMode) {
+          history.replace("/landing");
+        } else {
+          history.push("/otp");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting data:", error);
+        setLoading(false);
       })
       .finally(() => reset());
   };
@@ -35,10 +47,10 @@ function CompanyEmailWebsite() {
             <div className="flex flex-col gap-3 w-full">
               <input
                 className={
-                  "rounded-none text-xs border-purple border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none w-full"
+                  "rounded-none text-base border-purple border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none w-full"
                 }
                 {...register("companyWebsite", {
-                  required: "company website is required?",
+                  required: "Company website is required",
                 })}
                 type="text"
                 name="companyWebsite"
@@ -50,15 +62,15 @@ function CompanyEmailWebsite() {
                   {errors.companyWebsite.message}
                 </p>
               )}
-              <div className="text-[14px] leading-[17px]">Company Website</div>
+              <div className="text-sm leading-[17px]">Company Website</div>
             </div>
             <div className="flex flex-col gap-3 w-full">
               <input
                 className={
-                  "rounded-none text-xs border-purple border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none w-full"
+                  "rounded-none text-base border-purple border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none w-full"
                 }
                 {...register("companyEmail", {
-                  required: "company email is required?",
+                  required: "Company email is required",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: "Invalid Email Address e.g johndoe@example.com",
@@ -74,20 +86,31 @@ function CompanyEmailWebsite() {
                   {errors.companyEmail.message}
                 </p>
               )}
-              <div className="text-[14px] leading-[17px]">
+              <div className="text-sm leading-[17px]">
                 Company Email Address
               </div>
             </div>
           </div>
           <div className="flex justify-between">
-            <ChipButton onClick={() => history.push("reg-num")}>
-              Back
+            {isEditMode ? (
+              <ChipButton
+                onClick={() => history.replace("/landing")}
+                className="bg-gray-200 text-purple"
+              >
+                Cancel
+              </ChipButton>
+            ) : (
+              <ChipButton onClick={() => history.push("/reg-num")}>
+                Back
+              </ChipButton>
+            )}
+            <ChipButton type={"submit"}>
+              {isEditMode ? "Save" : "Next"}
             </ChipButton>
-            <ChipButton type={"submit"}>Next</ChipButton>
           </div>
         </form>
       </div>
-      <Loading open={loading} message={"Saving Info"} />
+      <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />
     </ServiceProviderRegistrationLayout>
   );
 }

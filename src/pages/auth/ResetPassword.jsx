@@ -34,7 +34,7 @@ function ResetPass() {
           <div className="flex flex-col gap-1.5">
             <input
               className={
-                "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+                "rounded-none text-base border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none"
               }
               placeholder="Password"
               {...register("password", {
@@ -54,7 +54,7 @@ function ResetPass() {
           <div className="flex flex-col gap-1.5">
             <input
               className={
-                "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+                "rounded-none text-base border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none"
               }
               placeholder="Confirm Password"
               {...register("confirmPassword", {

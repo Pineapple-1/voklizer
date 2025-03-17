@@ -2,14 +2,18 @@ import { useState } from "react";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
 import ChipButton from "../../../components/ChipButton";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
-
 import SelectIcon from "../../../assets/icons/SelectIcon";
 
 function PreferredLanguage() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const location = useLocation();
+
+  // Check if we're in edit mode
+  const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
+
   const languages = ["english", "urdu", "spanish", "french"];
   const [value, setValue] = useState([]);
 
@@ -20,7 +24,14 @@ function PreferredLanguage() {
     })
       .then((res) => {
         console.log(res);
-        history.push("/reg-name");
+        if (isEditMode) {
+          history.replace("/landing");
+        } else {
+          history.push("/reg-name");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting data:", error);
       })
       .finally(() => setLoading(false));
   };
@@ -43,14 +54,14 @@ function PreferredLanguage() {
                 </div>
               ))
             ) : (
-              <div className="mt-2 text-[14px] leading-4">
+              <div className="mt-2 text-sm leading-4">
                 Preferred Language/s
               </div>
             )}
           </div>
           <div
             className={
-              "caret-transparent cursor-pointer rounded-none text-xs border-purple border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none h-0.5"
+              "caret-transparent cursor-pointer rounded-none text-base border-purple border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none h-0.5"
             }
           />
           <div className="absolute -top-1 right-0">
@@ -74,11 +85,26 @@ function PreferredLanguage() {
           </div>
         </div>
 
-        <div className="flex justify-end">
-          <ChipButton onClick={() => submit()} disabled = {value.length===0}>Next</ChipButton>
+        <div className="flex justify-between">
+          {isEditMode ? (
+            <ChipButton
+              onClick={() => history.replace("/landing")}
+              className="bg-gray-200 text-purple"
+            >
+              Cancel
+            </ChipButton>
+          ) : (
+            <div></div> // Empty div to maintain spacing when no back button is needed
+          )}
+          <ChipButton
+            onClick={() => submit()}
+            disabled={value.length === 0}
+          >
+            {isEditMode ? "Save" : "Next"}
+          </ChipButton>
         </div>
       </div>
-      <Loading open={loading} message={"Saving Info"} />
+      <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />
     </ServiceProviderRegistrationLayout>
   );
 }

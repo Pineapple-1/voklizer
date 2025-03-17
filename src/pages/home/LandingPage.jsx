@@ -1,4 +1,3 @@
-import Base from "../../layout/Base";
 import UserHomeLayout from "../../layout/UserHomeLayout";
 import Reel from "./components/Reel";
 import useSWR from "swr";
@@ -13,12 +12,16 @@ import Loading from "../../components/Loading";
 const LandingPage = () => {
   const {data, isLoading} = useSWR("auth/me");
 
-  const {data: meetings, isloading: meetingsLoading} = useSWR(
-    `booked-time-slots-${
-      data?.data?.role === "serviceProvider" ? "user" : "user"
-    }?year=${getYear(new Date())}&month=${getMonth(new Date()) + 1}`
-  );
+  const currentYear = getYear(new Date());
+  const currentMonth = getMonth(new Date()) + 1;
 
+  const meetingsEndpoint = data?.data?.role === "serviceProvider"
+    ? `booked-time-slots-service-provider?year=${currentYear}&month=${currentMonth}`
+    : `booked-time-slots-user?year=${currentYear}&month=${currentMonth}`;
+
+  const {data: meetings, isLoading: meetingsLoading} = useSWR(
+    data ? meetingsEndpoint : null
+  );
 
   const history = useHistory();
 
@@ -80,7 +83,7 @@ const LandingPage = () => {
           <div
             className="w-[216px] h-20 rounded-[15px] flex  items-center justify-between  overflow-hidden bg-purple px-5 py-3  flex-shrink-0 ">
             <div className="flex flex-col gap-1 ">
-              <div className="text-white text-[16px] leading-4">Tutorial</div>
+              <div className="text-white text-base leading-4">Tutorial</div>
               <div className="text-white text-[7px] w-[67px]">
                 Learn how to use the application
               </div>
@@ -92,7 +95,7 @@ const LandingPage = () => {
           <div
             className="w-[216px] h-20 rounded-[15px] flex  items-center justify-between  overflow-hidden bg-[#7EE150] px-5 py-3  flex-shrink-0 ">
             <div className="flex flex-col gap-1  text-purple">
-              <div className="text-[16px] leading-4">Learn How to 'EARN'</div>
+              <div className="text-base leading-4">Learn How to 'EARN'</div>
             </div>
 
             <img src="/learnhow.svg" alt="" className="w-[81px] h-[53px]"/>
@@ -100,7 +103,7 @@ const LandingPage = () => {
         </div>
 
         <div className="capitalize font-bold">
-          Welcome, {data?.data?.firstName}
+          Welcome, {data?.data?.firstName || 'User'}
         </div>
 
         <div className="flex gap gap-5">
@@ -109,31 +112,34 @@ const LandingPage = () => {
             onClick={() => history.push("/queries")}
           >
             <img src="/speaker.svg" alt="" className="w-14 h-14"/>
-            <div className="text-[14px] leading-3">Voice Box</div>
+            <div className="text-sm leading-3">Voice Box</div>
           </div>
           <div
             className="flex flex-col items-center justify-between h-20"
             onClick={() => history.push("/profile")}
           >
             <img src="/user.svg" alt="" className="w-14 h-14"/>
-            <div className="text-[14px] leading-3">Account</div>
+            <div className="text-sm leading-3">Account</div>
           </div>
           <div
             className="flex flex-col items-center justify-between h-20"
             onClick={() => history.push("/billing")}
           >
             <img src="/card.svg" alt="" className="w-18 h-14"/>
-            <div className="text-[14px] leading-3">Billing</div>
+            <div className="text-sm leading-3">Billing</div>
           </div>
           <div className="flex flex-col items-center justify-between h-20">
             <img src="/support.svg" alt="" className="w-14 h-14"/>
-            <div className="text-[14px] leading-3">Support</div>
+            <div className="text-sm leading-3">Support</div>
           </div>
         </div>
 
         <div className="capitalize font-bold -mb-1">My Appointments</div>
-        {!meetingsLoading &&
-          meetings?.data?.map((item) => <Meet key={Math.random()} meet={item}/>)}
+        {!meetingsLoading && meetings?.data?.length > 0 ? (
+          meetings.data.map((item) => <Meet key={item.id || Math.random()} meet={item}/>)
+        ) : (
+          <div className="text-gray-500">No appointments scheduled</div>
+        )}
       </div>
       <Loading open={meetingsLoading || isLoading} message={"Fetching"}/>
     </UserHomeLayout>

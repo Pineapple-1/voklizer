@@ -19,7 +19,7 @@ function PitchSuccess() {
             <div className=" text-[20px] leading-[25px] text-center  w-[230px] break-words">
               Sit tight, Pitch has been sent
             </div>
-            <div className="text-[13px] text-purple pt-12">you shall be notified soon</div>
+            <div className="text-sm text-purple pt-12">you shall be notified soon</div>
           </div>
         </div>
       </div>

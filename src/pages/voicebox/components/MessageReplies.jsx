@@ -94,7 +94,7 @@ function MessageReplies({id, offer, vokRef}) {
           <div className="text-[8px] leading-[8px] text-[#8A8A8A]">
             {offer.User.ServiceProvider.city}
           </div>
-          <div className="text-[12px] leading-[10px] text-[#8A8A8A]">
+          <div className="text-sm leading-[10px] text-[#8A8A8A]">
             {offer.User.ServiceProvider.companyName}
           </div>
         </div>
@@ -139,7 +139,7 @@ function MessageReplies({id, offer, vokRef}) {
             src="/Ripple.svg"
             alt=""
           />
-          <div className="text-[12px] leading-3 text-[#000000]">
+          <div className="text-sm leading-3 text-[#000000]">
             From £500
           </div>
         </div>
@@ -150,15 +150,15 @@ function MessageReplies({id, offer, vokRef}) {
         >
           {value === 100 ? (<div className="flex gap-1">
             <Ticks/>
-            <div className="text-[12px] text-[#8A8A8A] leading-[8px]">
+            <div className="text-sm text-[#8A8A8A] leading-[8px]">
               Accepted
             </div>
-          </div>) : (<div className="text-[12px] text-[#8A8A8A] leading-[8px]">
+          </div>) : (<div className="text-sm text-[#8A8A8A] leading-[8px]">
             Slide to accept
           </div>)}
         </div>
         <div
-          className={clsx("text-[12px] leading-[8px] text-[#8A8A8A] -mt-2", value === 100 && "mr-6")}
+          className={clsx("text-sm leading-[8px] text-[#8A8A8A] -mt-2", value === 100 && "mr-6")}
         >
           {format(offer.createdAt, "dd/MM/yyyy - HH:mm")}
         </div>
@@ -181,7 +181,7 @@ function MessageReplies({id, offer, vokRef}) {
                     {offer.User.rating}
                   </div>
                 </div>
-                <div className="text-purple font-bold text-[16px] leading-5 w-24">
+                <div className="text-purple font-bold text-base leading-5 w-24">
                   {offer.User.ServiceProvider.companyName}
                 </div>
                 <div className="w-full bg-black h-0.5"/>
@@ -210,7 +210,7 @@ function MessageReplies({id, offer, vokRef}) {
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <div className="text-[#B2B2B2] text-[14px] leading-[18px]">
+              <div className="text-[#B2B2B2] text-sm leading-[18px]">
                 Preferred Language/s
               </div>
               <div className="flex gap-2">
@@ -224,7 +224,7 @@ function MessageReplies({id, offer, vokRef}) {
             </div>
 
             <div className="flex flex-col gap-3">
-              <div className="text-[#B2B2B2] text-[14px] leading-[18px]">
+              <div className="text-[#B2B2B2] text-sm leading-[18px]">
                 Areas of Expertise
               </div>
               {offer.User.ServiceProvider.PracticeAreas.map((item) => (<div
@@ -241,10 +241,10 @@ function MessageReplies({id, offer, vokRef}) {
               </div>))}
             </div>
             <div className="flex flex-col gap-3">
-              <div className="text-[#B2B2B2] text-[14px] leading-[18px]">
+              <div className="text-[#B2B2B2] text-sm leading-[18px]">
                 Website
               </div>
-              <div className="text-[13px] leading-4">
+              <div className="text-sm leading-4">
                 www.absolicitors.co.uk
               </div>
             </div>

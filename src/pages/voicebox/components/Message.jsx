@@ -63,7 +63,7 @@ function Message({ job, vokRef }) {
     <>
       <div className={clsx("flex flex-col  w-[196px]")}>
         <div className="flex items-center gap-2 justify-end">
-          <div className="text-[12px]  text-[#8A8A8A] leading-[9px]">
+          <div className="text-sm  text-[#8A8A8A] leading-[9px]">
             Delivered
           </div>
           <Delivered />
@@ -102,7 +102,7 @@ function Message({ job, vokRef }) {
 
         <div className="flex gap-1 mt-1.5 justify-end">
           <Ticks />
-          <div className="text-[12px] leading-[9px] text-[#8A8A8A]">
+          <div className="text-sm leading-[9px] text-[#8A8A8A]">
             {format(job?.createdAt ?? new Date(), "EEEE / HH:mm")}
           </div>
         </div>

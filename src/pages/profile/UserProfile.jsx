@@ -60,7 +60,7 @@ function UserProfile() {
           <div className="flex gap-2 ">
             <input
               className={
-                "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none w-full"
+                "rounded-none text-base border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none w-full"
               }
               placeholder="First Name"
               {...register("firstName", {
@@ -74,7 +74,7 @@ function UserProfile() {
 
             <input
               className={
-                "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none w-full"
+                "rounded-none text-base border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none w-full"
               }
               placeholder="LastName"
               {...register("lastName", {
@@ -102,7 +102,7 @@ function UserProfile() {
           <div className="flex flex-col gap-1.5 w-full">
             <input
               className={
-                "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none "
+                "rounded-none text-base border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none "
               }
               placeholder="Mobile Number"
               {...register("mobileNumber", {
@@ -127,7 +127,7 @@ function UserProfile() {
         <div className="flex flex-col gap-1.5">
           <input
             className={
-              "rounded-none text-xs border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-xs focus:outline-none focus:ring-none"
+              "rounded-none text-base border-black border-b-2 bg-transparent py-1.5 placeholder:text-black placeholder:text-base focus:outline-none focus:ring-none"
             }
             placeholder="Email Address"
             {...register("email", {

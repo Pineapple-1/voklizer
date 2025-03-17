@@ -70,12 +70,12 @@ function MessageGroup({job, messageRef}) {
         <div className="flex items-center gap-2 justify-between px-4 mb-2">
           <div className="flex gap-1 mt-1.5  items-center  ">
             <Ticks/>
-            <div className="text-[12px] leading-[15px] text-[#A3A3A3]">
+            <div className="text-sm leading-[15px] text-[#A3A3A3]">
               {format(job.createdAt, "EEEE / HH:mm")}
             </div>
           </div>
           <div className="flex items-center justify-center gap-2 ">
-            <div className="text-[12px] text-[#A3A3A3] leading-[15px]">
+            <div className="text-sm text-[#A3A3A3] leading-[15px]">
               Delivered
             </div>
             <Delivered/>
@@ -124,8 +124,8 @@ function MessageGroup({job, messageRef}) {
                   {job.offerCount}
                 </div>
                 <div className="flex flex-col items-start">
-                  <div className=" text-[13px] leading-0 ">Press here to</div>
-                  <div className="text-[13px] -mt-1"> see replies</div>
+                  <div className=" text-sm leading-0 ">Press here to</div>
+                  <div className="text-sm -mt-1"> see replies</div>
                 </div>
               </div>
             </div>

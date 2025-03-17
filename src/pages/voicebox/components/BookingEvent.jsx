@@ -20,22 +20,22 @@ function BookingEvent({ value }) {
           className="w-full flex items-center justify-center "
         >
           <div className="w-full">
-            <div className="mb-1 font-bold text-[16px] text-[#161A1D]">
+            <div className="mb-1 font-bold text-base text-[#161A1D]">
               Interpreter Required?
             </div>
             <div className="bg-[#8532D8] h-[26px] gap-11 px-[14px] flex items-center justify-between rounded-lg mb-3">
-              <div className="text-xs font-bold text-white"> No</div>
+              <div className="text-base font-bold text-white"> No</div>
 
               <div className="h-2 bg-white flex-1 rounded-lg"></div>
-              <div className=" text-xs font-bold text-white">Yes</div>
+              <div className=" text-base font-bold text-white">Yes</div>
             </div>
             <div className="bg-[#F5EBFF] p-6 rounded-2xl">
-              <div className=" font-bold text-[12px] leading-[15px] text-[#161A1D] mb-1">
+              <div className=" font-bold text-sm leading-[15px] text-[#161A1D] mb-1">
                 23/12/2003
               </div>
               {booking ? (
                 <div className="flex  items-center justify-between gap-11 mb-1">
-                  <div className=" font-bold text-[16px] leading-[20px] text-[#161A1D]">
+                  <div className=" font-bold text-base leading-[20px] text-[#161A1D]">
                     Appointment Booked
                   </div>
                   <SingleTick />
@@ -46,7 +46,7 @@ function BookingEvent({ value }) {
                     className="flex  items-center justify-between gap-11 mb-1"
                     onClick={() => {}}
                   >
-                    <div className=" font-bold text-[16px] leading-[20px] text-[#161A1D] capitalize">
+                    <div className=" font-bold text-base leading-[20px] text-[#161A1D] capitalize">
                       Book available time
                     </div>
 
@@ -62,7 +62,7 @@ function BookingEvent({ value }) {
                 Tuesday at 15:30 PM
               </div>
               <div className="flex items-center justify-between">
-                <div className=" font-bold text-[16px] leading-[20px] text-[#606161]">
+                <div className=" font-bold text-base leading-[20px] text-[#606161]">
                   Interpreter Included
                 </div>
                 <Translate />

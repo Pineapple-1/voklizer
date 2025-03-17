@@ -21,7 +21,7 @@ function SendSuccess() {
               been sent
             </div>
 
-            <div className=" text-[13px] leading-[16px] mt-[80px] text-center text-purple">you shall be notified soon
+            <div className=" text-sm leading-[16px] mt-[80px] text-center text-purple">you shall be notified soon
             </div>
           </div>
         </div>

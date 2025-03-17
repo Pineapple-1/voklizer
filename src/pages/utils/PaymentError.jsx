@@ -27,8 +27,8 @@ function PaymentError() {
           >
             <Goback />
             <div>
-            <div className="text-[13px]">Go Back &</div>
-            <div className="text-[13px]">Restart</div>
+            <div className="text-sm">Go Back &</div>
+            <div className="text-sm">Restart</div>
             </div>
           </div>
         </div>

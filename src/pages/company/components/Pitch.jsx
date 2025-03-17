@@ -256,10 +256,10 @@ function Pitch({location, area, focus, url, jobId, queryRef, setFocusedIndex, in
           }}
         >
           <div className="flex items-center justify-between text-white">
-            <div className="text-[12px] leading-[15px] font-bold">{area}</div>
+            <div className="text-sm leading-[15px] font-bold">{area}</div>
             <div className=" flex flex-col">
-              <div className="text-[14px] leading-[12px] font-bold">Max</div>
-              <div className="text-[14px] leading-[12px] font-bold">£500</div>
+              <div className="text-sm leading-[12px] font-bold">Max</div>
+              <div className="text-sm leading-[12px] font-bold">£500</div>
             </div>
           </div>
         </motion.div>
@@ -329,7 +329,7 @@ function Pitch({location, area, focus, url, jobId, queryRef, setFocusedIndex, in
                     <div className="flex-1 h-[1px] bg-white "/>
                   </div>
                   <div className="text-white font-bold  text-right">
-                    <div className="text-[14px] leading-[18px]">Max</div>
+                    <div className="text-sm leading-[18px]">Max</div>
                     <div className="text-[24px] leading-[30px]">£500</div>
                   </div>
                 </>
@@ -369,7 +369,7 @@ function Pitch({location, area, focus, url, jobId, queryRef, setFocusedIndex, in
 
             <div className="w-full h-8 bg-white mt-4 flex justify-between gap-7 items-center px-[14px] rounded-lg">
               <div
-                className="text-[#E7515B] text-[13px] leading-[16px] font-bold"
+                className="text-[#E7515B] text-sm leading-[16px] font-bold"
                 onClick={cancel}
               >
                 Cancel
@@ -381,7 +381,7 @@ function Pitch({location, area, focus, url, jobId, queryRef, setFocusedIndex, in
                 )}
               />
               <button
-                className="text-[#2B194C] text-[13px] leading-[16px] font-bold  disabled:text-[#c3c3c3] "
+                className="text-[#2B194C] text-sm leading-[16px] font-bold  disabled:text-[#c3c3c3] "
                 onClick={!isReplying ? reply : send}
                 disabled={isReplying ? !replyhex : isRecording}
               >

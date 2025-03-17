@@ -1,56 +1,50 @@
-import { Suspense, useEffect, useState } from "react";
-import {
-  IonApp,
-  IonRouterOutlet,
-  setupIonicReact,
-  useIonViewWillEnter,
-} from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
-import { Route, Redirect } from "react-router-dom";
-import { CapacitorStripeProvider } from "@capacitor-community/stripe/dist/esm/react/provider";
+import {Suspense, useEffect, useState} from "react";
+import {IonApp, IonRouterOutlet, setupIonicReact, useIonViewWillEnter,} from "@ionic/react";
+import {IonReactRouter} from "@ionic/react-router";
+import {Redirect, Route} from "react-router-dom";
+import {CapacitorStripeProvider} from "@capacitor-community/stripe/dist/esm/react/provider";
 
 import {
-  Play,
-  Register,
-  Login,
-  ForgetPass,
-  ResetPass,
-  Locale,
-  SendSuccess,
-  QueryListing,
-  Replies,
-  PitchSuccess,
-  VokDiary,
-  Queries,
-  ServiceProviderVideo,
-  Profile,
+  AllReplies,
   Billing,
-  Wallet,
+  EditCompanyInfo,
   Error,
+  ForgetPass,
   Landing,
-  ReelPlayer,
-  PaymentError,
+  Locale,
   LocationError,
+  Login,
   MicError,
-  AllReplies
+  PaymentError,
+  PitchSuccess,
+  Play,
+  Profile,
+  Queries,
+  QueryListing,
+  ReelPlayer,
+  Register,
+  Replies,
+  ResetPass,
+  Selection,
+  SendSuccess,
+  ServiceProviderAddress,
+  ServiceProviderEmailWebsite,
+  ServiceProviderLandLineNumber,
+  ServiceProviderName,
+  ServiceProviderOtp,
+  ServiceProviderPracticeArea,
+  ServiceProviderPreferredLanguage,
+  ServiceProviderRegistrationNumber,
+  ServiceProviderVideo,
+  VokDiary,
+  Wallet
 } from "./routes";
-
-import { ServiceProviderPreferredLanguage } from "./routes";
-import { ServiceProviderName } from "./routes";
-import { ServiceProviderRegistrationNumber } from "./routes";
-import { ServiceProviderEmailWebsite } from "./routes";
-import { ServiceProviderOtp } from "./routes";
-import { ServiceProviderLandLineNumber } from "./routes";
-import { ServiceProviderAddress } from "./routes";
-import { ServiceProviderPracticeArea } from "./routes";
-
-import { Selection } from "./routes";
-import { StatusBar, Style } from "@capacitor/status-bar";
-import { PushNotifications } from "@capacitor/push-notifications";
-import { VoiceRecorder } from "capacitor-voice-recorder";
-import { fmcAtom } from "./state";
-import { useSetAtom } from "jotai";
-import { useSWRConfig } from "swr";
+import {StatusBar, Style} from "@capacitor/status-bar";
+import {PushNotifications} from "@capacitor/push-notifications";
+import {VoiceRecorder} from "capacitor-voice-recorder";
+import {fmcAtom} from "./state";
+import {useSetAtom} from "jotai";
+import {useSWRConfig} from "swr";
 
 import "@ionic/react/css/core.css";
 import "@ionic/react/css/display.css";
@@ -62,7 +56,8 @@ import "@ionic/react/css/structure.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
-
+import "./App.css";
+import Instance from "./axios/Axios";
 
 
 setupIonicReact({
@@ -77,11 +72,8 @@ setupIonicReact({
   },
 });
 
-import "./App.css";
-import Instance from "./axios/Axios";
-
-function App({ token }) {
-  const { mutate } = useSWRConfig();
+function App({token}) {
+  const {mutate} = useSWRConfig();
   const [notifications, setnotifications] = useState([]);
 
 
@@ -90,8 +82,8 @@ function App({ token }) {
 
   useIonViewWillEnter(() => {
     const setStatusBarColor = async () => {
-      await StatusBar.setBackgroundColor({ color: "#F5F5F5" });
-      await StatusBar.setStyle({ style: Style.Light });
+      await StatusBar.setBackgroundColor({color: "#F5F5F5"});
+      await StatusBar.setStyle({style: Style.Light});
     };
 
     setStatusBarColor();
@@ -127,7 +119,7 @@ function App({ token }) {
 
       setFMC(fmcToken.value);
       token &&
-        Instance.post("auth/add-fcm-token/", { fcmToken: fmcToken.value });
+      Instance.post("auth/add-fcm-token/", {fcmToken: fmcToken.value});
     });
 
     PushNotifications.addListener("registrationError", (error) => {
@@ -172,139 +164,143 @@ function App({ token }) {
   const paths = [
     {
       path: "/preferred-language",
-      component: <ServiceProviderPreferredLanguage />,
+      component: <ServiceProviderPreferredLanguage/>,
     },
     {
       path: "/reg-name",
-      component: <ServiceProviderName />,
+      component: <ServiceProviderName/>,
     },
 
     {
       path: "/reg-num",
-      component: <ServiceProviderRegistrationNumber />,
+      component: <ServiceProviderRegistrationNumber/>,
     },
     {
       path: "/reg-email",
-      component: <ServiceProviderEmailWebsite />,
+      component: <ServiceProviderEmailWebsite/>,
     },
     {
       path: "/otp",
-      component: <ServiceProviderOtp />,
+      component: <ServiceProviderOtp/>,
     },
     {
       path: "/landline",
-      component: <ServiceProviderLandLineNumber />,
+      component: <ServiceProviderLandLineNumber/>,
     },
     {
       path: "/address",
-      component: <ServiceProviderAddress />,
+      component: <ServiceProviderAddress/>,
     },
     {
       path: "/practice-area",
-      component: <ServiceProviderPracticeArea />,
+      component: <ServiceProviderPracticeArea/>,
     },
 
     {
       path: "/video",
-      component: <ServiceProviderVideo />,
+      component: <ServiceProviderVideo/>,
     },
 
     {
       path: "/play",
-      component: <Play />,
+      component: <Play/>,
     },
     {
       path: "/register",
-      component: <Register />,
+      component: <Register/>,
     },
     {
       path: "/selection",
-      component: <Selection />,
+      component: <Selection/>,
     },
     {
       path: "/login",
-      component: <Login />,
+      component: <Login/>,
     },
 
     {
       path: "/forget-pass",
-      component: <ForgetPass />,
+      component: <ForgetPass/>,
     },
 
     {
       path: "/reset-pass",
-      component: <ResetPass />,
+      component: <ResetPass/>,
     },
 
     {
       path: "/locale",
-      component: <Locale />,
+      component: <Locale/>,
     },
 
     {
       path: "/send-success",
-      component: <SendSuccess />,
+      component: <SendSuccess/>,
     },
 
     {
       path: "/listing",
-      component: <QueryListing />,
+      component: <QueryListing/>,
     },
     {
       path: "/pitch-success",
-      component: <PitchSuccess />,
+      component: <PitchSuccess/>,
     },
     {
       path: "/queries",
-      component: <Queries />,
+      component: <Queries/>,
     },
     {
       path: "/replies/:jobId",
-      component: <Replies />,
+      component: <Replies/>,
     },
     {
       path: "/diary",
-      component: <VokDiary />,
+      component: <VokDiary/>,
     },
     {
       path: "/profile",
-      component: <Profile />,
+      component: <Profile/>,
     },
     {
       path: "/billing",
-      component: <Billing />,
+      component: <Billing/>,
     },
     {
       path: "/wallet",
-      component: <Wallet />,
+      component: <Wallet/>,
     },
     {
       path: "/error",
-      component: <Error />,
+      component: <Error/>,
     },
     {
       path: "/landing",
-      component: <Landing />,
+      component: <Landing/>,
     },
     {
       path: "/player/:id",
-      component: <ReelPlayer />,
+      component: <ReelPlayer/>,
     },
     {
-      path:'/payment-error',
+      path: '/payment-error',
       component: <PaymentError/>
     },
     {
-      path:"/location-error",
-      component:<LocationError/>
+      path: "/location-error",
+      component: <LocationError/>
     },
     {
-      path:"/mic-error",
-      component:<MicError/>
+      path: "/mic-error",
+      component: <MicError/>
     },
     {
-      path:"/all-replies",
+      path: "/all-replies",
       component: <AllReplies/>
+    },
+    {
+      path: "/edit-company-info",
+      component: <EditCompanyInfo/>
     }
   ];
 
@@ -324,8 +320,8 @@ function App({ token }) {
                   </Route>
                 ))}
                 <Route exact path="/">
-                  {!token && <Redirect to="/login" />}
-                  {token && <Redirect to="/play" />}
+                  {!token && <Redirect to="/login"/>}
+                  {token && <Redirect to="/play"/>}
                 </Route>
               </IonRouterOutlet>
             </IonReactRouter>

@@ -22,7 +22,7 @@ function CalenderBooking({ className, classNames, showOutsideDays = true, ...pro
         head_cell: "text-[#263238] rounded-md w-10 font-bold text-[0.8rem]",
         row: "flex w-full mt-2 justify-between",
         day: "h-10 w-10 p-0 font-normal aria-selected:opacity-100",
-        cell: "h-10 w-10 text-center text-[12px] p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+        cell: "h-10 w-10 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
 
         day_range_end: "day-range-end",
         day_selected:

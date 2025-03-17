@@ -4,12 +4,17 @@ import { useForm } from "react-hook-form";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
 import ChipButton from "../../../components/ChipButton";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import clsx from "clsx";
 
 function PracticeArea() {
   const history = useHistory();
+  const location = useLocation();
+
+  // Check if we're in edit mode
+  const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
+
   const { register, handleSubmit, setValue, watch } = useForm();
   const [loading, setLoading] = useState(false);
   const [selectedArea, setSelectedArea] = useState(null);
@@ -48,7 +53,14 @@ function PracticeArea() {
     Instance.post("service-provider/practice-area", { practiceArea: practiceAreas })
       .then((res) => {
         console.log(res);
-        history.push("/video");
+        if (isEditMode) {
+          history.replace("/landing");
+        } else {
+          history.push("/video");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting data:", error);
       })
       .finally(() => setLoading(false));
   };
@@ -134,15 +146,33 @@ function PracticeArea() {
                   onChange={(e) => handleDetailChange("price", e.target.value)}
                 />
 
-                <div className="flex justify-end mt-4">
-                  <ChipButton type="submit">Next</ChipButton>
+                <div className="flex justify-between mt-4">
+                  {isEditMode ? (
+                    <ChipButton
+                      type="button"
+                      onClick={() => history.replace("/landing")}
+                      className="bg-gray-200 text-purple"
+                    >
+                      Cancel
+                    </ChipButton>
+                  ) : (
+                    <ChipButton
+                      type="button"
+                      onClick={() => history.push("/address")}
+                    >
+                      Back
+                    </ChipButton>
+                  )}
+                  <ChipButton type="submit">
+                    {isEditMode ? "Save" : "Next"}
+                  </ChipButton>
                 </div>
               </form>
             </motion.div>
           )}
         </div>
       </div>
-      <Loading open={loading} message={"Saving Info"} />
+      <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />
     </ServiceProviderRegistrationLayout>
   );
 }

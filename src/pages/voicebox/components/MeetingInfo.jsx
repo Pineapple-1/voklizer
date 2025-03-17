@@ -6,7 +6,7 @@ function MeetingInfo() {
         <div className="bg-purple text-white rounded-md pl-1.5 text-[11px] pr-4">
           03-05-2024
         </div>
-        <div className="text-[14px]">Immigration</div>
+        <div className="text-sm">Immigration</div>
       </div>
       <div>Mr Alpha Beta</div>
       <hr className="bg-purple h-0.5" />

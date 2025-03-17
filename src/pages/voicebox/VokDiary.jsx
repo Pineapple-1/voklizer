@@ -20,20 +20,23 @@ function VokDairy() {
 
   const {data: userData, isLoading: userLoading} = useSWR("auth/me");
 
-  const {data: meetings, isLoading: meetingsLoading} = useSWR(
-    userData?.data?.role
-      ? `booked-time-slots-${
-        userData.data.role === "serviceProvider" ? "user" : "user"
-      }?year=${getYear(date)}&month=${getMonth(date) + 1}`
-      : null
-  );
+  const currentYear = getYear(date);
+  const currentMonth = getMonth(date) + 1;
+
+  const meetingsEndpoint = userData?.data?.role
+    ? `booked-time-slots-${
+      userData.data.role === "serviceProvider" ? "service-provider" : "user"
+    }?year=${currentYear}&month=${currentMonth}`
+    : null;
+
+  const {data: meetings, isLoading: meetingsLoading} = useSWR(meetingsEndpoint);
 
   return (
     <Base>
       <div className="flex flex-col gap-5 pt-10">
         <div className="flex justify-between items-center">
           <div className="flex flex-col gap-2 relative">
-            <div className="text-[13px] leading-[16px] text-[#030303]">
+            <div className="text-sm leading-[16px] text-[#030303]">
               Calendar View
             </div>
             <div className="h-0.5 bg-black w-full"/>
@@ -54,8 +57,13 @@ function VokDairy() {
 
         <div className="capitalize font-bold">My Appointments</div>
 
-        {!meetingsLoading &&
-          meetings?.data?.map((item) => <Meet key={item.id} meet={item}/>)}
+        {!meetingsLoading && meetings?.data?.length > 0 ? (
+          meetings.data.map((item) => <Meet key={item.id || Math.random()} meet={item}/>)
+        ) : (
+          <div className="text-gray-500">
+            {meetingsLoading ? "Loading appointments..." : "No appointments scheduled for this date"}
+          </div>
+        )}
       </div>
 
       <Loading open={meetingsLoading || userLoading} message={"Fetching"}/>

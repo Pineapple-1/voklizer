@@ -50,8 +50,8 @@ function LocationError() {
             }}
           >
             <div>
-              <div className="text-[13px]">Press Here To</div>
-              <div className="text-[13px]">Enable Location</div>
+              <div className="text-sm">Press Here To</div>
+              <div className="text-sm">Enable Location</div>
             </div>
           </div>
         </div>

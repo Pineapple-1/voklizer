@@ -161,7 +161,7 @@ const CheckoutForm = () => {
               )}
             />
           </div>
-          <div className="text-[14px] leading-3 font-medium text-[#000000]">
+          <div className="text-sm leading-3 font-medium text-[#000000]">
             Same as registration address
           </div>
         </div>

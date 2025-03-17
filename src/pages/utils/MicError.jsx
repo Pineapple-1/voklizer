@@ -38,8 +38,8 @@ function MicError() {
             }}
           >
             <div>
-              <div className="text-[13px]">Press Here To</div>
-              <div className="text-[13px]">Enable Voice Input</div>
+              <div className="text-sm">Press Here To</div>
+              <div className="text-sm">Enable Voice Input</div>
             </div>
           </div>
         </div>

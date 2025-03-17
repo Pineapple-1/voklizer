@@ -33,7 +33,7 @@ function Sidebar({open, setOpen}) {
               <div className="pl-9 pr-4 pt-16 pb-10 h-full">
                 <div className="flex flex-col gap-7">
                   <div className="flex justify-between items-start">
-                    <div className="text-[#CCCCCC] text-[20px] leading-[23px] w-24">
+                    <div className="text-[#CCCCCC] text-xl leading-[23px] w-24">
                       It's that simple.
                     </div>
                     <div className="text-[40px] leading-[40px] text-black" onClick={() => setOpen(false)}>
@@ -41,51 +41,46 @@ function Sidebar({open, setOpen}) {
                     </div>
                   </div>
 
-                  <div className="flex flex-col">
-                    <div className="h-12 flex items-center gap-4" onClick={() => {
+                  <div className="flex flex-col gap-[16px] relative ">
+                    <div className="absolute flex-1 w-[2px] top-0 left-8 h-full bg-black"/>
+                    <div className=" flex items-center gap-[20px]" onClick={() => {
                       history.push("/landing");
                       setOpen(false);
                     }}>
                       <div className="w-6 flex justify-center"><HomeIconSm/></div>
-                      <div className="w-[2px] bg-black h-12"></div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">Home</div>
+                      <div className="text-xl   leading-6 text-[#000] font-semibold">Home</div>
                     </div>
-                    <div className="h-12 flex items-center gap-4" onClick={() => {
+                    <div className="flex items-center gap-[20px]" onClick={() => {
                       history.push("/queries");
                       setOpen(false);
                     }}>
                       <div className="w-6 flex justify-center"><SpeakerIcon/></div>
-                      <div className="w-[2px] bg-black h-12"></div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">Voice Box</div>
+                      <div className="text-xl leading-6 text-[#000] font-semibold">Voice Box</div>
                     </div>
-                    <div className="h-12 flex items-center gap-4" onClick={() => {
+                    <div className=" flex items-center gap-[20px]" onClick={() => {
                       history.push("/profile");
                       setOpen(false);
                     }}>
                       <div className="w-6 flex justify-center"><PersonIcon/></div>
-                      <div className="w-[2px] bg-black h-12"></div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">Account</div>
+                      <div className="text-xl leading-6 text-[#000] font-semibold">Account</div>
                     </div>
-                    <div className="h-12 flex items-center gap-4" onClick={() => {
+                    <div className=" flex items-center gap-[20px]" onClick={() => {
                       history.push("/billing");
                       setOpen(false);
                     }}>
                       <div className="w-6 flex justify-center"><CardIcon/></div>
-                      <div className="w-[2px] bg-black h-12"></div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">Billing Info</div>
+                      <div className="text-xl leading-6 text-[#000] font-semibold">Billing Info</div>
                     </div>
-                    <div className="h-12 flex items-center gap-4" onClick={() => {
+                    <div className=" flex items-center gap-[20px]" onClick={() => {
                       history.push("/wallet");
                       setOpen(false);
                     }}>
                       <div className="w-6 flex justify-center"><WalletIcon/></div>
-                      <div className="w-[2px] bg-black h-12"></div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">Wallet</div>
+                      <div className="text-xl leading-6 text-[#000] font-semibold">Wallet</div>
                     </div>
-                    <div className="h-12 flex items-center gap-4">
+                    <div className=" flex items-center gap-[20px]">
                       <div className="w-6 flex justify-center"><SupportIcon/></div>
-                      <div className="w-[2px] bg-black h-12"></div>
-                      <div className="text-[20px] leading-6 text-[#000] font-semibold">Support</div>
+                      <div className="text-xl leading-6 text-[#000] font-semibold">Support</div>
                     </div>
                   </div>
                 </div>
@@ -108,6 +103,12 @@ function Sidebar({open, setOpen}) {
                       history.push("/diary");
                       setOpen(false);
                     }}>Vok Diary
+                    </div>
+
+                    <div className="text-[18px] leading-4 text-[#000] font-semibold" onClick={() => {
+                      history.push("/edit-company-info");
+                      setOpen(false);
+                    }}>Edit Info
                     </div>
                   </div>
                 </div>

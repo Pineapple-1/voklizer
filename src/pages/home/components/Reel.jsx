@@ -24,7 +24,7 @@ function Reel({id, name, place, thumbnail}) {
           <div
             className="mx-auto mt-1  items-center justify-center flex  gap-1">
             <Star/>
-            <div className="text-[15px] leading-[18px] text-white ">4.98</div>
+            <div className="text-base leading-[18px] text-white ">4.98</div>
           </div>
 
         </div>
@@ -39,9 +39,9 @@ function Reel({id, name, place, thumbnail}) {
         </div>
 
       </div>
-      <div className="flex flex-col gap-1 items-center">
-        <div className="text-[13px] leading-[13px] font-bold">{name}</div>
-        <div className="text-[11px] leading-[10px] text-[#B1B1B1]">{place}</div>
+      <div className="flex flex-col gap-2 items-center">
+        <div className="text-base leading-[13px] font-bold">{name}</div>
+        <div className="text-sm leading-[10px] text-[#B1B1B1]">{place}</div>
       </div>
     </div>
   );
