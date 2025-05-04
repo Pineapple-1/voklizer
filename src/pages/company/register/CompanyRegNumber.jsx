@@ -5,6 +5,7 @@ import ChipButton from "../../../components/ChipButton";
 import {useHistory, useLocation} from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import {useForm} from "react-hook-form";
+import useSWR from "swr";
 
 function CompanyRegNumber() {
   const [loading, setLoading] = useState(false);
@@ -13,12 +14,29 @@ function CompanyRegNumber() {
 
   const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
 
+  // Fetch user data
+  const { data: userData } = useSWR("auth/me");
+
+  // Get initial values for the form
+  const getInitialValues = () => {
+    if (isEditMode && userData?.data?.ServiceProvider) {
+      return {
+        companyRegistrationNumber: userData.data.ServiceProvider.companyRegistrationNumber || ""
+      };
+    }
+    return {
+      companyRegistrationNumber: ""
+    };
+  };
+
   const {
     register,
     handleSubmit,
     reset,
     formState: {errors},
-  } = useForm();
+  } = useForm({
+    defaultValues: getInitialValues()
+  });
 
 
   const onSubmit = (data) => {
@@ -42,7 +60,7 @@ function CompanyRegNumber() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9 ">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7" onReset={() => history.replace("/landing")}>
           <div className="flex flex-col gap-3">
             <input
               className={
@@ -68,7 +86,7 @@ function CompanyRegNumber() {
           <div className="flex justify-between">
             {isEditMode ? (
               <ChipButton
-                onClick={() => history.replace("/landing")}
+                type={"reset"}
                 className="bg-gray-200 text-purple"
               >
                 Cancel

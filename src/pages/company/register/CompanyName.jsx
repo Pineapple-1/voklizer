@@ -1,24 +1,42 @@
-import { useState } from "react";
+import {useState} from "react";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
 import ChipButton from "../../../components/ChipButton";
-import { useHistory, useLocation } from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import Instance from "../../../axios/Axios";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
+import useSWR from "swr";
 
 function CompanyName() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const location = useLocation();
 
+  // Check if we're in edit mode
   const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
+
+  const {data: userData} = useSWR("auth/me");
+
+  // Get initial values for the form
+  const getInitialValues = () => {
+    if (isEditMode && userData?.data?.ServiceProvider) {
+      return {
+        companyName: userData.data.ServiceProvider.companyName || ""
+      };
+    }
+    return {
+      companyName: ""
+    };
+  };
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm();
+    formState: {errors},
+  } = useForm({
+    defaultValues: getInitialValues()
+  });
 
   const onSubmit = (data) => {
     setLoading(true);
@@ -41,7 +59,7 @@ function CompanyName() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7" onReset={() => history.replace("/landing")}>
           <div className="flex flex-col gap-3">
             <input
               className={
@@ -65,7 +83,7 @@ function CompanyName() {
           <div className="flex justify-between">
             {isEditMode ? (
               <ChipButton
-                onClick={() => history.replace("/landing")}
+                type={"reset"}
                 className="bg-gray-200 text-purple"
               >
                 Cancel
@@ -81,7 +99,7 @@ function CompanyName() {
           </div>
         </form>
       </div>
-      <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />
+      <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"}/>
     </ServiceProviderRegistrationLayout>
   );
 }
