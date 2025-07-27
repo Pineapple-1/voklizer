@@ -216,9 +216,9 @@ function Register() {
 
 export const CountrySelect = ({register, errors}) => {
   return (
-      <div className="flex flex-col gap-2 w-1/4">
+      <div className="flex flex-col gap-2 w-1/4 h-full items-stretch justify-stretch shrink-0 rounded-none">
         <select
-            className="rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 focus:outline-none focus:ring-none cursor-pointer h-[34px]"
+            className="rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 focus:outline-none focus:ring-none cursor-pointer flex-1  shrink-0 "
             {...register("countryCode", {
               required: "Required",
               pattern: {
