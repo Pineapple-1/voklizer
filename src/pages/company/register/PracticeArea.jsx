@@ -188,7 +188,7 @@ function PracticeArea() {
                   <form onSubmit={handleSubmit(postData)} className="flex flex-col gap-4">
                     <div className="text-sm leading-4">Experience Level ({selectedArea})</div>
                     <select
-                        className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none"
+                        className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none rounded-none"
                         {...register("experience")}
                         value={areaDetails[selectedArea]?.experience || ""}
                         onChange={(e) => handleDetailChange("experience", e.target.value)}
@@ -201,7 +201,7 @@ function PracticeArea() {
 
                     <div className="text-sm leading-4">Payment Type ({selectedArea})</div>
                     <select
-                        className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none"
+                        className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none rounded-none"
                         {...register("payment")}
                         value={areaDetails[selectedArea]?.payment || ""}
                         onChange={(e) => handleDetailChange("payment", e.target.value)}
