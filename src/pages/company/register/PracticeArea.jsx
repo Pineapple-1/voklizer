@@ -7,10 +7,16 @@ import ChipButton from "../../../components/ChipButton";
 import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import clsx from "clsx";
+import useSWR from "swr";
 
 function PracticeArea() {
   const history = useHistory();
   const location = useLocation();
+  const {data: userData} = useSWR("auth/me");
+
+
+  console.log('-????',userData?.data?.ServiceProvider?.PracticeAreas)
+
 
   // Check if we're in edit mode
   const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
@@ -19,6 +25,7 @@ function PracticeArea() {
   const [loading, setLoading] = useState(false);
   const [selectedArea, setSelectedArea] = useState(null);
   const [areaDetails, setAreaDetails] = useState({});
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 
   const languages = [
     "Immigration",
@@ -29,6 +36,62 @@ function PracticeArea() {
     "Property Law",
   ];
   const packages = ["Per Hour", "Per Case", "Per Application", "Flat Fee"];
+
+  // Helper function to map API area names to display names
+  const mapAreaName = (apiAreaName) => {
+    const areaMap = {
+      "imigration": "Immigration",
+      "immigration": "Immigration",
+      "property": "Property",
+      "personalinjury": "Personal Injury",
+      "criminallaw": "Criminal Law",
+      "familylaw": "Family Law",
+      "propertylaw": "Property Law"
+    };
+    return areaMap[apiAreaName.toLowerCase()] || apiAreaName;
+  };
+
+  // Helper function to map API rate type to display format
+  const mapRateType = (apiRateType) => {
+    const rateTypeMap = {
+      "hour": "Per Hour",
+      "case": "Per Case",
+      "application": "Per Application",
+      "flat": "Flat Fee"
+    };
+    return rateTypeMap[apiRateType.toLowerCase()] || apiRateType;
+  };
+
+  // Helper function to map experience number to dropdown value
+  const mapExperience = (experienceYears) => {
+    const years = parseInt(experienceYears);
+    if (years >= 1 && years <= 3) return "1-3 years";
+    if (years >= 4 && years <= 5) return "3-5 years";
+    if (years > 5) return "5+ years";
+    return "1-3 years"; // default
+  };
+
+  // Populate practice area data from userData when in edit mode
+  useEffect(() => {
+    if (isEditMode && userData?.data?.ServiceProvider?.PracticeAreas && !initialDataLoaded) {
+
+
+      const practiceAreas = userData?.data?.ServiceProvider?.PracticeAreas;
+      const transformedAreaDetails = {};
+
+      practiceAreas.forEach((area) => {
+        const displayAreaName = mapAreaName(area.area);
+        transformedAreaDetails[displayAreaName] = {
+          experience: mapExperience(area.experience),
+          payment: mapRateType(area.rate_type),
+          price: area.rate.toString()
+        };
+      });
+
+      setAreaDetails(transformedAreaDetails);
+      setInitialDataLoaded(true);
+    }
+  }, [isEditMode, userData, initialDataLoaded]);
 
   useEffect(() => {
     if (selectedArea && areaDetails[selectedArea]) {
@@ -41,28 +104,40 @@ function PracticeArea() {
   const postData = (data) => {
     setLoading(true);
     const practiceAreas = Object.keys(areaDetails)
-      .filter((area) => areaDetails[area].price && areaDetails[area].payment)
-      .map((area) => ({
-        area: area.toLowerCase().replace(" ", ""),
-        rate_type: areaDetails[area].payment,
-        rate: areaDetails[area].price,
-        experience_type: "year",
-        experience: areaDetails[area].experience,
-      }));
+        .filter((area) => areaDetails[area].price && areaDetails[area].payment)
+        .map((area) => {
+          // Map back to API format
+          const apiAreaName = area.toLowerCase().replace(/\s+/g, "");
+          const apiRateType = areaDetails[area].payment.toLowerCase().replace("per ", "");
 
-    Instance.post("service-provider/practice-area", { practiceArea: practiceAreas })
-      .then((res) => {
-        console.log(res);
-        if (isEditMode) {
-          history.replace("/landing");
-        } else {
-          history.push("/video");
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting data:", error);
-      })
-      .finally(() => setLoading(false));
+          // Map experience back to number
+          let experienceValue = 1;
+          const exp = areaDetails[area].experience;
+          if (exp === "1-3 years") experienceValue = 2;
+          else if (exp === "3-5 years") experienceValue = 4;
+          else if (exp === "5+ years") experienceValue = 6;
+
+          return {
+            area: apiAreaName,
+            rate_type: apiRateType,
+            rate: parseInt(areaDetails[area].price),
+            experience_type: "year",
+            experience: experienceValue,
+          };
+        });
+
+    Instance.post("service-provider/practice-area", { practiceArea: practiceAreas }).then((res) => {
+          console.log(res);
+          if (isEditMode) {
+            history.replace("/landing");
+          } else {
+            history.push("/video");
+          }
+        })
+        .catch((error) => {
+          console.error("Error submitting data:", error);
+        })
+        .finally(() => setLoading(false));
   };
 
   const toggleAreaSelection = (area) => {
@@ -82,98 +157,101 @@ function PracticeArea() {
   };
 
   return (
-    <ServiceProviderRegistrationLayout>
-      <div className="flex flex-col gap-9 h-full justify-center">
-        <div className="flex flex-col gap-4 w-full relative">
-          <div className="text-sm leading-4">Practice Area</div>
-          <div className="flex flex-wrap gap-2">
-            {languages.map((item) => (
-              <div
-                key={item}
-                className={clsx(
-                  "bg-black px-3 py-0.5 text-sm text-white w-max rounded-[14px] cursor-pointer capitalize transition-all duration-150",
-                  selectedArea === item ? "bg-purple" : "",
-                  areaDetails[item]?.price ? "border border-white" : ""
-                )}
-                onClick={() => toggleAreaSelection(item)}
-              >
-                {item} {areaDetails[item]?.price && ` (£${areaDetails[item].price})`}
-              </div>
-            ))}
+      <ServiceProviderRegistrationLayout>
+        <div className="flex flex-col gap-9 h-full justify-center">
+          <div className="flex flex-col gap-4 w-full relative">
+            <div className="text-sm leading-4">Practice Area</div>
+            <div className="flex flex-wrap gap-2">
+              {languages.map((item) => (
+                  <div
+                      key={item}
+                      className={clsx(
+                          "bg-black px-3 py-0.5 text-sm text-white w-max rounded-[14px] cursor-pointer capitalize transition-all duration-150",
+                          selectedArea === item ? "bg-purple" : "",
+                          areaDetails[item]?.price ? "border border-white" : ""
+                      )}
+                      onClick={() => toggleAreaSelection(item)}
+                  >
+                    {item} {areaDetails[item]?.price && ` (£${areaDetails[item].price})`}
+                  </div>
+              ))}
+            </div>
+
+            {selectedArea && (
+                <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-4"
+                >
+                  <form onSubmit={handleSubmit(postData)} className="flex flex-col gap-4">
+                    <div className="text-sm leading-4">Experience Level ({selectedArea})</div>
+                    <select
+                        className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none"
+                        {...register("experience")}
+                        value={areaDetails[selectedArea]?.experience || ""}
+                        onChange={(e) => handleDetailChange("experience", e.target.value)}
+                    >
+                      <option value="">Select Experience</option>
+                      <option value="1-3 years">1-3 years</option>
+                      <option value="3-5 years">3-5 years</option>
+                      <option value="5+ years">5+ years</option>
+                    </select>
+
+                    <div className="text-sm leading-4">Payment Type ({selectedArea})</div>
+                    <select
+                        className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none"
+                        {...register("payment")}
+                        value={areaDetails[selectedArea]?.payment || ""}
+                        onChange={(e) => handleDetailChange("payment", e.target.value)}
+                    >
+                      <option value="">Select Payment Type</option>
+                      {packages.map((item) => (
+                          <option key={item} value={item}>{item}</option>
+                      ))}
+                    </select>
+
+                    <div className="text-sm leading-4">Price ({selectedArea})</div>
+                    <input
+                        type="number"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none w-40 text-sm rounded-none"
+                        placeholder="£"
+                        {...register("price")}
+                        value={areaDetails[selectedArea]?.price || ""}
+                        onChange={(e) => handleDetailChange("price", e.target.value)}
+                    />
+
+                    <div className="flex justify-between mt-4">
+                      {isEditMode ? (
+                          <ChipButton
+                              type="button"
+                              onClick={() => history.replace("/landing")}
+                              className="bg-gray-200 text-purple"
+                          >
+                            Cancel
+                          </ChipButton>
+                      ) : (
+                          <ChipButton
+                              type="button"
+                              onClick={() => history.push("/address")}
+                          >
+                            Back
+                          </ChipButton>
+                      )}
+                      <ChipButton type="submit">
+                        {isEditMode ? "Save" : "Next"}
+                      </ChipButton>
+                    </div>
+                  </form>
+                </motion.div>
+            )}
           </div>
-
-          {selectedArea && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="mt-4"
-            >
-              <form onSubmit={handleSubmit(postData)} className="flex flex-col gap-4">
-                <div className="text-sm leading-4">Experience Level ({selectedArea})</div>
-                <select
-                  className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none"
-                  {...register("experience")}
-                  onChange={(e) => handleDetailChange("experience", e.target.value)}
-                >
-                  <option value="">Select Experience</option>
-                  <option value="1-3 years">1-3 years</option>
-                  <option value="3-5 years">3-5 years</option>
-                  <option value="5+ years">5+ years</option>
-                </select>
-
-                <div className="text-sm leading-4">Payment Type ({selectedArea})</div>
-                <select
-                  className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none"
-                  {...register("payment")}
-                  onChange={(e) => handleDetailChange("payment", e.target.value)}
-                >
-                  <option value="">Select Payment Type</option>
-                  {packages.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                  ))}
-                </select>
-
-                <div className="text-sm leading-4">Price ({selectedArea})</div>
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  className="border-purple border-b-2 bg-transparent py-1.5 focus:outline-none w-40 text-sm rounded-none"
-                  placeholder="£"
-                  {...register("price")}
-                  onChange={(e) => handleDetailChange("price", e.target.value)}
-                />
-
-                <div className="flex justify-between mt-4">
-                  {isEditMode ? (
-                    <ChipButton
-                      type="button"
-                      onClick={() => history.replace("/landing")}
-                      className="bg-gray-200 text-purple"
-                    >
-                      Cancel
-                    </ChipButton>
-                  ) : (
-                    <ChipButton
-                      type="button"
-                      onClick={() => history.push("/address")}
-                    >
-                      Back
-                    </ChipButton>
-                  )}
-                  <ChipButton type="submit">
-                    {isEditMode ? "Save" : "Next"}
-                  </ChipButton>
-                </div>
-              </form>
-            </motion.div>
-          )}
         </div>
-      </div>
-      <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />
-    </ServiceProviderRegistrationLayout>
+        <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />
+      </ServiceProviderRegistrationLayout>
   );
 }
 
