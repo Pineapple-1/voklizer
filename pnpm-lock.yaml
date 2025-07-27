@@ -4042,6 +4042,9 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
+  react-geocode@2.0.1:
+    resolution: {integrity: sha512-fIjTaXK7Ta1kZKqS5n9vUCL6LPngSRlLfEj935mMhHivfsGQ8nXPo+NRoDnq63Yy1kQ6mdyFl78/8tAodERIHw==}
+
   react-hook-form@7.54.2:
     resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
     engines: {node: '>=18.0.0'}
@@ -9552,6 +9555,8 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
+
+  react-geocode@2.0.1: {}
 
   react-hook-form@7.54.2(react@18.3.1):
     dependencies:

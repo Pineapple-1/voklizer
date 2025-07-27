@@ -9,7 +9,7 @@ import Instance from "../../../axios/Axios";
 import {useAtomValue, useSetAtom} from "jotai";
 import {fmcAtom, socialAtom} from "../../../state";
 import Loading from "../../../components/Loading";
-import {tokenSubject$} from "./../TokenState";
+import {tokenSubject$, userSubject$} from "./../TokenState";
 import {storage} from "../../../storage";
 import {auth} from "../../../firebase";
 
@@ -17,6 +17,7 @@ import {auth} from "../../../firebase";
 import {
   GoogleAuthProvider, signInWithCredential, signInWithPopup
 } from "firebase/auth";
+import {mutate} from "swr";
 
 SocialLogin.initialize({
   google: {
@@ -52,7 +53,7 @@ function Socials({setValue, setRemovePassword}) {
 
       Instance.post("auth/login/", {
         token: firebaseUserCredential.user.stsTokenManager.accessToken, fcmToken: fmcToken ?? "",
-      }).then((res) => {
+      }).then(async (res) => {
         setLoading(false);
 
         if (!res.data.registered) {
@@ -77,8 +78,11 @@ function Socials({setValue, setRemovePassword}) {
             history.push("/register?hidepass=true");
           }
         } else {
+          await storage.set("user", res.data);
+          await storage.set("token",res.data.token);
           tokenSubject$.next(res.data.token);
-          storage.set("user", res.data);
+          userSubject$.next(res.data);
+          mutate('auth/me')
 
           history.push("/landing");
         }
@@ -95,7 +99,7 @@ function Socials({setValue, setRemovePassword}) {
 
         Instance.post("auth/login/", {
           token: user.accessToken, fcmToken: fmcToken,
-        }).then((res) => {
+        }).then(async (res) => {
           setLoading(false);
 
           if (!res.data.registered) {
@@ -120,9 +124,11 @@ function Socials({setValue, setRemovePassword}) {
               history.push("/register?hidepass=true");
             }
           } else {
+            await storage.set("user", res.data);
+            await storage.set("token",res.data.token);
             tokenSubject$.next(res.data.token);
-            storage.set("user", res.data);
-
+            userSubject$.next(res.data);
+            mutate('auth/me')
             history.push("/landing");
           }
         });

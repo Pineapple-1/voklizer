@@ -1,25 +1,38 @@
 import { BehaviorSubject } from "rxjs";
 import { storage } from "../../storage";
 
-export const tokenSubject$ = new BehaviorSubject("");
+export const tokenSubject$ = new BehaviorSubject(null); // Start with null instead of empty string
 export const userSubject$ = new BehaviorSubject();
 
-storage.get("token").then((token) => {
+tokenSubject$.subscribe((token) => {
   if (token) {
-    tokenSubject$.next(token);
-  }
-
-  tokenSubject$.subscribe((token) => {
     storage.set("token", token);
-  });
-});
-
-storage.get("user").then((user) => {
-  if (user) {
-    userSubject$.next(user);
   }
-
-  userSubject$.subscribe((user) => {
-    storage.set("user", user);
-  });
 });
+
+userSubject$.subscribe((user) => {
+  if (user) {
+    storage.set("user", user);
+  }
+});
+
+const initializeFromStorage = async () => {
+  try {
+    const [token, user] = await Promise.all([
+      storage.get("token"),
+      storage.get("user")
+    ]);
+
+    if (token) {
+      tokenSubject$.next(token);
+    }
+
+    if (user) {
+      userSubject$.next(user);
+    }
+  } catch (error) {
+    console.error("Error initializing from storage:", error);
+  }
+};
+
+initializeFromStorage();
