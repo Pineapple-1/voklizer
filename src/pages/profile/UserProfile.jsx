@@ -58,6 +58,7 @@ function UserProfile() {
                 lastName: formData.lastName,
                 email: formData.email,
                 mobileNumber: formData.mobileNumber,
+                countryCode: formData.countryCode,
             });
 
             // Revalidate to get fresh data
