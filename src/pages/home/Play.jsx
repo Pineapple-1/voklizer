@@ -20,283 +20,304 @@ import {useIonViewWillLeave} from "@ionic/react";
 
 
 function Play() {
-  const [isRecording, setIsRecording] = useState(false);
+    const [isRecording, setIsRecording] = useState(false);
 
-  const [audioHex, setAudioHex] = useState(null);
-  const [jobPosting, setJobPosting] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
-  const history = useHistory();
-
-
-  useIonViewWillLeave(() => {
-    setTimeout(() => {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    }, 0);
-  });
+    const [audioHex, setAudioHex] = useState(null);
+    const [jobPosting, setJobPosting] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef(null);
+    const history = useHistory();
 
 
-  const {stripe, isGooglePayAvailable} = useCapacitorStripe();
-  const {data} = useSWR(isGooglePayAvailable && "create-payment-intent");
-  const {data: me} = useSWR("auth/me");
-
-  const {mutate} = useSWRConfig();
-
-  const createPaymentToken = async () => {
-    try {
-      if (isGooglePayAvailable) {
-        await stripe.createGooglePay({
-          paymentIntentClientSecret: data?.paymentIntent?.client_secret,
-          paymentSummaryItems: [
-            {
-              label: "Voklizer",
-              amount: data?.amount,
-            },
-          ],
-          merchantIdentifier: "merchant.com.getcapacitor.stripe",
-          countryCode: "US",
-          currency: "USD",
-        });
-
-        const result = await stripe.presentGooglePay();
-        return result;
-      }
-
-      const isApplePayAvailable = await stripe.isApplePayAvailable();
-
-      if (isApplePayAvailable) {
-        await stripe.createApplePay({
-          paymentIntentClientSecret: data?.paymentIntent?.client_secret,
-          paymentSummaryItems: [
-            {
-              label: "Voklizer",
-              amount: data?.amount,
-            },
-          ],
-          merchantDisplayName: "Your Merchant Name",
-          countryCode: "US",
-          currency: "USD",
-        });
-
-        const result = await stripe.presentApplePay();
-        return result;
-      }
-    } catch (e) {
-      console.error("Error processing payment:", e);
-    }
-  };
+    useIonViewWillLeave(() => {
+        setTimeout(() => {
+            audioRef.current.pause();
+            setIsPlaying(false);
+        }, 0);
+    });
 
 
-  const cancelAudio = () => {
-    setAudioHex(null);
-    setIsPlaying(false);
-    audioRef.current.pause();
-    audioRef.current = null;
-  };
+    const {stripe, isGooglePayAvailable} = useCapacitorStripe();
+    const {data} = useSWR(isGooglePayAvailable && "create-payment-intent");
+    const {data: me} = useSWR("auth/me");
 
-  const PlayAudio = () => {
+    const {mutate} = useSWRConfig();
 
-    if (!isPlaying) {
-      audioRef.current = new Audio(
-        `data:${audioHex.mimeType};base64,${audioHex.recordDataBase64}`
-      );
-      audioRef.current.oncanplaythrough = () => {
-        setIsPlaying(true);
-        audioRef.current.play();
-      };
+    const createPaymentToken = async () => {
+        try {
+            if (isGooglePayAvailable) {
+                await stripe.createGooglePay({
+                    paymentIntentClientSecret: data?.paymentIntent?.client_secret,
+                    paymentSummaryItems: [
+                        {
+                            label: "Voklizer",
+                            amount: data?.amount,
+                        },
+                    ],
+                    merchantIdentifier: "merchant.com.getcapacitor.stripe",
+                    countryCode: "US",
+                    currency: "USD",
+                });
 
-      audioRef.current.onended = () => {
-        setIsPlaying(false);
-      };
-      audioRef.current.load();
-    }
-  };
+                const result = await stripe.presentGooglePay();
+                return result;
+            }
 
-  const SendAudio = async () => {
-    setJobPosting(true);
+            const isApplePayAvailable = await stripe.isApplePayAvailable();
 
-    const locationPermission = await Geolocation.requestPermissions();
-    const hasNoLocation = !locationPermission || locationPermission.location !== "granted";
-    if (hasNoLocation) {
-      history.push("/location-error");
-      return;
-    }
+            if (isApplePayAvailable) {
+                await stripe.createApplePay({
+                    paymentIntentClientSecret: data?.paymentIntent?.client_secret,
+                    paymentSummaryItems: [
+                        {
+                            label: "Voklizer",
+                            amount: data?.amount,
+                        },
+                    ],
+                    merchantDisplayName: "Your Merchant Name",
+                    countryCode: "US",
+                    currency: "USD",
+                });
 
-    if (!me.data.defaultPaymentMethod) {
-      setJobPosting(false);
-      history.push("/billing?recorded=true");
-      return;
-    }
-
-    const currentPosition = await Geolocation.getCurrentPosition();
-
-
-    try {
-      if (["google-pay", "apple-pay"].includes(me?.data?.defaultPaymentMethod?.toLowerCase())) {
-        const paymentResult = await createPaymentToken();
-        if (paymentResult?.paymentResult !== "googlePayCompleted") {
-          throw new Error("Google Pay payment was not completed");
+                const result = await stripe.presentApplePay();
+                return result;
+            }
+        } catch (e) {
+            console.error("Error processing payment:", e);
         }
-      } else {
-        await Instance.post("/charge-card/", {
-          title: "Immigration",
-          serviceType: "JOB",
-        });
-      }
+    };
 
-      await Instance.post("/add-job/", {
-        audioType: audioHex.mimeType,
-        audioHex: audioHex.recordDataBase64,
-        longitude: currentPosition.coords.longitude,
-        latitude: currentPosition.coords.latitude,
-      });
 
-      setAudioHex(null);
-      setIsPlaying(false);
-      audioRef.current = null;
-      setJobPosting(false);
-      mutate("job-notifications");
-      mutate("create-payment-intent");
-      mutate("user-payments");
+    const cancelAudio = () => {
+        setAudioHex(null);
+        setIsPlaying(false);
+        audioRef.current.pause();
+        audioRef.current = null;
+    };
 
-      history.push("/send-success");
-    } catch (error) {
-      setJobPosting(false);
+    const PlayAudio = () => {
 
-      if (
-        me?.data?.defaultPaymentMethod === "google-pay" &&
-        error.message === "Google Pay payment was not completed"
-      ) {
-        history.push(`/payment-error`);
-      }
-    }
-  };
+        if (!isPlaying) {
+            audioRef.current = new Audio(
+                `data:${audioHex.mimeType};base64,${audioHex.recordDataBase64}`
+            );
+            audioRef.current.oncanplaythrough = () => {
+                setIsPlaying(true);
+                audioRef.current.play();
+            };
 
-  const RecordStart = () => {
-    VoiceRecorder.startRecording()
-      .then(() => {
-        setIsRecording(true);
-      })
-      .catch(() => setIsRecording(false));
-  };
+            audioRef.current.onended = () => {
+                setIsPlaying(false);
+            };
+            audioRef.current.load();
+        }
+    };
 
-  const RecordStop = () => {
-    VoiceRecorder.stopRecording()
-      .then((result) => {
-        setAudioHex(result.value);
+    const SendAudio = async () => {
+        setJobPosting(true);
 
-        setIsRecording(false);
-      })
-      .catch(() => {
-        setIsRecording(false);
+        const locationPermission = await Geolocation.requestPermissions();
+        const hasNoLocation = !locationPermission || locationPermission.location !== "granted";
+        if (hasNoLocation) {
+            history.push("/location-error");
+            return;
+        }
 
-      });
-  };
+        if (!me.data.defaultPaymentMethod) {
+            setJobPosting(false);
+            history.push("/billing?recorded=true");
+            return;
+        }
 
-  const toggleRecording = () => {
-    if (isRecording) {
-      RecordStop();
-    } else {
-      RecordStart();
-    }
-  };
+        const currentPosition = await Geolocation.getCurrentPosition();
 
-  const pause = () => {
-    setIsPlaying(false);
-    audioRef.current.pause();
-    audioRef.current = null;
-  };
 
-  return (
-    <UserHomeLayout>
-      <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
-        <div className="relative flex justify-center items-center">
-          {(isRecording || isPlaying) && (
-            <>
-              <div
-                className="absolute     animate-ping border-[1.5px] border-purple w-32 h-32 rounded-full -z-10"
+        try {
+            if (["google-pay", "apple-pay"].includes(me?.data?.defaultPaymentMethod?.toLowerCase())) {
+                const paymentResult = await createPaymentToken();
+                if (paymentResult?.paymentResult !== "googlePayCompleted") {
+                    throw new Error("Google Pay payment was not completed");
+                }
+            } else {
+                await Instance.post("/charge-card/", {
+                    title: "Immigration",
+                    serviceType: "JOB",
+                });
+            }
 
-              />
-              <div
-                className="absolute   border-[1.5px] border-purple w-32 h-32 rounded-full -z-10 animate-[ping_1s_linear_infinite]"
+            const fetchLocation = async (longitude, latitude) => {
+                const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+                const response = await fetch(url, {
+                    headers: {
+                        'Accept-Language': 'en',
+                        'User-Agent': 'YourAppName/1.0 (contact@example.com)',
+                    }
+                });
 
-              />
-            </>
-          )}
-          {!isRecording && audioHex ? (
-            <div
-              className="w-[132px] h-[132px] bg-[#161A1D] rounded-full flex items-center justify-center z-10"
-              onClick={isPlaying ? pause : PlayAudio}
-            >
-              {isPlaying ? (
-                <Pause className="text-white"/>
-              ) : (
-                <img className="ml-3 " src="/Play.svg" alt=""/>
-              )}
-            </div>
-          ) : (
-            <div
-              className="w-[132px] h-[132px] bg-[#161A1D] rounded-full flex items-center justify-center z-10"
-              onClick={toggleRecording}
-            >
-              <img src="/Mic.svg" alt=""/>
-            </div>
-          )}
-        </div>
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-        <div className="flex flex-col gap-3 items-center w-full">
-          {!isRecording && audioHex ? (
-            <motion.div
-              initial={{opacity: 0, scale: 0.5}}
-              animate={{opacity: 1, scale: 1}}
-              transition={{duration: 0.3}}
-              className="w-full"
-            >
-              <div className="h-[40px] flex items-center justify-center w-full">
-                <div className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
-                  <button className="text-sm" onClick={cancelAudio}>
-                    Cancel
-                  </button>
-                  <div className="h-1.5 bg-purple rounded-2xl flex-1"/>
-                  <button className="text-sm " onClick={SendAudio}>
-                    Send
-                  </button>
+                const data = await response.json();
+                return data.address?.country;
+            };
+
+
+
+            await Instance.post("/add-job/", {
+                audioType: audioHex.mimeType,
+                audioHex: audioHex.recordDataBase64,
+                longitude: currentPosition.coords.longitude,
+                latitude: currentPosition.coords.latitude,
+                location: await fetchLocation(currentPosition.coords.longitude, currentPosition.coords.latitude),
+            });
+
+            setAudioHex(null);
+            setIsPlaying(false);
+            audioRef.current = null;
+            setJobPosting(false);
+            mutate("job-notifications");
+            mutate("create-payment-intent");
+            mutate("user-payments");
+
+            history.push("/send-success");
+        } catch (error) {
+            setJobPosting(false);
+
+            if (
+                me?.data?.defaultPaymentMethod === "google-pay" &&
+                error.message === "Google Pay payment was not completed"
+            ) {
+                history.push(`/payment-error`);
+            }
+        }
+    };
+
+    const RecordStart = () => {
+        VoiceRecorder.startRecording()
+            .then(() => {
+                setIsRecording(true);
+            })
+            .catch(() => setIsRecording(false));
+    };
+
+    const RecordStop = () => {
+        VoiceRecorder.stopRecording()
+            .then((result) => {
+                setAudioHex(result.value);
+
+                setIsRecording(false);
+            })
+            .catch(() => {
+                setIsRecording(false);
+
+            });
+    };
+
+    const toggleRecording = () => {
+        if (isRecording) {
+            RecordStop();
+        } else {
+            RecordStart();
+        }
+    };
+
+    const pause = () => {
+        setIsPlaying(false);
+        audioRef.current.pause();
+        audioRef.current = null;
+    };
+
+    return (
+        <UserHomeLayout>
+            <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
+                <div className="relative flex justify-center items-center">
+                    {(isRecording || isPlaying) && (
+                        <>
+                            <div
+                                className="absolute     animate-ping border-[1.5px] border-purple w-32 h-32 rounded-full -z-10"
+
+                            />
+                            <div
+                                className="absolute   border-[1.5px] border-purple w-32 h-32 rounded-full -z-10 animate-[ping_1s_linear_infinite]"
+
+                            />
+                        </>
+                    )}
+                    {!isRecording && audioHex ? (
+                        <div
+                            className="w-[132px] h-[132px] bg-[#161A1D] rounded-full flex items-center justify-center z-10"
+                            onClick={isPlaying ? pause : PlayAudio}
+                        >
+                            {isPlaying ? (
+                                <Pause className="text-white" />
+                            ) : (
+                                <img className="ml-3 " src="/Play.svg" alt="" />
+                            )}
+                        </div>
+                    ) : (
+                        <div
+                            className="w-[132px] h-[132px] bg-[#161A1D] rounded-full flex items-center justify-center z-10"
+                            onClick={toggleRecording}
+                        >
+                            <img src="/Mic.svg" alt="" />
+                        </div>
+                    )}
                 </div>
-              </div>
-            </motion.div>
-          ) : (
-            <div className="h-[40px]  w-full">
-              <motion.div
-                initial={{opacity: 0, scale: 0.5}}
-                animate={{opacity: 1, scale: 1}}
-                transition={{duration: 0.3}}
-                className="w-full flex items-center justify-center "
-              >
-                <ClockSvg isRecording={isRecording}/>
-              </motion.div>
-            </div>
-          )}
-          <Loading open={jobPosting} message={"Transmitting"}/>
 
-          <div className="flex flex-col gap-6 justify-center">
-            {isRecording || isPlaying ? (
-              <div className="h-[44px] flex items-center justify-center">
-                <MusicBars isAnimating/>
-              </div>
-            ) : (
-              <div className="h-[44px] flex items-center justify-center">
-                <img src="/Ripple.svg" alt=""/>
-              </div>
-            )}
-            <div className="text-[15px] leading-[18px]  text-black w-full text-center">
-              Press to listen & Slide to send
+                <div className="flex flex-col gap-3 items-center w-full">
+                    {!isRecording && audioHex ? (
+                        <motion.div
+                            initial={{opacity: 0, scale: 0.5}}
+                            animate={{opacity: 1, scale: 1}}
+                            transition={{duration: 0.3}}
+                            className="w-full"
+                        >
+                            <div className="h-[40px] flex items-center justify-center w-full">
+                                <div
+                                    className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
+                                    <button className="text-sm" onClick={cancelAudio}>
+                                        Cancel
+                                    </button>
+                                    <div className="h-1.5 bg-purple rounded-2xl flex-1" />
+                                    <button className="text-sm " onClick={SendAudio}>
+                                        Send
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ) : (
+                        <div className="h-[40px]  w-full">
+                            <motion.div
+                                initial={{opacity: 0, scale: 0.5}}
+                                animate={{opacity: 1, scale: 1}}
+                                transition={{duration: 0.3}}
+                                className="w-full flex items-center justify-center "
+                            >
+                                <ClockSvg isRecording={isRecording} />
+                            </motion.div>
+                        </div>
+                    )}
+                    <Loading open={jobPosting} message={"Transmitting"} />
+
+                    <div className="flex flex-col gap-6 justify-center">
+                        {isRecording || isPlaying ? (
+                            <div className="h-[44px] flex items-center justify-center">
+                                <MusicBars isAnimating />
+                            </div>
+                        ) : (
+                            <div className="h-[44px] flex items-center justify-center">
+                                <img src="/Ripple.svg" alt="" />
+                            </div>
+                        )}
+                        <div className="text-[15px] leading-[18px]  text-black w-full text-center">
+                            Press to listen & Slide to send
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </UserHomeLayout>
-  );
+        </UserHomeLayout>
+    );
 }
 
 export default Play;

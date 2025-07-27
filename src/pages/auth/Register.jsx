@@ -218,7 +218,7 @@ export const CountrySelect = ({register, errors}) => {
   return (
       <div className="flex flex-col gap-2 w-1/4">
         <select
-            className="rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 focus:outline-none focus:ring-none cursor-pointer"
+            className="rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 focus:outline-none focus:ring-none cursor-pointer h-[34px]"
             {...register("countryCode", {
               required: "Required",
               pattern: {
