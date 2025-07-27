@@ -146,20 +146,26 @@ function Play() {
             }
 
             const fetchLocation = async (longitude, latitude) => {
-                const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
-                const response = await fetch(url, {
-                    headers: {
-                        'Accept-Language': 'en',
-                        'User-Agent': 'YourAppName/1.0 (contact@example.com)',
+                try {
+                    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+                    const response = await fetch(url, {
+                        headers: {
+                            'Accept-Language': 'en',
+                            'User-Agent': 'YourAppName/1.0 (contact@example.com)',
+                        }
+                    });
+
+                    if (!response.ok) {
+                        console.log(`Location API HTTP error! status: ${response.status}`);
+                        return '';
                     }
-                });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    return data.address?.country || '';
+                } catch (error) {
+                    console.log('Location API failed:', error);
+                    return '';
                 }
-
-                const data = await response.json();
-                return data.address?.country;
             };
 
 
