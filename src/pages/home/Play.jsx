@@ -146,8 +146,12 @@ function Play() {
             }
 
             const fetchLocation = async (longitude, latitude) => {
+                console.log('🌍 fetchLocation called with:', { longitude, latitude });
+                
                 try {
                     const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+                    console.log('🌍 Making request to URL:', url);
+                    
                     const response = await fetch(url, {
                         headers: {
                             'Accept-Language': 'en',
@@ -155,28 +159,63 @@ function Play() {
                         }
                     });
 
+                    console.log('🌍 Response status:', response.status);
+                    console.log('🌍 Response ok:', response.ok);
+
                     if (!response.ok) {
-                        console.log(`Location API HTTP error! status: ${response.status}`);
+                        console.error(`🌍 Location API HTTP error! status: ${response.status}`);
+                        const errorText = await response.text();
+                        console.error('🌍 Error response body:', errorText);
                         return '';
                     }
 
                     const data = await response.json();
+                    console.log('🌍 Full API response:', JSON.stringify(data, null, 2));
+                    console.log('🌍 Address object:', data.address);
+                    console.log('🌍 Country extracted:', data.address?.country || 'NO COUNTRY FOUND');
+                    
                     return data.address?.country || '';
                 } catch (error) {
-                    console.log('Location API failed:', error);
+                    console.error('🌍 Location API failed:', error);
+                    console.error('🌍 Error details:', {
+                        name: error.name,
+                        message: error.message,
+                        stack: error.stack
+                    });
                     return '';
                 }
             };
 
 
 
-            await Instance.post("/add-job/", {
+            console.log('📍 Current position:', {
+                longitude: currentPosition.coords.longitude,
+                latitude: currentPosition.coords.latitude,
+                accuracy: currentPosition.coords.accuracy,
+                timestamp: currentPosition.timestamp
+            });
+
+            const locationResult = await fetchLocation(currentPosition.coords.longitude, currentPosition.coords.latitude);
+            console.log('🌍 Final location result:', locationResult);
+
+            const jobData = {
                 audioType: audioHex.mimeType,
                 audioHex: audioHex.recordDataBase64,
                 longitude: currentPosition.coords.longitude,
                 latitude: currentPosition.coords.latitude,
-                location: await fetchLocation(currentPosition.coords.longitude, currentPosition.coords.latitude),
+                location: locationResult,
+            };
+
+            console.log('🚀 Posting job data:', {
+                audioType: jobData.audioType,
+                audioHexLength: jobData.audioHex ? jobData.audioHex.length : 'NO AUDIO',
+                longitude: jobData.longitude,
+                latitude: jobData.latitude,
+                location: jobData.location || 'NO LOCATION'
             });
+
+            const response = await Instance.post("/add-job/", jobData);
+            console.log('✅ Job posted successfully:', response.data);
 
             setAudioHex(null);
             setIsPlaying(false);
@@ -188,13 +227,25 @@ function Play() {
 
             history.push("/send-success");
         } catch (error) {
+            console.error('❌ Error in SendAudio:', error);
+            console.error('❌ Error details:', {
+                name: error.name,
+                message: error.message,
+                stack: error.stack,
+                response: error.response?.data,
+                status: error.response?.status
+            });
+            
             setJobPosting(false);
 
             if (
                 me?.data?.defaultPaymentMethod === "google-pay" &&
                 error.message === "Google Pay payment was not completed"
             ) {
+                console.log('🔄 Redirecting to payment error page');
                 history.push(`/payment-error`);
+            } else {
+                console.log('🔄 General error occurred, staying on current page');
             }
         }
     };

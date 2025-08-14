@@ -8,14 +8,14 @@ import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import clsx from "clsx";
 import useSWR from "swr";
+import MultiSelectDialog from "../../../components/MultiSelect.jsx";
 
 function PracticeArea() {
   const history = useHistory();
   const location = useLocation();
   const {data: userData} = useSWR("auth/me");
+  const {data:areas} = useSWR("service-provider/secondary-area");
 
-
-  console.log('-????',userData?.data?.ServiceProvider?.PracticeAreas)
 
 
   // Check if we're in edit mode
@@ -26,30 +26,11 @@ function PracticeArea() {
   const [selectedArea, setSelectedArea] = useState(null);
   const [areaDetails, setAreaDetails] = useState({});
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+  const [selectedPracticeAreas, setSelectedPracticeAreas] = useState([]);
 
-  const languages = [
-    "Immigration",
-    "Property",
-    "Personal Injury",
-    "Criminal Law",
-    "Family Law",
-    "Property Law",
-  ];
+
   const packages = ["Per Hour", "Per Case", "Per Application", "Flat Fee"];
 
-  // Helper function to map API area names to display names
-  const mapAreaName = (apiAreaName) => {
-    const areaMap = {
-      "imigration": "Immigration",
-      "immigration": "Immigration",
-      "property": "Property",
-      "personalinjury": "Personal Injury",
-      "criminallaw": "Criminal Law",
-      "familylaw": "Family Law",
-      "propertylaw": "Property Law"
-    };
-    return areaMap[apiAreaName.toLowerCase()] || apiAreaName;
-  };
 
   // Helper function to map API rate type to display format
   const mapRateType = (apiRateType) => {
@@ -80,8 +61,8 @@ function PracticeArea() {
       const transformedAreaDetails = {};
 
       practiceAreas.forEach((area) => {
-        const displayAreaName = mapAreaName(area.area);
-        transformedAreaDetails[displayAreaName] = {
+        // Use area name as-is since API returns what we send
+        transformedAreaDetails[area.area] = {
           experience: mapExperience(area.experience),
           payment: mapRateType(area.rate_type),
           price: area.rate.toString()
@@ -89,6 +70,7 @@ function PracticeArea() {
       });
 
       setAreaDetails(transformedAreaDetails);
+      setSelectedPracticeAreas(Object.keys(transformedAreaDetails));
       setInitialDataLoaded(true);
     }
   }, [isEditMode, userData, initialDataLoaded]);
@@ -103,11 +85,11 @@ function PracticeArea() {
 
   const postData = (data) => {
     setLoading(true);
-    const practiceAreas = Object.keys(areaDetails)
-        .filter((area) => areaDetails[area].price && areaDetails[area].payment)
+    const practiceAreas = selectedPracticeAreas
+        .filter((area) => areaDetails[area]?.price && areaDetails[area]?.payment)
         .map((area) => {
-          // Map back to API format
-          const apiAreaName = area.toLowerCase().replace(/\s+/g, "");
+          // Use area name as-is since API returns what we send
+          const apiAreaName = area;
           const apiRateType = areaDetails[area].payment.toLowerCase().replace("per ", "");
 
           // Map experience back to number
@@ -156,26 +138,85 @@ function PracticeArea() {
     }));
   };
 
+  const handlePracticeAreaSelection = (areas) => {
+    setSelectedPracticeAreas(areas);
+    
+    // Initialize areaDetails for newly selected areas
+    const newAreaDetails = { ...areaDetails };
+    areas.forEach(area => {
+      if (!newAreaDetails[area]) {
+        newAreaDetails[area] = { experience: "", payment: "", price: "" };
+      }
+    });
+    
+    // Remove details for unselected areas
+    Object.keys(newAreaDetails).forEach(area => {
+      if (!areas.includes(area)) {
+        delete newAreaDetails[area];
+      }
+    });
+    
+    setAreaDetails(newAreaDetails);
+    
+    // Auto-select first area if no area is currently selected or current area is no longer in the list
+    if (areas.length > 0 && (!selectedArea || !areas.includes(selectedArea))) {
+      setSelectedArea(areas[0]);
+    } else if (areas.length === 0) {
+      setSelectedArea(null);
+    }
+  };
+
+  const removePracticeArea = (areaToRemove) => {
+    const updatedAreas = selectedPracticeAreas.filter(area => area !== areaToRemove);
+    handlePracticeAreaSelection(updatedAreas);
+  };
+
   return (
       <ServiceProviderRegistrationLayout>
         <div className="flex flex-col gap-9 h-full justify-center">
           <div className="flex flex-col gap-4 w-full relative">
             <div className="text-sm leading-4">Practice Area</div>
-            <div className="flex flex-wrap gap-2">
-              {languages.map((item) => (
+            
+            <MultiSelectDialog 
+              items={areas?.data}
+              placeholder="Select practice areas..."
+              searchPlaceholder="Search practice areas..."
+              selectedItems={selectedPracticeAreas}
+              onSelectionChange={handlePracticeAreaSelection}
+              className="w-full border rounded px-3 py-2 text-left border-purple"
+            />
+            
+            {selectedPracticeAreas.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {selectedPracticeAreas.map((area) => (
                   <div
-                      key={item}
-                      className={clsx(
-                          "bg-black px-3 py-0.5 text-sm text-white w-max rounded-[14px] cursor-pointer capitalize transition-all duration-150",
-                          selectedArea === item ? "bg-purple" : "",
-                          areaDetails[item]?.price ? "border border-white" : ""
-                      )}
-                      onClick={() => toggleAreaSelection(item)}
+                    key={area}
+                    className={clsx(
+                      "bg-black px-3 py-1 text-sm text-white rounded-[14px] flex items-center gap-2 transition-all duration-150 capitalize",
+                      selectedArea === area ? "bg-purple" : "",
+                      areaDetails[area]?.price ? "border border-white" : ""
+                    )}
                   >
-                    {item} {areaDetails[item]?.price && ` (£${areaDetails[item].price})`}
+                    <span 
+                      className="cursor-pointer"
+                      onClick={() => toggleAreaSelection(area)}
+                    >
+                      {area} {areaDetails[area]?.price && ` (£${areaDetails[area].price})`}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removePracticeArea(area);
+                      }}
+                      className="ml-1  text-white hover:text-purple transition-colors duration-150"
+                    >
+                      ×
+                    </button>
                   </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             {selectedArea && (
                 <motion.div

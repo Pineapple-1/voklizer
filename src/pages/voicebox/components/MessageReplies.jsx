@@ -22,6 +22,7 @@ import {getDate, getMonth, getYear} from "date-fns";
 import useSWR, {mutate} from "swr";
 import Instance from "../../../axios/Axios";
 import Book from "../../../assets/icons/Book.jsx";
+import Reel from "../../home/components/Reel";
 
 function MessageReplies({id, offer, vokRef}) {
   const [value, setValue] = useState(offer.isBooked ? 100 : 0);
@@ -34,6 +35,8 @@ function MessageReplies({id, offer, vokRef}) {
   const year = getYear(date);
   const {data, isLoading} = useSWR(`available-time-slots?year=${year}&month=${month}&day=${day}`);
   const modal = useRef();
+
+
 
   const book = (start, end) => {
     Instance.post(`book-time-slot/${offer.id}`, {
@@ -165,15 +168,22 @@ function MessageReplies({id, offer, vokRef}) {
       </div>
 
       <IonModal
-        ref={modal}
-        initialBreakpoint={1}
-        breakpoints={[0, 0.25, 0.5, 0.75, 1]}
-        handleBehavior="cycle"
+          ref={modal}
+          initialBreakpoint={1}
+          breakpoints={[0, 0.25, 0.5, 0.75, 1]}
+          handleBehavior="cycle"
       >
         <IonContent>
           <div className="flex flex-col gap-5 bg-[#f5f5f5] h-screen p-6">
             <div className="flex gap-5 w-full">
-              <div className="bg-slate-400 w-full max-w-[180px] rounded-lg"></div>
+              <div onClick={() => modal.current?.dismiss()}>
+                <Reel
+                  name={offer.User.ServiceProvider.companyName}
+                  place={offer.User.ServiceProvider.city}
+                  thumbnail={offer.User.ServiceProvider.videoThumbnail || "/sample/1.jpeg"}
+                  id={offer.User.id}
+                />
+              </div>
               <div className="flex flex-col gap-5">
                 <div className="flex bg-[#32C889] gap-1 items-center rounded-md justify-center w-[60px] h-[25px]">
                   <Star className="text-white"/>
@@ -215,8 +225,8 @@ function MessageReplies({id, offer, vokRef}) {
               </div>
               <div className="flex gap-2">
                 {offer.User.ServiceProvider.PreferredLanguages.map((item) => (<div
-                  className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer"
-                  key={id}
+                    className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer"
+                    key={id}
                 >
                   {item.language}
                 </div>))}
@@ -228,9 +238,9 @@ function MessageReplies({id, offer, vokRef}) {
                 Areas of Expertise
               </div>
               {offer.User.ServiceProvider.PracticeAreas.map((item) => (<div
-                className="flex gap-1"
-                onClick={() => setSelected(item)}
-                key={item.id}
+                  className="flex gap-1"
+                  onClick={() => setSelected(item)}
+                  key={item.id}
               >
                 <div className="bg-black px-3 py-0.5 text-p1 text-white w-max rounded-[14px] cursor-pointer">
                   {item.area}
@@ -292,7 +302,7 @@ function MessageReplies({id, offer, vokRef}) {
       </div>
     </IonModal>
 
-    <BookingEvent value={offer.isBooked ? 100 : 0}/>
+    <BookingEvent value={offer.isBooked ? 100 : 0} details={offer.booking}/>
   </>);
 }
 

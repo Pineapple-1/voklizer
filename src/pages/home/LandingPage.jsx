@@ -12,12 +12,19 @@ import Loading from "../../components/Loading";
 const LandingPage = () => {
   const {data, isLoading} = useSWR("auth/me");
 
-  const currentYear = getYear(new Date());
-  const currentMonth = getMonth(new Date()) + 1;
+  const now = new Date();
+  const currentYear = getYear(now);
+  const currentMonth = getMonth(now) + 1;
+
+  // Validate dates to prevent NaN in query parameters
+  const validYear = !isNaN(currentYear) && currentYear > 2000 ? currentYear : new Date().getFullYear();
+  const validMonth = !isNaN(currentMonth) && currentMonth >= 1 && currentMonth <= 12 ? currentMonth : new Date().getMonth() + 1;
+
+  console.log('📅 Date validation:', { currentYear, currentMonth, validYear, validMonth });
 
   const meetingsEndpoint = data?.data?.role === "serviceProvider"
-    ? `booked-time-slots-service-provider?year=${currentYear}&month=${currentMonth}`
-    : `booked-time-slots-user?year=${currentYear}&month=${currentMonth}`;
+    ? `booked-time-slots-service-provider?year=${validYear}&month=${validMonth}`
+    : `booked-time-slots-user?year=${validYear}&month=${validMonth}`;
 
   const {data: meetings, isLoading: meetingsLoading} = useSWR(
     data ? meetingsEndpoint : null

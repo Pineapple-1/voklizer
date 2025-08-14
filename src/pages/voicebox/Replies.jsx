@@ -38,7 +38,7 @@ function Replies() {
 
   return (
     <Base>
-      <div className="flex flex-col gap-10 pb-10">
+      <div className="flex flex-col gap-5 pb-10">
         <Message job={data?.job} vokRef={vokRef} />
 
         <div className="flex flex-col w-full justify-end items-end gap-5">

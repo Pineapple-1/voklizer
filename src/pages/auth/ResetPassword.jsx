@@ -14,8 +14,7 @@ function ResetPass() {
   const password = watch("password");
 
   const onSubmit = (data) => {
-    console.log(data);
-    history.replace("/");
+    history.replace("/login");
   };
 
   return (

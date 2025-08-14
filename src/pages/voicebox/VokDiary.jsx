@@ -23,10 +23,16 @@ function VokDairy() {
   const currentYear = getYear(date);
   const currentMonth = getMonth(date) + 1;
 
+  // Validate dates to prevent NaN in query parameters
+  const validYear = !isNaN(currentYear) && currentYear > 2000 ? currentYear : new Date().getFullYear();
+  const validMonth = !isNaN(currentMonth) && currentMonth >= 1 && currentMonth <= 12 ? currentMonth : new Date().getMonth() + 1;
+
+  console.log('📅 VokDiary date validation:', { currentYear, currentMonth, validYear, validMonth, date });
+
   const meetingsEndpoint = userData?.data?.role
     ? `booked-time-slots-${
       userData.data.role === "serviceProvider" ? "service-provider" : "user"
-    }?year=${currentYear}&month=${currentMonth}`
+    }?year=${validYear}&month=${validMonth}`
     : null;
 
   const {data: meetings, isLoading: meetingsLoading} = useSWR(meetingsEndpoint);

@@ -132,7 +132,7 @@ function Login() {
               <div
                 className="text-purple text-sm"
                 onClick={() => {
-                  history.push("/practice-area");
+                  history.push("/forget-pass");
                 }}
               >
                 Forgot Password ?
