@@ -27,26 +27,16 @@ function UserProfile() {
         },
     });
 
-    // Populate form with API data when it loads
     useEffect(() => {
         if (data?.data) {
             const userData = data.data;
 
-            // Set individual form values from API data
             setValue("firstName", userData.firstName || "");
             setValue("lastName", userData.lastName || "");
             setValue("email", userData.email || "");
             setValue("mobileNumber", userData.mobileNumber || "");
             setValue("countryCode", userData.countryCode || "+92");
 
-            // Alternative: Use reset to set all values at once
-            // reset({
-            //     firstName: userData.firstName || "",
-            //     lastName: userData.lastName || "",
-            //     email: userData.email || "",
-            //     mobileNumber: userData.mobileNumber || "",
-            //     countryCode: userData.countryCode || "+92",
-            // });
         }
     }, [data, setValue]);
 
