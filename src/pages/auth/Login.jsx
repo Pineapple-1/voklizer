@@ -9,6 +9,7 @@ import {StatusBar, Style} from "@capacitor/status-bar";
 
 import AuthLayout from "./AuthLayout";
 import Loading from "../../components/Loading";
+import DragToSubmit from "../../components/DragToSubmit";
 import {useEffect, useState} from "react";
 import {useAtomValue} from "jotai";
 import {fmcAtom} from "../../state";
@@ -51,6 +52,11 @@ function Login() {
         });
       }
     );
+  };
+
+  const handleDragSubmit = () => {
+    const formEvent = { preventDefault: () => {} };
+    handleSubmit(onSubmit)(formEvent);
   };
 
   useEffect(() => {
@@ -120,13 +126,13 @@ function Login() {
                 )}
               </div>
 
-              <button
-                className="bg-[#D9D9D960] rounded-xl  py-[10px] flex justify-between items-center  px-3"
-                type="submit"
-              >
-                <div className="h-1.5 w-1/2 bg-purple rounded-2xl"></div>
-                <div className="text-sm">Login</div>
-              </button>
+              <DragToSubmit
+                onSubmit={handleDragSubmit}
+                text="Drag to Login"
+                draggingText="Release to Login"
+                sliderColor="bg-purple"
+                disabled={isLogging}
+              />
             </form>
             <div className="flex justify-between px-1">
               <div
