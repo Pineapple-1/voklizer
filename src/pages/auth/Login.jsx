@@ -128,7 +128,7 @@ function Login() {
 
               <DragToSubmit
                 onSubmit={handleDragSubmit}
-                text="Drag to Login"
+                text="Login"
                 draggingText="Release to Login"
                 sliderColor="bg-purple"
                 disabled={isLogging}
