@@ -156,7 +156,7 @@ function DragToSubmit({
     >
       <div 
         ref={trackRef}
-        className="relative w-1/2 h-1.5 rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing"
+        className="relative w-1/2 h-1.5  overflow-hidden cursor-grab active:cursor-grabbing"
         style={{ 
           backgroundColor: trackColor.replace('bg-', '') || '#D1D5DB',
           // Extended touch area for better dragging
@@ -169,12 +169,12 @@ function DragToSubmit({
         <div 
           ref={sliderRef}
           className={`h-1.5 ${sliderColor} rounded-2xl absolute cursor-grab active:cursor-grabbing ${
-            isDragging ? 'transition-none' : 'transition-all duration-300 ease-out'
+            isDragging ? 'transition-none' : 'transition-all duration-300 ease-out shrink-0'
           }`}
           style={{ 
             top: '12px', // Offset for the extended touch area
             left: '0',
-            width: '40px', // Fixed width - no more elongating
+            width: '120px', // Fixed width - no more elongating
             transform: `translateX(${sliderPosition}px)`
           }}
         />
