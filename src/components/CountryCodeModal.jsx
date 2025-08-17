@@ -48,8 +48,9 @@ function CountryCodeModal({
             <IonModal
                 ref={modal}
                 trigger="country-code-modal"
-                initialBreakpoint={0.75}
-                breakpoints={[0, 0.5, 0.75, 1]}
+                initialBreakpoint={1}
+                breakpoints={[0, 1]}
+                style={{ '--height': '65vh' }}
             >
                 <IonContent className="ion-padding">
                     <input
