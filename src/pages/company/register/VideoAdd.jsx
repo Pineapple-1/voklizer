@@ -34,14 +34,14 @@ function VideoAdd() {
 
   const skipVideo = () => {
     if (isEditMode) {
-      history.replace("/landing");
+      history.replace("/edit-company-info");
     } else {
       history.push("/landing");
     }
   };
 
   const cancelEdit = () => {
-    history.replace("/landing");
+    history.replace("/edit-company-info");
   };
 
   const togglePlay = () => {
@@ -84,7 +84,7 @@ function VideoAdd() {
               .then(() => {
                 setUploadStart(false);
                 if (isEditMode) {
-                  history.replace("/landing");
+                  history.replace("/edit-company-info");
                 } else {
                   history.push("/landing");
                 }

@@ -6,6 +6,31 @@
   html {
     @apply font-lexend;
   }
+  
+  /*!* Prevent keyboard from resizing viewport *!*/
+  /*html, body {*/
+  /*  height: 100vh;*/
+  /*  height: 100dvh; !* Dynamic viewport height for mobile *!*/
+  /*  overflow: hidden;*/
+  /*}*/
+  
+  /*#root {*/
+  /*  height: 100vh;*/
+  /*  height: 100dvh;*/
+  /*  overflow-y: auto;*/
+  /*  overflow-x: hidden;*/
+  /*}*/
+  
+  /*!* iOS Safari keyboard fix *!*/
+  /*@supports (-webkit-touch-callout: none) {*/
+  /*  html, body {*/
+  /*    height: -webkit-fill-available;*/
+  /*  }*/
+  /*  */
+  /*  #root {*/
+  /*    height: -webkit-fill-available;*/
+  /*  }*/
+  /*}*/
 }
 
 @layer utilities {
@@ -16,5 +41,31 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  
+  /*!* Keyboard handling utilities *!*/
+  /*.keyboard-stable {*/
+  /*  height: 100vh;*/
+  /*  height: 100dvh;*/
+  /*  overflow: hidden;*/
+  /*}*/
+  
+  /*.keyboard-content {*/
+  /*  height: 100%;*/
+  /*  overflow-y: auto;*/
+  /*  -webkit-overflow-scrolling: touch;*/
+  /*}*/
+  
+  /*!* Prevent zoom on input focus *!*/
+  /*input, select, textarea {*/
+  /*  font-size: 16px;*/
+  /*  -webkit-user-select: text;*/
+  /*  user-select: text;*/
+  /*}*/
+  
+  /*@media screen and (max-width: 767px) {*/
+  /*  input, select, textarea {*/
+  /*    font-size: 16px; !* Prevents zoom on iOS *!*/
+  /*  }*/
+  /*}*/
 }
 

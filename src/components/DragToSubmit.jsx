@@ -156,7 +156,7 @@ function DragToSubmit({
     >
       <div 
         ref={trackRef}
-        className="relative w-1/2 h-1.5  overflow-hidden cursor-grab active:cursor-grabbing"
+        className="relative w-1/2 h-1.5 overflow-hidden cursor-grab active:cursor-grabbing"
         style={{ 
           backgroundColor: trackColor.replace('bg-', '') || '#D1D5DB',
           // Extended touch area for better dragging

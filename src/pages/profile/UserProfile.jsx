@@ -2,19 +2,21 @@ import Base from "../../layout/Base";
 import {useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
 import useSWR from "swr";
-import {CountrySelect} from '../auth/Register';
+import CountryCodeModal from "../../components/CountryCodeModal";
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading.jsx";
+import countries from "../../data/countries.json";
 
 function UserProfile() {
     const {data, isLoading, mutate} = useSWR("auth/me");
     const [posting, setPosting] = useState(false);
-    const [showCountry, setShowCountry] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState(null);
 
     const {
         register,
         handleSubmit,
         setValue,
+        clearErrors,
         reset,
         formState: {errors},
     } = useForm({
@@ -23,7 +25,7 @@ function UserProfile() {
             lastName: "",
             email: "",
             mobileNumber: "",
-            countryCode: "+92",
+            countryCode: "-",
         },
     });
 
@@ -37,8 +39,21 @@ function UserProfile() {
             setValue("mobileNumber", userData.mobileNumber || "");
             setValue("countryCode", userData.countryCode || "+92");
 
+            const foundCountry = countries.find(country => country.code === (userData.countryCode || "+92"));
+            if (foundCountry) {
+                setSelectedCountry(foundCountry);
+            }
         }
     }, [data, setValue]);
+
+    const handleCountrySelection = (country) => {
+        setSelectedCountry(country);
+        setValue("countryCode", country.code);
+        // Clear any validation errors for countryCode field
+        if (errors.countryCode) {
+            clearErrors("countryCode");
+        }
+    };
 
     const onSubmit = async (formData) => {
         try {
@@ -116,13 +131,33 @@ function UserProfile() {
 
                 <div className="flex gap-4 w-full">
 
-                    <CountrySelect
-                        register={register}
-                        errors={errors}
-                        setValue={setValue}
-                        showCountry={showCountry}
-                        setShowCountry={setShowCountry}
-                    />
+                    <div className="flex flex-col gap-2 items-stretch justify-stretch rounded-none" style={{
+                        minWidth: '120px',
+                        maxWidth: '150px',
+                        flexShrink: 0,
+                        WebkitFlexShrink: 0
+                    }}>
+                        <div className='w-[100px] border-b-2 border-black py-0.5'>
+                            <CountryCodeModal
+                                selectedCountry={selectedCountry}
+                                onSelectionChange={handleCountrySelection}
+                                placeholder="Select Country"
+                            />
+                        </div>
+                        
+                        <input
+                            type="hidden"
+                            {...register("countryCode", {
+                                required: "Required",
+                                validate: (value) => value !== "" || "Please select a country"
+                            })}
+                            name="countryCode"
+                        />
+                        
+                        {errors.countryCode && (
+                            <p className="text-purple text-sm">{errors.countryCode.message}</p>
+                        )}
+                    </div>
 
                     <div className="flex flex-col gap-1.5 w-full">
                         <input

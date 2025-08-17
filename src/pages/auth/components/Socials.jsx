@@ -84,7 +84,7 @@ function Socials({setValue, setRemovePassword}) {
           userSubject$.next(res.data);
           mutate('auth/me')
 
-          history.push("/landing");
+          history.replace("/landing");
         }
       }).catch((err) => {
         console.log(JSON.stringify("error", err));
@@ -129,7 +129,7 @@ function Socials({setValue, setRemovePassword}) {
             tokenSubject$.next(res.data.token);
             userSubject$.next(res.data);
             mutate('auth/me')
-            history.push("/landing");
+            history.replace("/landing");
           }
         });
       });

@@ -5,6 +5,7 @@ import {useState} from "react";
 import AuthLayout from "./AuthLayout";
 import {useSetAtom, useAtomValue} from "jotai";
 import {userAtom, socialAtom} from "../../state";
+import CountryCodeModal from "../../components/CountryCodeModal";
 
 function Register() {
     const social = useAtomValue(socialAtom);
@@ -21,6 +22,7 @@ function Register() {
         handleSubmit,
         watch,
         setValue,
+        clearErrors,
         formState: {errors},
     } = useForm({
         defaultValues: {
@@ -94,6 +96,8 @@ function Register() {
                             <CountrySelect
                                 register={register}
                                 errors={errors}
+                                setValue={setValue}
+                                clearErrors={clearErrors}
                             />
 
                             <div className="flex flex-col gap-2 w-full">
@@ -214,50 +218,37 @@ function Register() {
 }
 
 
-export const CountrySelect = ({register, errors}) => {
+export const CountrySelect = ({register, errors, setValue, clearErrors}) => {
+    const [selectedCountry, setSelectedCountry] = useState(null);
+
+    const handleCountrySelection = (country) => {
+        setSelectedCountry(country);
+        setValue("countryCode", country.code);
+        // Clear any validation errors for countryCode field
+        if (errors.countryCode) {
+            clearErrors("countryCode");
+        }
+    };
+
     return (
-        <div className="flex flex-col gap-2 items-stretch justify-stretch rounded-none" style={{
-            minWidth: '100px',
-            maxWidth: '120px',
-            flexShrink: 0,
-            WebkitFlexShrink: 0
-        }}>
-            <select
-                className="rounded-none text-sm border-black border-b-2 bg-transparent py-1.5 focus:outline-none focus:ring-none cursor-pointer"
-                style={{
-                    minWidth: '100px',
-                    maxWidth: '120px',
-                    WebkitAppearance: 'none',
-                    appearance: 'none',
-                    backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke-width=\'2.5\' stroke=\'%23000\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' d=\'m19.5 8.25-7.5 7.5-7.5-7.5\' /%3E%3C/svg%3E")',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'right 8px center',
-                    backgroundSize: '12px',
-                    paddingRight: '30px'
-                }}
-
-
+        <div className="flex flex-col gap-2 items-stretch justify-stretch rounded-none ">
+            <div className='w-[100px] border-b-2 border-black '>
+                <CountryCodeModal
+                    selectedCountry={selectedCountry}
+                    onSelectionChange={handleCountrySelection}
+                    placeholder="Country"
+                />
+            </div>
+            
+            <input
+                type="hidden"
                 {...register("countryCode", {
                     required: "Required",
-                    pattern: {
-                        value: /^(\+92|\+44)$/,
-                        message: "Select valid country code",
-                    },
+                    validate: (value) => value !== "" || "Please select a country"
                 })}
                 name="countryCode"
-                aria-invalid={errors.countryCode ? "true" : "false"}
-                defaultValue=""
-            >
-                <option value="" disabled className="text-gray-400">
-                    Country
-                </option>
-                <option value="+44" className="text-black">
-                    UK (+44)
-                </option>
-                <option value="+92" className="text-black">
-                    PK (+92)
-                </option>
-            </select>
+            />
+            
             {errors.countryCode && (
                 <p className="text-purple text-sm">{errors.countryCode.message}</p>
             )}

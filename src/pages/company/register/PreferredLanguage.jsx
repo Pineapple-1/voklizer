@@ -25,7 +25,7 @@ function PreferredLanguage() {
       .then((res) => {
         console.log(res);
         if (isEditMode) {
-          history.replace("/landing");
+          history.replace("/edit-company-info");
         } else {
           history.push("/reg-name");
         }
@@ -88,7 +88,7 @@ function PreferredLanguage() {
         <div className="flex justify-between">
           {isEditMode ? (
             <ChipButton
-              onClick={() => history.replace("/landing")}
+              onClick={() => history.replace("/edit-company-info")}
               className="bg-gray-200 text-purple"
             >
               Cancel

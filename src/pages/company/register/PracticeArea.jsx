@@ -9,6 +9,7 @@ import Instance from "../../../axios/Axios";
 import clsx from "clsx";
 import useSWR from "swr";
 import MultiSelectDialog from "../../../components/MultiSelect.jsx";
+import PracticeAreaModal from "../../../components/PracticeAreaModal.jsx";
 
 function PracticeArea() {
   const history = useHistory();
@@ -111,7 +112,7 @@ function PracticeArea() {
     Instance.post("service-provider/practice-area", { practiceArea: practiceAreas }).then((res) => {
           console.log(res);
           if (isEditMode) {
-            history.replace("/landing");
+            history.replace("/edit-company-info");
           } else {
             history.push("/video");
           }
@@ -177,13 +178,12 @@ function PracticeArea() {
           <div className="flex flex-col gap-4 w-full relative">
             <div className="text-sm leading-4">Practice Area</div>
             
-            <MultiSelectDialog 
+            <PracticeAreaModal 
               items={areas?.data}
               placeholder="Select practice areas..."
               searchPlaceholder="Search practice areas..."
               selectedItems={selectedPracticeAreas}
               onSelectionChange={handlePracticeAreaSelection}
-              className="w-full border rounded px-3 py-2 text-left border-purple"
             />
             
             {selectedPracticeAreas.length > 0 && (
@@ -269,7 +269,7 @@ function PracticeArea() {
                       {isEditMode ? (
                           <ChipButton
                               type="button"
-                              onClick={() => history.replace("/landing")}
+                              onClick={() => history.replace("/edit-company-info")}
                               className="bg-gray-200 text-purple"
                           >
                             Cancel

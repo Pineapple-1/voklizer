@@ -45,7 +45,7 @@ function CompanyRegNumber() {
       .then(() => {
         setLoading(false);
         if (isEditMode) {
-          history.replace("/landing");
+          history.replace("/edit-company-info");
         } else {
           history.push("/reg-email");
         }
@@ -60,7 +60,7 @@ function CompanyRegNumber() {
   return (
     <ServiceProviderRegistrationLayout>
       <div className="flex flex-col gap-9 ">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7" onReset={() => history.replace("/landing")}>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7" onReset={() => history.replace("/edit-company-info")}>
           <div className="flex flex-col gap-3">
             <input
               className={

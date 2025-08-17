@@ -129,16 +129,9 @@ function Sidebar({open, setOpen}) {
                                     await storage.remove("user");
                                     mutate(() => true)
                                     
-                                    // Clear the entire navigation stack and navigate to login
-                                    history.replace("/login");
-                                    
-                                    // Additional step to ensure clean navigation stack
-                                    setTimeout(() => {
-                                        window.history.replaceState(null, null, "/login");
-                                        if (window.history.length > 1) {
-                                            window.history.go(-(window.history.length - 1));
-                                        }
-                                    }, 100);
+                                    // Clear navigation stack by replacing current state and using window.location
+                                    window.history.replaceState(null, null, "/login");
+                                    window.location.replace("/login");
                                     
                                     setOpen(false);
                                 }}>Logout

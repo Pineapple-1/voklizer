@@ -33,6 +33,11 @@
         "sound",
         "alert"
       ]
+    },
+    "Keyboard": {
+      "resize": "none",
+      "style": "LIGHT",
+      "resizeOnFullScreen": true
     }
   }
 }
