@@ -6,6 +6,7 @@ import AuthLayout from "./AuthLayout";
 import {useSetAtom, useAtomValue} from "jotai";
 import {userAtom, socialAtom} from "../../state";
 import CountryCodeModal from "../../components/CountryCodeModal";
+import {GeometricButton} from "../../components/GeometricButton";
 
 function Register() {
     const social = useAtomValue(socialAtom);
@@ -198,14 +199,27 @@ function Register() {
                             </>
                         )}
 
-                        {console.log(removePassword)}
-                        <button
-                            className="bg-[#D9D9D960]  flex justify-between items-center rounded-xl py-[9px] px-3"
-                            type="submit"
-                        >
-                            <div className="h-1.5 w-1/2 bg-purple rounded-2xl"></div>
-                            <div className="text-sm">Register</div>
-                        </button>
+                        <div className="flex">
+                            <GeometricButton
+                                type="submit"
+                                cut="right"
+                                width="100%"
+                                className="flex-1"
+                            >
+                                Register
+                            </GeometricButton>
+                            <GeometricButton
+                                type="button"
+                                fillColor="#E5E7EB"
+                                textColor="#8532D8"
+                                cut="left"
+                                width="100%"
+                                className="flex-1"
+                                onClick={() => history.push("/")}
+                            >
+                                Cancel
+                            </GeometricButton>
+                        </div>
                     </form>
                 </div>
 

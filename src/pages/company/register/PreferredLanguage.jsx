@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
-import ChipButton from "../../../components/ChipButton";
+import { GeometricButton } from "../../../components/GeometricButton";
 import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import SelectIcon from "../../../assets/icons/SelectIcon";
@@ -38,7 +38,7 @@ function PreferredLanguage() {
 
   return (
     <ServiceProviderRegistrationLayout>
-      <div className="flex flex-col gap-9">
+      <div className="flex flex-col gap-9 h-full justify-between">
         <div className="flex flex-col gap-4 w-full relative">
           <div className="flex gap-2 absolute -top-6 left-0">
             {value.length > 0 ? (
@@ -85,23 +85,31 @@ function PreferredLanguage() {
           </div>
         </div>
 
-        <div className="flex justify-between">
-          {isEditMode ? (
-            <ChipButton
-              onClick={() => history.replace("/edit-company-info")}
-              className="bg-gray-200 text-purple"
-            >
-              Cancel
-            </ChipButton>
-          ) : (
-            <div></div> // Empty div to maintain spacing when no back button is needed
-          )}
-          <ChipButton
+        <div className="flex">
+          <GeometricButton
             onClick={() => submit()}
+            cut="right"
+            width="100%"
+            className="flex-1"
             disabled={value.length === 0}
           >
             {isEditMode ? "Save" : "Next"}
-          </ChipButton>
+          </GeometricButton>
+          {isEditMode ? (
+            <GeometricButton
+              type="button"
+              fillColor="#E5E7EB"
+              textColor="#8532D8"
+              cut="left"
+              width="100%"
+              className="flex-1"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+            >
+              Cancel
+            </GeometricButton>
+          ) : (
+            <div className="flex-1" />
+          )}
         </div>
       </div>
       <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />

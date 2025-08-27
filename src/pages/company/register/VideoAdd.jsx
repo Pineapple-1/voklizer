@@ -40,7 +40,9 @@ function VideoAdd() {
     }
   };
 
-  const cancelEdit = () => {
+  const cancelEdit = (e) => {
+    e?.preventDefault?.();
+    e?.stopPropagation?.();
     history.replace("/edit-company-info");
   };
 
@@ -105,7 +107,7 @@ function VideoAdd() {
 
   return (
     <ServiceProviderRegistrationLayout>
-      <div className="flex flex-col gap-9">
+      <div className="flex flex-col gap-9 h-full justify-between">
         <div className="flex flex-col gap-2">
           <div className="text-[20px] ">Branding Video</div>
           <div className="text-sm underline decoration-purple decoration-2 underline-offset-4 leading-6">

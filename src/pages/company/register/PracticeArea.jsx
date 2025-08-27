@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
-import ChipButton from "../../../components/ChipButton";
+import { GeometricButton } from "../../../components/GeometricButton";
 import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import clsx from "clsx";
@@ -174,7 +174,7 @@ function PracticeArea() {
 
   return (
       <ServiceProviderRegistrationLayout>
-        <div className="flex flex-col gap-9 h-full justify-center">
+        <div className="flex flex-col gap-9 h-full justify-between">
           <div className="flex flex-col gap-4 w-full relative">
             <div className="text-sm leading-4">Practice Area</div>
             
@@ -265,26 +265,38 @@ function PracticeArea() {
                         onChange={(e) => handleDetailChange("price", e.target.value)}
                     />
 
-                    <div className="flex justify-between mt-4">
+                    <div className="flex mt-4">
+                      <GeometricButton
+                        type="submit"
+                        cut="right"
+                        width="100%"
+                        className="flex-1"
+                      >
+                        {isEditMode ? "Save" : "Next"}
+                      </GeometricButton>
                       {isEditMode ? (
-                          <ChipButton
+                          <GeometricButton
                               type="button"
-                              onClick={() => history.replace("/edit-company-info")}
-                              className="bg-gray-200 text-purple"
+                              fillColor="#E5E7EB"
+                              textColor="#8532D8"
+                              cut="left"
+                              width="100%"
+                              className="flex-1"
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
                           >
                             Cancel
-                          </ChipButton>
+                          </GeometricButton>
                       ) : (
-                          <ChipButton
+                          <GeometricButton
                               type="button"
                               onClick={() => history.push("/address")}
+                              cut="left"
+                              width="100%"
+                              className="flex-1"
                           >
                             Back
-                          </ChipButton>
+                          </GeometricButton>
                       )}
-                      <ChipButton type="submit">
-                        {isEditMode ? "Save" : "Next"}
-                      </ChipButton>
                     </div>
                   </form>
                 </motion.div>

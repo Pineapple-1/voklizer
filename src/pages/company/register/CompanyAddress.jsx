@@ -1,85 +1,145 @@
-import React from "react";
+import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import ChipButton from "../../../components/ChipButton";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import Textbox from "../../../components/Textbox";
+import {GeometricButton} from "../../../components/GeometricButton.jsx";
+import Loading from "../../../components/Loading";
+import Instance from "../../../axios/Axios";
+import useSWR from "swr";
 
 function CompanyAddress() {
-  const history = useHistory();
-  const {register, handleSubmit, formState: {errors}} = useForm({
-    defaultValues: {
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      postCode: "",
-      county: ""
-    }
-  });
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+    const location = useLocation();
 
-  const onSubmit = (data) => {
-    console.log("Form data:", data);
-    history.push("/practice-area");
-  };
+    // Check if we're in edit mode
+    const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
 
-  return (
-    <ServiceProviderRegistrationLayout>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
-        <div className="flex flex-col gap-5">
-          <Textbox
-            label={"Address Line 1"}
-            {...register("addressLine1", {required: "Address Line 1 is required"})}
-            subtitle={errors.addressLine1?.message}
-          />
+    const {data: userData} = useSWR("auth/me");
 
-          <Textbox
-            label={"Address Line 2"}
-            {...register("addressLine2")}
-          />
+    // Get initial values for the form
+    const getInitialValues = () => {
+        if (isEditMode && userData?.data?.ServiceProvider) {
+            return {
+                addressLine1: userData.data.ServiceProvider.addressLine1 || "",
+                addressLine2: userData.data.ServiceProvider.addressLine2 || "",
+                city: userData.data.ServiceProvider.city || "",
+                postCode: userData.data.ServiceProvider.postCode || "",
+                county: userData.data.ServiceProvider.county || ""
+            };
+        }
+        return {
+            addressLine1: "",
+            addressLine2: "",
+            city: "",
+            postCode: "",
+            county: ""
+        };
+    };
+    const {register, handleSubmit, reset, formState: {errors}} = useForm({
+        defaultValues: getInitialValues()
+    });
 
-          <div className="w-6/12">
-            <Textbox
-              label={"City"}
-              {...register("city", {required: "City is required"})}
-              subtitle={errors.city?.message}
-            />
-          </div>
+    const onSubmit = (data) => {
+        setLoading(true);
+        Instance.post("service-provider/company-address", data)
+            .then(() => {
+                setLoading(false);
+                if (isEditMode) {
+                    history.replace("/edit-company-info");
+                } else {
+                    history.push("/practice-area");
+                }
+            })
+            .catch((error) => {
+                console.error("Error submitting data:", error);
+                setLoading(false);
+            })
+            .finally(() => reset());
+    };
 
-          <div className="w-4/12">
-            <Textbox
-              label={"Post Code"}
-              {...register("postCode", {
-                required: "Post Code is required"
-              })}
-              subtitle={errors.postCode?.message}
-            />
-          </div>
+    return (
+        <ServiceProviderRegistrationLayout>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10 justify-between h-full">
+                <div className="flex flex-col gap-5">
+                    <Textbox
+                        label={"Address Line 1"}
+                        {...register("addressLine1", {required: "Address Line 1 is required"})}
+                        subtitle={errors.addressLine1?.message}
+                    />
 
-          <div className="w-4/12">
-            <Textbox
-              label={"County"}
-              {...register("county", {required: "County is required"})}
-              subtitle={errors.county?.message}
-            />
-          </div>
+                    <Textbox
+                        label={"Address Line 2"}
+                        {...register("addressLine2")}
+                    />
 
-        </div>
+                    <div className="w-6/12">
+                        <Textbox
+                            label={"City"}
+                            {...register("city", {required: "City is required"})}
+                            subtitle={errors.city?.message}
+                        />
+                    </div>
 
-        <div className="flex justify-between">
-          <ChipButton
-            type="button"
-            onClick={() => history.push("/address")}
-          >
-            Back
-          </ChipButton>
+                    <div className="w-4/12">
+                        <Textbox
+                            label={"Post Code"}
+                            {...register("postCode", {
+                                required: "Post Code is required"
+                            })}
+                            subtitle={errors.postCode?.message}
+                        />
+                    </div>
 
-          <ChipButton type="submit">
-            Next
-          </ChipButton>
-        </div>
-      </form>
-    </ServiceProviderRegistrationLayout>
-  );
+                    <div className="w-4/12">
+                        <Textbox
+                            label={"County"}
+                            {...register("county", {required: "County is required"})}
+                            subtitle={errors.county?.message}
+                        />
+                    </div>
+
+                </div>
+
+                <div className="flex">
+                    <GeometricButton
+                        type="submit"
+                        cut="right"
+                        width="100%"
+                        className="flex-1"
+                        disabled={loading}
+                    >
+                        {isEditMode ? "Save" : "Next"}
+                    </GeometricButton>
+                    {isEditMode ? (
+                        <GeometricButton
+                            type="button"
+                            fillColor="#E5E7EB"
+                            textColor="#8532D8"
+                            cut="left"
+                            width="100%"
+                            className="flex-1"
+                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+                        >
+                            Cancel
+                        </GeometricButton>
+                    ) : (
+                        <GeometricButton
+                            onClick={() => history.push("/landline")}
+                            cut="left"
+                            width="100%"
+                            className="flex-1"
+                        >
+                            Back
+                        </GeometricButton>
+                    )}
+                </div>
+            </form>
+            <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"}/>
+        </ServiceProviderRegistrationLayout>
+    );
 }
 
 export default CompanyAddress;

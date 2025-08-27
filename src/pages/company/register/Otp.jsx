@@ -1,5 +1,5 @@
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
-import ChipButton from "../../../components/ChipButton";
+import { GeometricButton } from "../../../components/GeometricButton";
 import { useHistory } from "react-router-dom";
 import Textbox from "../../../components/Textbox";
 
@@ -8,15 +8,25 @@ function Otp() {
 
   return (
     <ServiceProviderRegistrationLayout>
-      <div className="flex flex-col gap-9">
+      <div className="flex flex-col gap-9 h-full justify-between">
         <Textbox label={"Enter OTP"} subtitle={"Verify Email Address"} />
-        <div className="flex justify-between">
-          <ChipButton onClick={() => history.push("/reg-email")}>
+        <div className="flex">
+          <GeometricButton
+            onClick={() => history.push("/reg-email")}
+            cut="left"
+            width="100%"
+            className="flex-1"
+          >
             Back
-          </ChipButton>
-          <ChipButton onClick={() => history.push("/landline")}>
+          </GeometricButton>
+          <GeometricButton
+            onClick={() => history.push("/landline")}
+            cut="right"
+            width="100%"
+            className="flex-1"
+          >
             Next
-          </ChipButton>
+          </GeometricButton>
         </div>
       </div>
     </ServiceProviderRegistrationLayout>

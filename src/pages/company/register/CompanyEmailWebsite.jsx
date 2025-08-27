@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
-import ChipButton from "../../../components/ChipButton";
+import { GeometricButton } from "../../../components/GeometricButton";
 import { useHistory, useLocation } from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import { useForm } from "react-hook-form";
@@ -61,8 +61,8 @@ function CompanyEmailWebsite() {
 
   return (
     <ServiceProviderRegistrationLayout>
-      <div className="flex flex-col gap-9">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7" onReset={() => history.replace("/edit-company-info")}>
+      <div className="flex flex-col gap-9 h-full justify-between">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7 h-full justify-between">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3 w-full">
               <input
@@ -111,22 +111,37 @@ function CompanyEmailWebsite() {
               </div>
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex">
+            <GeometricButton
+              type={"submit"}
+              cut="right"
+              width="100%"
+              className="flex-1"
+            >
+              {isEditMode ? "Save" : "Next"}
+            </GeometricButton>
             {isEditMode ? (
-              <ChipButton
-                type={"reset"}
-                className="bg-gray-200 text-purple"
+              <GeometricButton
+                type={"button"}
+                fillColor="#E5E7EB"
+                textColor="#8532D8"
+                cut="left"
+                width="100%"
+                className="flex-1"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
               >
                 Cancel
-              </ChipButton>
+              </GeometricButton>
             ) : (
-              <ChipButton onClick={() => history.push("/reg-num")}>
+              <GeometricButton
+                onClick={() => history.push("/reg-num")}
+                cut="left"
+                width="100%"
+                className="flex-1"
+              >
                 Back
-              </ChipButton>
+              </GeometricButton>
             )}
-            <ChipButton type={"submit"}>
-              {isEditMode ? "Save" : "Next"}
-            </ChipButton>
           </div>
         </form>
       </div>

@@ -1,6 +1,7 @@
-import {IonContent, IonPage, useIonViewWillEnter} from "@ionic/react";
+import {IonContent, IonPage,  useIonViewWillEnter} from "@ionic/react";
 import {StatusBar, Style} from "@capacitor/status-bar";
 import clsx from "clsx";
+import {Footer} from "../../components/Footer.jsx";
 
 function AuthLayout({children}) {
   useIonViewWillEnter(() => {
@@ -10,7 +11,7 @@ function AuthLayout({children}) {
 
   return (
     <IonPage>
-      <IonContent fullscreen>
+      <IonContent  scrollY={false}>
         <div
           className={clsx(
             "h-full bg-gray/50 px-6 pb-10 flex flex-col pt-24",
@@ -18,15 +19,14 @@ function AuthLayout({children}) {
         >
           <div className="flex-grow">{children}</div>
 
-          <div className="flex flex-col justify-center items-center">
-            <img
-              className="w-[122px] h-[98px]"
-              src="/logos/Logo-Alt-Auth.svg"
-              alt=""
-            />
-          </div>
+
         </div>
+
+
+          <Footer/>
       </IonContent>
+
+
     </IonPage>
   );
 }

@@ -9,7 +9,7 @@ import {StatusBar, Style} from "@capacitor/status-bar";
 
 import AuthLayout from "./AuthLayout";
 import Loading from "../../components/Loading";
-import DragToSubmit from "../../components/DragToSubmit";
+import {GeometricButton} from "../../components/GeometricButton";
 import {useEffect, useState} from "react";
 import {useAtomValue} from "jotai";
 import {fmcAtom} from "../../state";
@@ -126,13 +126,28 @@ function Login() {
                 )}
               </div>
 
-              <DragToSubmit
-                onSubmit={handleDragSubmit}
-                text="Login"
-                draggingText="Release to Login"
-                sliderColor="bg-purple"
-                disabled={isLogging}
-              />
+              <div className="flex">
+                <GeometricButton
+                  type="submit"
+                  cut="right"
+                  width="100%"
+                  className="flex-1"
+                  disabled={isLogging}
+                >
+                  Login
+                </GeometricButton>
+                <GeometricButton
+                  type="button"
+                  fillColor="#E5E7EB"
+                  textColor="#8532D8"
+                  cut="left"
+                  width="100%"
+                  className="flex-1"
+                  onClick={() => history.push("/")}
+                >
+                  Cancel
+                </GeometricButton>
+              </div>
             </form>
             <div className="flex justify-between px-1">
               <div

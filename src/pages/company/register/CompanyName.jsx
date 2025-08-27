@@ -1,7 +1,7 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import ServiceProviderRegistrationLayout from "../../../layout/ServiceProviderRegistrationLayout";
 import Loading from "../../../components/Loading";
-import ChipButton from "../../../components/ChipButton";
+import {GeometricButton} from "../../../components/GeometricButton";
 import {useHistory, useLocation} from "react-router-dom";
 import Instance from "../../../axios/Axios";
 import {useForm} from "react-hook-form";
@@ -14,29 +14,29 @@ function CompanyName() {
 
   // Check if we're in edit mode
   const isEditMode = new URLSearchParams(location.search).get("edit") === "true";
+  
+  // Debug logs removed to avoid noisy console output
 
   const {data: userData} = useSWR("auth/me");
-
-  // Get initial values for the form
-  const getInitialValues = () => {
-    if (isEditMode && userData?.data?.ServiceProvider) {
-      return {
-        companyName: userData.data.ServiceProvider.companyName || ""
-      };
-    }
-    return {
-      companyName: ""
-    };
-  };
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: {errors},
   } = useForm({
-    defaultValues: getInitialValues()
+    defaultValues: {
+      companyName: ""
+    }
   });
+
+  // Update form values when userData is available and we're in edit mode
+  useEffect(() => {
+    if (isEditMode && userData?.data?.ServiceProvider) {
+      setValue("companyName", userData.data.ServiceProvider.companyName || "");
+    }
+  }, [userData, isEditMode, setValue]);
 
   const onSubmit = (data) => {
     setLoading(true);
@@ -58,8 +58,8 @@ function CompanyName() {
 
   return (
     <ServiceProviderRegistrationLayout>
-      <div className="flex flex-col gap-9">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7" onReset={() => history.replace("/edit-company-info")}>
+      <div className="flex flex-col gap-9 h-full justify-between">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7 h-full justify-between">
           <div className="flex flex-col gap-3">
             <input
               className={
@@ -80,22 +80,39 @@ function CompanyName() {
             )}
             <div className="text-sm leading-[17px]">Company Name</div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex ">
+
+              <GeometricButton
+                  type={"submit"}
+                  cut="right"
+                  width="100%"
+                  className="flex-1"
+              >
+                  {isEditMode ? "Save" : "Next"}
+              </GeometricButton>
             {isEditMode ? (
-              <ChipButton
-                type={"reset"}
-                className="bg-gray-200 text-purple"
+              <GeometricButton
+                type={"button"}
+                fillColor="#E5E7EB"
+                textColor="#8532D8"
+                cut="left"
+                width="100%"
+                className="flex-1"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
               >
                 Cancel
-              </ChipButton>
+              </GeometricButton>
             ) : (
-              <ChipButton onClick={() => history.push("/preferred-language")}>
+              <GeometricButton 
+                onClick={() => history.push("/preferred-language")}
+                cut="left"
+                width="100%"
+                className="flex-1"
+              >
                 Back
-              </ChipButton>
+              </GeometricButton>
             )}
-            <ChipButton type={"submit"}>
-              {isEditMode ? "Save" : "Next"}
-            </ChipButton>
+
           </div>
         </form>
       </div>

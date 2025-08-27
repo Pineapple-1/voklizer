@@ -3,7 +3,7 @@ function Meet({ meet }) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-3">
-        <div className="bg-purple text-white rounded-md pl-1.5 text-base pr-4 py-0.5">
+        <div className="bg-purple text-white rounded-md pl-1.5 text-base pr-4 py-0.5 whitespace-nowrap">
           {meet.date}
         </div>
         <div className="text-base capitalize">{meet.title.toLowerCase()}</div>

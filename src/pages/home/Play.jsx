@@ -287,7 +287,33 @@ function Play() {
 
     return (
         <UserHomeLayout>
+
+            <div className="flex flex-col gap-3 mt-12 w-[145px] h-[116px] mx-auto">
+                <div>
+                    <img
+                        className="w-[66px] h-[56px] m-auto"
+                        src={'/logos/Logo.svg'}
+                        alt="Voklizer logo at the top"
+                    />
+                </div>
+
+                <div className="flex flex-col justify-center items-center h-10">
+                    <div className="flex flex-col gap-2 items-center">
+                        <img
+                            className="h-[30px] w-[145px]"
+                            src={'/logos/Logo-Alt.svg'}
+                            alt="Voklizer logo at the bottom"
+                        />
+                        <div className="text-black text-[11px] leading-[11px] text-center">
+                            It's that simple.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="flex flex-col items-center h-full justify-end  w-full  gap-12">
+
                 <div className="relative flex justify-center items-center">
                     {(isRecording || isPlaying) && (
                         <>

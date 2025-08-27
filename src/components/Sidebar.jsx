@@ -28,7 +28,7 @@ function Sidebar({open, setOpen}) {
                         animate={{x: 0}}
                         exit={{x: "-100%"}}
                         transition={{duration: 0.3}}
-                        className="w-64 z-40 h-full bg-gray-800 text-white fixed top-0 left-0 shadow-lg overflow-y-auto bg-[#EEEEEE] "
+                        className="w-64 z-[214748] h-full bg-gray-800 text-white fixed top-0 left-0 shadow-lg overflow-y-auto bg-[#EEEEEE] "
                     >
                         <div className=" flex flex-col h-full justify-between">
                             <div className="pl-9 pr-4 pt-16 pb-10 h-full">
