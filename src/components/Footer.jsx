@@ -1,7 +1,7 @@
 export const Footer = () => {
     return (
         <div
-            className='w-full !h-20 flex justify-between items-start pt-3 border-t-2 border-[#D9D9D9] !fixed !bottom-0 bg-[#f5f5f5]'>
+            className='w-full !h-20 flex justify-between items-start pt-1 border-t-2 border-[#D9D9D9] !fixed !bottom-0 bg-[#f5f5f5]'>
             <div className='!h-[40px]'>
                 <svg width="auto" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

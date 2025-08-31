@@ -80,39 +80,39 @@ function CompanyName() {
             )}
             <div className="text-sm leading-[17px]">Company Name</div>
           </div>
-          <div className="flex ">
-
+          <div className="flex">
+            <div className="w-3/5">
               <GeometricButton
                   type={"submit"}
+                  variant="primary"
                   cut="right"
-                  width="100%"
-                  className="flex-1"
+                  className="w-full"
               >
                   {isEditMode ? "Save" : "Next"}
               </GeometricButton>
-            {isEditMode ? (
-              <GeometricButton
-                type={"button"}
-                fillColor="#E5E7EB"
-                textColor="#8532D8"
-                cut="left"
-                width="100%"
-                className="flex-1"
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
-              >
-                Cancel
-              </GeometricButton>
-            ) : (
-              <GeometricButton 
-                onClick={() => history.push("/preferred-language")}
-                cut="left"
-                width="100%"
-                className="flex-1"
-              >
-                Back
-              </GeometricButton>
-            )}
-
+            </div>
+            <div className="w-2/5">
+              {isEditMode ? (
+                <GeometricButton
+                  type={"button"}
+                  variant="secondary"
+                  cut="left"
+                  className="w-full"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+                >
+                  Cancel
+                </GeometricButton>
+              ) : (
+                <GeometricButton 
+                  variant="primary"
+                  onClick={() => history.push("/preferred-language")}
+                  cut="left"
+                  className="w-full"
+                >
+                  Back
+                </GeometricButton>
+              )}
+            </div>
           </div>
         </form>
       </div>

@@ -266,37 +266,39 @@ function PracticeArea() {
                     />
 
                     <div className="flex mt-4">
-                      <GeometricButton
-                        type="submit"
-                        cut="right"
-                        width="100%"
-                        className="flex-1"
-                      >
-                        {isEditMode ? "Save" : "Next"}
-                      </GeometricButton>
-                      {isEditMode ? (
-                          <GeometricButton
-                              type="button"
-                              fillColor="#E5E7EB"
-                              textColor="#8532D8"
-                              cut="left"
-                              width="100%"
-                              className="flex-1"
-                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
-                          >
-                            Cancel
-                          </GeometricButton>
-                      ) : (
-                          <GeometricButton
-                              type="button"
-                              onClick={() => history.push("/address")}
-                              cut="left"
-                              width="100%"
-                              className="flex-1"
-                          >
-                            Back
-                          </GeometricButton>
-                      )}
+                      <div className="w-3/5">
+                        <GeometricButton
+                          type="submit"
+                          variant="primary"
+                          cut="right"
+                          className="w-full"
+                        >
+                          {isEditMode ? "Save" : "Next"}
+                        </GeometricButton>
+                      </div>
+                      <div className="w-2/5">
+                        {isEditMode ? (
+                            <GeometricButton
+                                type="button"
+                                variant="secondary"
+                                cut="left"
+                                className="w-full"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+                            >
+                              Cancel
+                            </GeometricButton>
+                        ) : (
+                            <GeometricButton
+                                type="button"
+                                variant="primary"
+                                onClick={() => history.push("/address")}
+                                cut="left"
+                                className="w-full"
+                            >
+                              Back
+                            </GeometricButton>
+                        )}
+                      </div>
                     </div>
                   </form>
                 </motion.div>

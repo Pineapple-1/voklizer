@@ -11,22 +11,26 @@ function Otp() {
       <div className="flex flex-col gap-9 h-full justify-between">
         <Textbox label={"Enter OTP"} subtitle={"Verify Email Address"} />
         <div className="flex">
-          <GeometricButton
-            onClick={() => history.push("/reg-email")}
-            cut="left"
-            width="100%"
-            className="flex-1"
-          >
-            Back
-          </GeometricButton>
-          <GeometricButton
-            onClick={() => history.push("/landline")}
-            cut="right"
-            width="100%"
-            className="flex-1"
-          >
-            Next
-          </GeometricButton>
+          <div className="w-2/5">
+            <GeometricButton
+              onClick={() => history.push("/reg-email")}
+              variant="secondary"
+              cut="left"
+              className="w-full"
+            >
+              Back
+            </GeometricButton>
+          </div>
+          <div className="w-3/5">
+            <GeometricButton
+              onClick={() => history.push("/landline")}
+              variant="primary"
+              cut="right"
+              className="w-full"
+            >
+              Next
+            </GeometricButton>
+          </div>
         </div>
       </div>
     </ServiceProviderRegistrationLayout>

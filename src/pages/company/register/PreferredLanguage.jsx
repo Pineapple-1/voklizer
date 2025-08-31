@@ -86,30 +86,32 @@ function PreferredLanguage() {
         </div>
 
         <div className="flex">
-          <GeometricButton
-            onClick={() => submit()}
-            cut="right"
-            width="100%"
-            className="flex-1"
-            disabled={value.length === 0}
-          >
-            {isEditMode ? "Save" : "Next"}
-          </GeometricButton>
-          {isEditMode ? (
+          <div className="w-3/5">
             <GeometricButton
-              type="button"
-              fillColor="#E5E7EB"
-              textColor="#8532D8"
-              cut="left"
-              width="100%"
-              className="flex-1"
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+              variant="primary"
+              onClick={() => submit()}
+              cut="right"
+              className="w-full"
+              disabled={value.length === 0}
             >
-              Cancel
+              {isEditMode ? "Save" : "Next"}
             </GeometricButton>
-          ) : (
-            <div className="flex-1" />
-          )}
+          </div>
+          <div className="w-2/5">
+            {isEditMode ? (
+              <GeometricButton
+                type="button"
+                variant="secondary"
+                cut="left"
+                className="w-full"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+              >
+                Cancel
+              </GeometricButton>
+            ) : (
+              <div />
+            )}
+          </div>
         </div>
       </div>
       <Loading open={loading} message={isEditMode ? "Updating Info" : "Saving Info"} />

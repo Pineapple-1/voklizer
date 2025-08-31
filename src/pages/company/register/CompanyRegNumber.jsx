@@ -84,36 +84,38 @@ function CompanyRegNumber() {
             </div>
           </div>
           <div className="flex">
-            <GeometricButton
-              type={"submit"}
-              cut="right"
-              width="100%"
-              className="flex-1"
-            >
-              {isEditMode ? "Save" : "Next"}
-            </GeometricButton>
-            {isEditMode ? (
+            <div className="w-3/5">
               <GeometricButton
-                type={"button"}
-                fillColor="#E5E7EB"
-                textColor="#8532D8"
-                cut="left"
-                width="100%"
-                className="flex-1"
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+                type={"submit"}
+                variant="primary"
+                cut="right"
+                className="w-full"
               >
-                Cancel
+                {isEditMode ? "Save" : "Next"}
               </GeometricButton>
-            ) : (
-              <GeometricButton
-                onClick={() => history.push("/reg-name")}
-                cut="left"
-                width="100%"
-                className="flex-1"
-              >
-                Back
-              </GeometricButton>
-            )}
+            </div>
+            <div className="w-2/5">
+              {isEditMode ? (
+                <GeometricButton
+                  type={"button"}
+                  variant="secondary"
+                  cut="left"
+                  className="w-full"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); history.replace("/edit-company-info"); }}
+                >
+                  Cancel
+                </GeometricButton>
+              ) : (
+                <GeometricButton
+                  variant="primary"
+                  onClick={() => history.push("/reg-name")}
+                  cut="left"
+                  className="w-full"
+                >
+                  Back
+                </GeometricButton>
+              )}
+            </div>
           </div>
         </form>
       </div>

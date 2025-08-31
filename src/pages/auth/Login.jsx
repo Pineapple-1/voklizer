@@ -127,26 +127,30 @@ function Login() {
               </div>
 
               <div className="flex">
-                <GeometricButton
-                  type="submit"
-                  cut="right"
-                  width="100%"
-                  className="flex-1"
-                  disabled={isLogging}
-                >
-                  Login
-                </GeometricButton>
-                <GeometricButton
-                  type="button"
-                  fillColor="#E5E7EB"
-                  textColor="#8532D8"
-                  cut="left"
-                  width="100%"
-                  className="flex-1"
-                  onClick={() => history.push("/")}
-                >
-                  Cancel
-                </GeometricButton>
+                <div className="w-3/5">
+                  <GeometricButton
+                    type="submit"
+                    variant="primary"
+                    cut="right"
+                    width="100%"
+                    className="w-full"
+                    disabled={isLogging}
+                  >
+                    Login
+                  </GeometricButton>
+                </div>
+                <div className="w-2/5">
+                  <GeometricButton
+                    type="button"
+                    variant="secondary"
+                    cut="left"
+                    width="100%"
+                    className="w-full"
+                    onClick={() => history.push("/")}
+                  >
+                    Cancel
+                  </GeometricButton>
+                </div>
               </div>
             </form>
             <div className="flex justify-between px-1">
