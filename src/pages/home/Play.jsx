@@ -2,6 +2,7 @@ import UserHomeLayout from "../../layout/UserHomeLayout";
 import {MusicBars} from "../../components/MusicBars";
 import {motion} from "framer-motion";
 import {useRef} from "react";
+import {GeometricButton} from "../../components/GeometricButton";
 
 import {VoiceRecorder} from "capacitor-voice-recorder";
 import {Geolocation} from "@capacitor/geolocation";
@@ -357,15 +358,31 @@ function Play() {
                             className="w-full"
                         >
                             <div className="h-[40px] flex items-center justify-center w-full">
-                                <div
-                                    className="bg-[#D9D9D960] rounded-xl  py-[9px] flex  gap-2 items-center  px-3 w-full">
-                                    <button className="text-sm" onClick={cancelAudio}>
-                                        Cancel
-                                    </button>
-                                    <div className="h-1.5 bg-purple rounded-2xl flex-1" />
-                                    <button className="text-sm " onClick={SendAudio}>
-                                        Send
-                                    </button>
+                                <div className="flex w-full">
+                                    <div className="w-3/5 shrink-0">
+                                        <GeometricButton
+                                            type="button"
+                                            variant="primary"
+                                            cut="right"
+                                            width="100%"
+                                            className="w-full"
+                                            onClick={SendAudio}
+                                        >
+                                            Send
+                                        </GeometricButton>
+                                    </div>
+                                    <div className="w-full -ml-2">
+                                        <GeometricButton
+                                            type="button"
+                                            variant="secondary"
+                                            cut="left"
+                                            width="100%"
+                                            className="w-full"
+                                            onClick={cancelAudio}
+                                        >
+                                            Cancel
+                                        </GeometricButton>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

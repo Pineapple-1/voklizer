@@ -11,7 +11,7 @@ function Otp() {
       <div className="flex flex-col gap-9 h-full justify-between">
         <Textbox label={"Enter OTP"} subtitle={"Verify Email Address"} />
         <div className="flex">
-          <div className="w-2/5">
+          <div className="w-full -ml-2">
             <GeometricButton
               onClick={() => history.push("/reg-email")}
               variant="secondary"
@@ -21,7 +21,7 @@ function Otp() {
               Back
             </GeometricButton>
           </div>
-          <div className="w-3/5">
+          <div className="w-3/5 shrink-0">
             <GeometricButton
               onClick={() => history.push("/landline")}
               variant="primary"

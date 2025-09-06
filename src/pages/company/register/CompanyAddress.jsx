@@ -104,7 +104,7 @@ function CompanyAddress() {
                 </div>
 
                 <div className="flex">
-                    <div className="w-3/5">
+                    <div className="w-3/5 shrink-0">
                         <GeometricButton
                             type="submit"
                             variant="primary"
@@ -115,7 +115,7 @@ function CompanyAddress() {
                             {isEditMode ? "Save" : "Next"}
                         </GeometricButton>
                     </div>
-                    <div className="w-2/5">
+                    <div className="w-full -ml-2">
                         {isEditMode ? (
                             <GeometricButton
                                 type="button"

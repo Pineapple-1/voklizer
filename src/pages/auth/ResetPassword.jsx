@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
 import AuthLayout from "./AuthLayout";
+import {GeometricButton} from "../../components/GeometricButton";
 
 function ResetPass() {
   const {
@@ -71,13 +72,31 @@ function ResetPass() {
             )}
           </div>
 
-          <button
-            className="bg-[#D9D9D960]  flex justify-between items-center rounded-xl py-[9px] px-3"
-            type="submit"
-          >
-            <div className="h-1.5 w-1/2 bg-purple rounded-2xl"></div>
-            <div className="text-sm">Update Password</div>
-          </button>
+          <div className="flex">
+            <div className="w-3/5 shrink-0">
+              <GeometricButton
+                type="submit"
+                variant="primary"
+                cut="right"
+                width="100%"
+                className="w-full"
+              >
+                Update Password
+              </GeometricButton>
+            </div>
+            <div className="w-full -ml-2">
+              <GeometricButton
+                type="button"
+                variant="secondary"
+                cut="left"
+                width="100%"
+                className="w-full"
+                onClick={() => history.goBack()}
+              >
+                Cancel
+              </GeometricButton>
+            </div>
+          </div>
         </form>
         <div />
       </div>

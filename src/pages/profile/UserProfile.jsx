@@ -6,11 +6,14 @@ import CountryCodeModal from "../../components/CountryCodeModal";
 import Instance from "../../axios/Axios";
 import Loading from "../../components/Loading.jsx";
 import countries from "../../data/countries.json";
+import {GeometricButton} from "../../components/GeometricButton";
+import {useHistory} from "react-router-dom";
 
 function UserProfile() {
     const {data, isLoading, mutate} = useSWR("auth/me");
     const [posting, setPosting] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(null);
+    const history = useHistory();
 
     const {
         register,
@@ -208,14 +211,33 @@ function UserProfile() {
                     )}
                 </div>
 
-                <button
-                    className="bg-[#D9D9D960] flex justify-between items-center rounded-xl py-[9px] px-3"
-                    type="submit"
-                    disabled={posting}
-                >
-                    <div className="h-1.5 w-1/2 bg-purple rounded-2xl"></div>
-                    <div className="text-sm">{posting ? "Updating..." : "Update"}</div>
-                </button>
+                <div className="flex">
+                    <div className="w-3/5 shrink-0">
+                        <GeometricButton
+                            type="submit"
+                            variant="primary"
+                            cut="right"
+                            width="100%"
+                            className="w-full"
+                            disabled={posting}
+                        >
+                            {posting ? "Updating..." : "Update"}
+                        </GeometricButton>
+                    </div>
+                    <div className="w-full -ml-2">
+                        <GeometricButton
+                            type="button"
+                            variant="secondary"
+                            cut="left"
+                            width="100%"
+                            className="w-full"
+                            onClick={() => history.go(-1)}
+                            disabled={posting}
+                        >
+                            Cancel
+                        </GeometricButton>
+                    </div>
+                </div>
             </form>
 
             <Loading open={posting} message="Saving Info" />

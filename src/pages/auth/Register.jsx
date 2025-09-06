@@ -199,8 +199,8 @@ function Register() {
                             </>
                         )}
 
-                        <div className="flex">
-                            <div className="w-3/5">
+                        <div className="flex ">
+                            <div className="w-3/5 shrink-0">
                                 <GeometricButton
                                     type="submit"
                                     variant="primary"
@@ -211,7 +211,7 @@ function Register() {
                                     Register
                                 </GeometricButton>
                             </div>
-                            <div className="w-2/5">
+                            <div className="w-full -ml-2">
                                 <GeometricButton
                                     type="button"
                                     variant="secondary"

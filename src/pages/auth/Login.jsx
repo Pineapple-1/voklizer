@@ -139,7 +139,7 @@ function Login() {
                     Login
                   </GeometricButton>
                 </div>
-                <div className="w-2/5">
+                <div className="w-2/5 -ml-1">
                   <GeometricButton
                     type="button"
                     variant="secondary"
