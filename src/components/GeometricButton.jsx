@@ -17,26 +17,34 @@ export const GeometricButton = ({
     const variants = {
         primary: {
             fillColor: "#8532D8",
-            textColor: "white"
+            textColor: "white",
+            borderColor: null
         },
         secondary: {
             fillColor: "#E5E7EB",
-            textColor: "black"
+            textColor: "black",
+            borderColor: null
         },
         darkPrimary: {
             fillColor: "#4E217C",
-            textColor: "white"
+            textColor: "white",
+            borderColor: null
         },
-
         dark: {
             fillColor: "#000",
-            textColor: "white"
+            textColor: "white",
+            borderColor: null
         },
-
+        outlined: {
+            fillColor: "#00000000",
+            textColor: "#000000",
+            borderColor: "#fff"
+        },
     };
 
     const finalFillColor = fillColor || variants[variant].fillColor;
     const finalTextColor = textColor || variants[variant].textColor;
+    const finalBorderColor = variants[variant].borderColor;
 
     return (
         <div
@@ -45,7 +53,10 @@ export const GeometricButton = ({
 
             <div
                 className={clsx("absolute  top-0 w-6 h-10  rounded-md ", cut === "right" ? "left-0" : "right-0")}
-                style={{backgroundColor: finalFillColor}}
+                style={{
+                    backgroundColor: finalFillColor,
+                    border: finalBorderColor ? `2px solid ${finalBorderColor}` : 'none'
+                }}
             />
 
 
@@ -55,7 +66,8 @@ export const GeometricButton = ({
                 className={`w-full rounded-md outline-1   h-10 disabled:cursor-not-allowed focus:outline-none inline-flex items-center justify-center -skew-x-[20deg] `}
                 style={{
                     backgroundColor: finalFillColor,
-                    color: finalTextColor
+                    color: finalTextColor,
+                    border: finalBorderColor ? `2px solid ${finalBorderColor}` : 'none'
                 }}
                 {...props}
             >
